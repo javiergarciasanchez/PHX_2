@@ -1,0 +1,55 @@
+<repast.simphony.data2.engine.DataSetDescriptor>
+  <name>Consumers</name>
+  <type>NON_AGGREGATE</type>
+  <sourceType>pHX_2.Consumer</sourceType>
+  <inclTick>true</inclTick>
+  <inclBatchRun>false</inclBatchRun>
+  <inclRandomSeed>false</inclRandomSeed>
+  <scheduleParams>
+    <start>1.0</start>
+    <interval>1.0</interval>
+    <priority>-Infinity</priority>
+    <pType>LAST</pType>
+    <duration>-1.0</duration>
+    <frequency>REPEAT</frequency>
+    <hashCode>-863630457</hashCode>
+  </scheduleParams>
+  <atEnd>false</atEnd>
+  <methodDataSources class="linked-hash-map">
+    <entry>
+      <string>ChosenFirmID</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>ChosenFirmID</id>
+        <className>pHX_2.Consumer</className>
+        <methodName>getChosenFirmID</methodName>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>MargUtilOfQuality</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>MargUtilOfQuality</id>
+        <className>pHX_2.Consumer</className>
+        <methodName>getMargUtilOfQuality</methodName>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Utility</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Utility</id>
+        <className>pHX_2.Consumer</className>
+        <methodName>getUtility</methodName>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>ConsumerID</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>ConsumerID</id>
+        <className>pHX_2.Consumer</className>
+        <methodName>getConsumerID</methodName>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+  </methodDataSources>
+  <countSources class="linked-hash-map"/>
+  <customNADataSources class="linked-hash-map"/>
+  <customAggDataSources class="linked-hash-map"/>
+</repast.simphony.data2.engine.DataSetDescriptor>
