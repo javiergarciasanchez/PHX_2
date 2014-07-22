@@ -1,6 +1,12 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <parameters>
-					<parameter name="randomSeed" displayName="Default Random Seed" type="int" 
+					<parameter name="lowQualityMean" displayName="Quality mean of firms in lower segment" type="double" 
+						defaultValue="5.0" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter"
+									
+		/>
+				<parameter name="randomSeed" displayName="Default Random Seed" type="int" 
 						defaultValue="__NULL__"
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
@@ -12,16 +18,22 @@
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
 									
 		/>
+				<parameter name="fixedCostStdDevPerc" displayName="Fixed Cost Standard Deviation as Percent of Mean" type="double" 
+						defaultValue="0.3" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter"
+									
+		/>
+				<parameter name="maxQuality" displayName="Maximum Quality" type="double" 
+						defaultValue="100.0" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter"
+									
+		/>
 				<parameter name="potencialFirmsPerPeriod" displayName="Potencial Firms Per Period" type="int" 
 						defaultValue="5" 
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$IntConverter"
-									
-		/>
-				<parameter name="substitutePrice" displayName="Price of Substitute" type="double" 
-						defaultValue="5.0" 
-						isReadOnly="false" 
-						converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter"
 									
 		/>
 				<parameter name="fixedCostMean" displayName="Fixed Cost Mean" type="double" 
@@ -30,38 +42,26 @@
 						converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter"
 									
 		/>
-				<parameter name="substituteQuality" displayName="Quality of Substitute" type="double" 
-						defaultValue="0.1" 
+				<parameter name="priceStepStdDevPerc" displayName="StdDev of price variation as Percent of Mean" type="double" 
+						defaultValue="0.3" 
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter"
 									
 		/>
-				<parameter name="firmGridY" displayName="Valores posibles de calidad" type="double" 
-						defaultValue="2.0" 
-						isReadOnly="false" 
-						converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter"
-									
-		/>
-				<parameter name="firmGridX" displayName="Valores posibles de precio" type="double" 
-						defaultValue="50.0" 
-						isReadOnly="false" 
-						converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter"
-									
-		/>
-				<parameter name="priceStepStdDev" displayName="StdDev of price variation" type="double" 
-						defaultValue="0.01" 
-						isReadOnly="false" 
-						converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter"
-									
-		/>
-				<parameter name="qualityStepStdDev" displayName="StdDev of quality variation" type="double" 
-						defaultValue="0.01" 
-						isReadOnly="false" 
-						converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter"
-									
-		/>
-				<parameter name="margUtilOfQualityMean" displayName="Mean of Marginal Utility of Quality" type="double" 
+				<parameter name="maxPrice" displayName="Maximum Price" type="double" 
 						defaultValue="100.0" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter"
+									
+		/>
+				<parameter name="maxMargUtilOfQuality" displayName="Maximum of Marginal Utility of Quality" type="double" 
+						defaultValue="20.0" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter"
+									
+		/>
+				<parameter name="costScale" displayName="Scale cost parameter" type="double" 
+						defaultValue="1.0" 
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter"
 									
@@ -72,20 +72,8 @@
 						converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter"
 									
 		/>
-				<parameter name="consumerGridX" displayName="Valores posibles de utilidad marginal de la calidad" type="double" 
-						defaultValue="500.0" 
-						isReadOnly="false" 
-						converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter"
-									
-		/>
-				<parameter name="fixedCostStdDev" displayName="Fixed Cost Standard Deviation" type="double" 
-						defaultValue="1.0" 
-						isReadOnly="false" 
-						converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter"
-									
-		/>
-				<parameter name="qualityStepMean" displayName="Percentage of quality variation" type="double" 
-						defaultValue="0.05" 
+				<parameter name="highQualityMean" displayName="Quality Mean of firms in lower segment" type="double" 
+						defaultValue="80.0" 
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter"
 									
@@ -96,8 +84,32 @@
 						converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter"
 									
 		/>
-				<parameter name="margUtilOfQualityStdDev" displayName="StdDev of Marginal Utility of Quality" type="double" 
-						defaultValue="10.0" 
+				<parameter name="lowQualityMostLikely" displayName="Most Likley Quaility in lower segment" type="double" 
+						defaultValue="70.0" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter"
+									
+		/>
+				<parameter name="diffusionSpeedParam" displayName="Parameter of Diffusion Speed" type="double" 
+						defaultValue="0.2" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter"
+									
+		/>
+				<parameter name="minMargUtilOfQuality" displayName="Minimum of Marginal Utility of Quality" type="double" 
+						defaultValue="1.0" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter"
+									
+		/>
+				<parameter name="minQuality" displayName="Minimum Quality" type="double" 
+						defaultValue="1.0" 
+						isReadOnly="false" 
+						converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter"
+									
+		/>
+				<parameter name="minPrice" displayName="Minimum Price" type="double" 
+						defaultValue="1.0" 
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter"
 									

@@ -1,29 +1,11 @@
 package pHX_2;
 
+
+// This firm offers high price and low quality
 public class OpportunisticFirm extends Firm {
 
-	public OpportunisticFirm(Market market) {
-		super(market);
-	}
-
-	@Override
-	public void makeInitialOffer() {
-
-		// This firm offers high price and low quality
-		firmState.product.setPrice(market.referenceProductForFirms.getPrice()
-				* (1 + market.priceStepDistrib.nextDouble()));
-
-		firmState.product.setQuality(market.referenceProductForFirms
-				.getQuality() * (1 - market.qualityStepDistrib.nextDouble()));
-
-	}
-
-	@Override
-	public void makeOffer() {
-		// This firm offer high price and low quality
-		// so it tries to increase price
-		offer(1);
-
+	public OpportunisticFirm() {
+		super(QualityOfferType.LOW_QUALITY, PriceOfferType.HIGH_PRICE);
 	}
 
 }
