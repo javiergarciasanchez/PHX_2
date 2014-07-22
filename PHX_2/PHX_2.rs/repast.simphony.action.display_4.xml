@@ -10,7 +10,7 @@
   <editedStyles>
     <entry>
       <string>pHX_2.Consumer</string>
-      <string>pHX_2.Consumer.style_2.xml</string>
+      <string>pHX_2.Consumer.style_3.xml</string>
     </entry>
   </editedStyles>
   <netStyles/>
@@ -23,10 +23,10 @@
     <pType>LAST</pType>
     <duration>-1.0</duration>
     <frequency>REPEAT</frequency>
-    <hashCode>-723126407</hashCode>
+    <hashCode>1973722134</hashCode>
   </schedParams>
   <layoutClassName>foo.bar.baz</layoutClassName>
-  <layoutProjection>Consumers</layoutProjection>
+  <layoutProjection>Consumers_Proyection</layoutProjection>
   <layoutInterval>0</layoutInterval>
   <layerOrder>
     <entry>
@@ -36,18 +36,18 @@
   </layerOrder>
   <projections>
     <repast.simphony.scenario.data.ProjectionData>
-      <id>Consumers</id>
+      <id>Consumers_Proyection</id>
       <attributes/>
       <type>CONTINUOUS_SPACE</type>
     </repast.simphony.scenario.data.ProjectionData>
   </projections>
   <valueLayers/>
   <visualizationProperties class="repast.simphony.visualization.UnitSizeLayoutProperties">
-    <unitSize>50.0</unitSize>
+    <unitSize>45.0</unitSize>
   </visualizationProperties>
   <projectionDescriptors>
     <entry>
-      <string>Consumers</string>
+      <string>Consumers_Proyection</string>
       <repast.simphony.visualization.continuous.ContinuousProjectionDescriptor>
         <proj reference="../../../../projections/repast.simphony.scenario.data.ProjectionData"/>
         <props>
@@ -56,7 +56,7 @@
             <map>
               <entry>
                 <string>UNIT_SIZE</string>
-                <float>50.0</float>
+                <float>45.0</float>
               </entry>
               <entry>
                 <string>SHOW</string>

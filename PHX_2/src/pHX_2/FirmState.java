@@ -1,22 +1,64 @@
 package pHX_2;
 
 public class FirmState {
-	Product product;
-	double profit = 0.;
-	int demand = 0;
-	Market market;
+	private Offer offer;
+	private double profit = 0.;
+	private int demand = 0;
 
-	public FirmState(Market market) {
-		product = new Product(market);
-		this.market = market;
+	public FirmState() {
+		offer = new Offer();
+	}
+
+	public FirmState(Offer offer) {
+		this.offer = offer;
 	}
 
 	public double productX() {
-		return product.getX();
+		return offer.getX();
 	}
 
 	public double productY() {
-		return product.getY();
+		return offer.getY();
+	}
+
+	public double getPrice() {
+		return offer.getPrice();
+	}
+
+	public void setPrice(double price) {
+		offer.setPrice(price);
+	}
+
+	public double getQuality() {
+		return offer.getQuality();
+	}
+
+	public void setQuality(double quality) {
+		offer.setQuality(quality);
+	}
+
+	public double getProfit() {
+		return profit;
+	}
+
+	public void setProfit(double profit) {
+		this.profit = profit;
+	}
+
+	public Offer getOffer() {
+		return offer;
+	}
+
+	public void setOffer(Offer product) {
+		this.offer = product;
+	}
+
+	public int getDemand() {
+		return demand;
+	}
+
+	public void setDemand(int demand) {
+		this.demand = demand;
 	}
 
 }
