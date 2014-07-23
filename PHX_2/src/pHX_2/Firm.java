@@ -1,8 +1,8 @@
 package pHX_2;
 
-import static repast.simphony.essentials.RepastEssentials.GetParameter;
-
 import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Iterator;
 import java.util.Map;
 
 import repast.simphony.engine.schedule.ScheduledMethod;
@@ -17,8 +17,6 @@ public abstract class Firm {
 	private double accumProfit = 0;
 	private double fixedCost;
 	private ArrayList<Consumer> notYetKnownBy = new ArrayList<Consumer>();
-
-	private static final double MIN_PROFIT = (Double) GetParameter("minimumProfit");
 
 	protected static long firmIDCounter = 1;
 
@@ -37,10 +35,18 @@ public abstract class Firm {
 
 		fixedCost = (Double) Firms.getFixedCostDistrib().nextDouble();
 
-		notYetKnownBy.addAll(CreateMarket.consumersContext);
-
 		makeInitialOffer();
 
+	}
+
+	private void setInitialKnownBy() {
+		Consumers consumers = CreateMarket.consumersContext;
+
+		long notKnownByNum = Math.round(consumers.size()
+				* (1.0 - Firms.initiallyKnownByPerc));
+
+		notYetKnownBy.addAll((Collection<? extends Consumer>) consumers
+				.getRandomObjects(Consumer.class, notKnownByNum));
 	}
 
 	protected void makeInitialOffer() {
@@ -51,16 +57,66 @@ public abstract class Firm {
 		Firms.sortQFirms.put(offer.getQuality(), this);
 
 		// Set price
-		offer.setPrice(getInitialPrice(offer.getQuality()));
+		offer.setPrice(Math.max(getMinimumPrice(offer.getQuality()),
+				getRandomInitialPrice()));
 
-		// Set location in projection
-		CreateMarket.firmsProyection.moveTo(this, offer.getX(), offer.getY());
+		// Check if offer has a profit above 0 otherwise try to adapt
+		// If adaptation was unsuccessful kill firm
+		if ((getEstimatedProfit(offer) > 0.0) || (adjustOffer(offer, 0.0))) {
 
-		setCurrentState(new FirmState(offer));
+			// Set location in projection
+			CreateMarket.firmsProyection.moveTo(this, offer.getX(),
+					offer.getY());
 
-		// Increase knowledge of the firm in the market
-		updateNotYetKnownBy();
+			setCurrentState(new FirmState(offer));
 
+			// Establish which consumers know the firm
+			setInitialKnownBy();
+		} else {
+			killFirm();
+		}
+	}
+
+	private double getEstimatedProfit(Offer offer) {
+		return (offer.getPrice() - cost(offer.getQuality()))
+				* getEstimatedDemand(offer) - fixedCost;
+	}
+
+	private double getMinimumPrice(double quality) {
+		// Minimum price for a positive margin
+		return cost(quality);
+	}
+
+	private double getMinimumDemand(Offer offer) {
+		// Minimum quantity sold to afford fixed costs given price and quality
+		return fixedCost / (offer.getPrice() - cost(offer.getQuality()));
+	}
+
+	private double getEstimatedDemand(Offer offer) {
+		// TODO Auto-generated method stub
+
+		return 0;
+	}
+
+	private boolean adjustOffer(Offer offer, double minProfitExpected) {
+
+		Iterator<Offer> trailOffers = getTrailOffers(offer);
+
+		while ((getEstimatedProfit(offer) <= minProfitExpected)
+				&& (trailOffers.hasNext())) {
+
+			offer = trailOffers.next();
+		}
+
+		if (getEstimatedProfit(offer) > minProfitExpected)
+			return true;
+		else
+			return false;
+	}
+
+	private Iterator<Offer> getTrailOffers(Offer offer) {
+		// TODO Auto-generated method stub
+		return null;
 	}
 
 	@ScheduledMethod(start = 1, priority = RunPriority.NEXT_STEP_FIRM_PRIORITY, interval = 1)
@@ -150,6 +206,19 @@ public abstract class Firm {
 		return q;
 	}
 
+	protected double getRandomInitialPrice() {
+
+		switch (priceOfferType) {
+		case HIGH_PRICE:
+			return Firms.getHighInitialPriceDistrib().nextDouble();
+		case LOW_PRICE:
+			return Firms.getLowInitialPriceDistrib().nextDouble();
+		default:
+			return 0.0; // it should never come here
+		}
+
+	}
+
 	private double getInitialPrice(double quality) {
 		// P/Q should be between P/Q of competitors with higher and lower
 		// quality
@@ -215,12 +284,11 @@ public abstract class Firm {
 		// Take some consumers out of "ignorance" and let them know this firm
 		// Knowledge is spread using standard epidemic diffusion process
 
-		double speedParam = (Double) GetParameter("diffusionSpeedParam");
 		double mktSize = CreateMarket.consumersContext.size();
 		double alreadyK = mktSize - notYetKnownBy.size();
 
-		int knownByIncrement = (int) Math.round(speedParam * alreadyK
-				* (1 - alreadyK / mktSize));
+		int knownByIncrement = (int) Math.round(Firms.diffusionSpeedParam
+				* alreadyK * (1 - alreadyK / mktSize));
 
 		knownByIncrement = (int) Math.min(mktSize, knownByIncrement);
 		knownByIncrement = Math.max(1, knownByIncrement);
@@ -265,7 +333,7 @@ public abstract class Firm {
 
 	public boolean isToBeKilled() {
 		// Returns true if firm should exit the market
-		return (accumProfit < MIN_PROFIT);
+		return (accumProfit < Firms.minimumProfit);
 	}
 
 	public void killFirm() {
@@ -277,7 +345,7 @@ public abstract class Firm {
 
 	private double cost(double quality) {
 		// Cost grows with quality
-		return (double) GetParameter("costScale") * quality;
+		return Firms.costScale * quality;
 	}
 
 	public int getDemand() {

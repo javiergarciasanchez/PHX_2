@@ -12,21 +12,32 @@ public class Firms extends DefaultContext<Firm> {
 
 	// Random distributions
 
-	// Initial quality distributions for different firm's strategies
+	// Initial quality and price distributions for different firm's strategies
 	private static BetaSubj lowQualityDistrib = null;
 	private static BetaSubj highQualityDistrib = null;
-
+	private static BetaSubj lowInitialPriceDistrib = null;
+	private static BetaSubj highInitialPriceDistrib = null;
+	
 	private static Gamma priceStepDistrib = null;
 	private static Gamma fixedCostDistrib = null;
 
 	// Firms ordered according to quality
 	public static TreeMap<Double, Firm> sortQFirms;
 
+	// Parameters for Firms
+	static double initiallyKnownByPerc, minimumProfit , costScale, diffusionSpeedParam;
+
 	public Firms() {
 
 		super("Firms_Context");
 
 		sortQFirms = new TreeMap<Double, Firm>();
+
+		// Read parameters for firms
+		initiallyKnownByPerc = (Double) GetParameter("initiallyKnownByPerc");
+		minimumProfit = (Double) GetParameter("minimumProfit");
+		costScale = (Double) GetParameter("costScale");
+		diffusionSpeedParam = (Double) GetParameter("diffusionSpeedParam");
 
 	}
 
@@ -50,6 +61,26 @@ public class Firms extends DefaultContext<Firm> {
 		return highQualityDistrib;
 	}
 
+	public static BetaSubj getLowInitialPriceDistrib() {
+		if (lowInitialPriceDistrib == null)
+			lowInitialPriceDistrib = new BetaSubj(Offer.getMinPrice(),
+					Offer.getMaxPrice(),
+					(Double) GetParameter("lowInitialPriceMostLikely"),
+					(Double) GetParameter("lowInitialPriceMean"));
+
+		return lowInitialPriceDistrib;
+	}
+
+	public static BetaSubj getHighInitialPriceDistrib() {
+		if (highInitialPriceDistrib == null)
+			highInitialPriceDistrib = new BetaSubj(Offer.getMinPrice(),
+					Offer.getMaxPrice(),
+					(Double) GetParameter("highInitialPriceMostLikely"),
+					(Double) GetParameter("highInitialPriceMean"));
+
+		return highInitialPriceDistrib;
+	}
+	
 	public static Gamma getPriceStepDistrib() {
 
 		// Create distributions for strategic % steps on price and quality
@@ -80,7 +111,7 @@ public class Firms extends DefaultContext<Firm> {
 		}
 		return fixedCostDistrib;
 	}
-	
+
 	@ScheduledMethod(start = 1, priority = RunPriority.ADD_FIRMS_PRIORITY, interval = 1)
 	public void addFirms() {
 
@@ -107,10 +138,9 @@ public class Firms extends DefaultContext<Firm> {
 	public void wipeDeadFirms() {
 		for (Firm f : CreateMarket.toBeKilled)
 			f.killFirm();
-		
-		CreateMarket.toBeKilled.clear();
-		
-	}
 
+		CreateMarket.toBeKilled.clear();
+
+	}
 
 }
