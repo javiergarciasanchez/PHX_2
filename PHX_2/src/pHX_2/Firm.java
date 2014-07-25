@@ -62,7 +62,7 @@ public abstract class Firm {
 
 		// Check if offer has a profit above 0 otherwise try to adapt
 		// If adaptation was unsuccessful kill firm
-		if ((getEstimatedProfit(offer) > 0.0) || (adjustOffer(offer, 0.0))) {
+		if (getEstimatedProfit(offer) > 0.0) {
 
 			// Set location in projection
 			CreateMarket.firmsProyection.moveTo(this, offer.getX(),
@@ -72,7 +72,7 @@ public abstract class Firm {
 
 			// Establish which consumers know the firm
 			setInitialKnownBy();
-		} else {
+		} else if (!adjustOffer(offer, 0.0)) {
 			killFirm();
 		}
 	}
