@@ -40,7 +40,7 @@
 	<parameter name="lowQualityMean" displayName="Quality mean of firms in lower segment"
 		type="double" defaultValue="16" isReadOnly="false"
 		converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" />
-	<parameter name="lowQualityMostLikely" displayName="Most Likley Quaility in lower segment"
+	<parameter name="lowQualityMostLikely" displayName="Most Likely Quaility in lower segment"
 		type="double" defaultValue="15.0" isReadOnly="false"
 		converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" />
 	<parameter name="highQualityMean" displayName="Quality Mean of firms in higher segment"
