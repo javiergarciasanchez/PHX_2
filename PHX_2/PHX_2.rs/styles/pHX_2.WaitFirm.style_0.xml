@@ -1,10 +1,9 @@
 <repast.simphony.visualization.editedStyle.DefaultEditedStyleData2D>
-  <shapeWkt>star</shapeWkt>
-  <size>-1.0</size>
+  <shapeWkt>circle</shapeWkt>
+  <size>10.0</size>
   <sizeMax>15.0</sizeMax>
   <sizeMin>1.0</sizeMin>
-  <sizeScale>1.0</sizeScale>
-  <sizeMethodName>getDemand</sizeMethodName>
+  <sizeScale>10.0</sizeScale>
   <label></label>
   <labelMethod>getFirmID</labelMethod>
   <labelPosition>bottom</labelPosition>
@@ -19,11 +18,10 @@
     <float>0.0</float>
   </labelColor>
   <color>
-    <float>0.6</float>
+    <float>0.2</float>
+    <float>0.2</float>
     <float>1.0</float>
-    <float>0.0</float>
   </color>
-  <redMethodName>getFirmIntID</redMethodName>
   <colorMax>
     <float>50.0</float>
     <float>10.0</float>

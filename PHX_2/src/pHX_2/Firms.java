@@ -7,6 +7,7 @@ import static repast.simphony.essentials.RepastEssentials.GetParameter;
 import repast.simphony.context.DefaultContext;
 import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.random.RandomHelper;
+import repast.simphony.essentials.RepastEssentials;
 
 public class Firms extends DefaultContext<Firm> {
 
@@ -17,7 +18,8 @@ public class Firms extends DefaultContext<Firm> {
 	private static BetaSubj highQualityDistrib = null;
 	private static BetaSubj lowInitialPriceDistrib = null;
 	private static BetaSubj highInitialPriceDistrib = null;
-	
+
+	private static Gamma qualityStepDistrib = null;
 	private static Gamma priceStepDistrib = null;
 	private static Gamma fixedCostDistrib = null;
 
@@ -25,7 +27,8 @@ public class Firms extends DefaultContext<Firm> {
 	public static TreeMap<Double, Firm> sortQFirms;
 
 	// Parameters for Firms
-	static double initiallyKnownByPerc, minimumProfit , costScale, diffusionSpeedParam;
+	static double initiallyKnownByPerc, minimumProfit, costScale,
+			diffusionSpeedParam;
 
 	public Firms() {
 
@@ -43,8 +46,7 @@ public class Firms extends DefaultContext<Firm> {
 
 	public static BetaSubj getLowQualityDistrib() {
 		if (lowQualityDistrib == null)
-			lowQualityDistrib = new BetaSubj(Offer.getMinQuality(),
-					Offer.getMaxQuality(),
+			lowQualityDistrib = new BetaSubj(
 					(Double) GetParameter("lowQualityMostLikely"),
 					(Double) GetParameter("lowQualityMean"));
 
@@ -53,8 +55,7 @@ public class Firms extends DefaultContext<Firm> {
 
 	public static BetaSubj getHighQualityDistrib() {
 		if (highQualityDistrib == null)
-			highQualityDistrib = new BetaSubj(Offer.getMinQuality(),
-					Offer.getMaxQuality(),
+			highQualityDistrib = new BetaSubj(
 					(Double) GetParameter("highQualityMostLikely"),
 					(Double) GetParameter("highQualityMean"));
 
@@ -63,8 +64,7 @@ public class Firms extends DefaultContext<Firm> {
 
 	public static BetaSubj getLowInitialPriceDistrib() {
 		if (lowInitialPriceDistrib == null)
-			lowInitialPriceDistrib = new BetaSubj(Offer.getMinPrice(),
-					Offer.getMaxPrice(),
+			lowInitialPriceDistrib = new BetaSubj(
 					(Double) GetParameter("lowInitialPriceMostLikely"),
 					(Double) GetParameter("lowInitialPriceMean"));
 
@@ -73,14 +73,29 @@ public class Firms extends DefaultContext<Firm> {
 
 	public static BetaSubj getHighInitialPriceDistrib() {
 		if (highInitialPriceDistrib == null)
-			highInitialPriceDistrib = new BetaSubj(Offer.getMinPrice(),
-					Offer.getMaxPrice(),
+			highInitialPriceDistrib = new BetaSubj(
 					(Double) GetParameter("highInitialPriceMostLikely"),
 					(Double) GetParameter("highInitialPriceMean"));
 
 		return highInitialPriceDistrib;
 	}
-	
+
+	public static Gamma getQualityStepDistrib() {
+
+		// Create distributions for strategic % steps on price and quality
+		// We use Gamma distribution because the domain is > 0
+		if (qualityStepDistrib == null) {
+			double mean = (Double) GetParameter("qualityStepMean");
+			double stdDevPercent = (Double) GetParameter("qualityStepStdDevPerc");
+			double alfa = (1 / Math.pow(stdDevPercent, 2));
+			double lamda = alfa / mean;
+
+			qualityStepDistrib = RandomHelper.createGamma(alfa, lamda);
+		}
+
+		return qualityStepDistrib;
+	}
+
 	public static Gamma getPriceStepDistrib() {
 
 		// Create distributions for strategic % steps on price and quality
@@ -114,6 +129,10 @@ public class Firms extends DefaultContext<Firm> {
 
 	@ScheduledMethod(start = 1, priority = RunPriority.ADD_FIRMS_PRIORITY, interval = 1)
 	public void addFirms() {
+
+		if ((boolean) GetParameter("firmsEntryOnlyAtStart")
+				&& (RepastEssentials.GetTickCount() != 1))
+			return;
 
 		for (int i = 1; i <= (Integer) GetParameter("potencialFirmsPerPeriod"); i++) {
 

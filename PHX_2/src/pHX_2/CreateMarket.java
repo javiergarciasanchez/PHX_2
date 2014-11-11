@@ -33,11 +33,11 @@ public class CreateMarket extends DefaultContext<Object> implements
 
 		// Initialize ToBeKilled
 		toBeKilled = new ArrayList<Firm>();
-		
+
 		// Reset static counters
 		Firm.setFirmIDCounter(1);
 		Consumer.setConsumerIDCounter(1);
-		
+
 		// Check parameters
 		String msg = checkParameters();
 		if (msg != null) {
@@ -48,7 +48,7 @@ public class CreateMarket extends DefaultContext<Object> implements
 
 		context.setId("Market");
 		market = context;
-		
+
 		if (RunEnvironment.getInstance().isBatch()) {
 
 			// Collect data

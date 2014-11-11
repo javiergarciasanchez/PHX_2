@@ -1,6 +1,6 @@
-<repast.simphony.visualization.engine.DefaultDisplayDescriptor>
+<repast.simphony.visualization.engine.CartesianDisplayDescriptor>
   <name>Consumers</name>
-  <type>TWO_D</type>
+  <type>2D</type>
   <styles>
     <entry>
       <string>pHX_2.Consumer</string>
@@ -10,7 +10,7 @@
   <editedStyles>
     <entry>
       <string>pHX_2.Consumer</string>
-      <string>pHX_2.Consumer.style_3.xml</string>
+      <string>pHX_2.Consumer.style_1.xml</string>
     </entry>
   </editedStyles>
   <netStyles/>
@@ -23,7 +23,7 @@
     <pType>LAST</pType>
     <duration>-1.0</duration>
     <frequency>REPEAT</frequency>
-    <hashCode>1973722134</hashCode>
+    <hashCode>-1563215985</hashCode>
   </schedParams>
   <layoutClassName>foo.bar.baz</layoutClassName>
   <layoutProjection>Consumers_Proyection</layoutProjection>
@@ -38,12 +38,11 @@
     <repast.simphony.scenario.data.ProjectionData>
       <id>Consumers_Proyection</id>
       <attributes/>
-      <type>CONTINUOUS_SPACE</type>
+      <type>continuous space</type>
     </repast.simphony.scenario.data.ProjectionData>
   </projections>
-  <valueLayers/>
   <visualizationProperties class="repast.simphony.visualization.UnitSizeLayoutProperties">
-    <unitSize>45.0</unitSize>
+    <unitSize>10.0</unitSize>
   </visualizationProperties>
   <projectionDescriptors>
     <entry>
@@ -56,7 +55,7 @@
             <map>
               <entry>
                 <string>UNIT_SIZE</string>
-                <float>45.0</float>
+                <float>10.0</float>
               </entry>
               <entry>
                 <string>SHOW</string>
@@ -79,4 +78,5 @@
     <blue>255</blue>
     <alpha>255</alpha>
   </backgroundColor>
-</repast.simphony.visualization.engine.DefaultDisplayDescriptor>
+  <valueLayers/>
+</repast.simphony.visualization.engine.CartesianDisplayDescriptor>

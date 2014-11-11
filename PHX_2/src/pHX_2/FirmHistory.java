@@ -20,14 +20,14 @@ public class FirmHistory extends ArrayList<FirmState> {
 		return super.add(firmState);
 	}
 
-	public FirmState getCurrentOffer() {
+	public FirmState getCurrentState() {
 		if (isEmpty())
 			return null;
 		else
 			return get(size() - 1);
 	}
 
-	public FirmState getLastOffer() {
+	public FirmState getLastState() {
 		if (isEmpty() || size() < 2)
 			return null;
 		else
