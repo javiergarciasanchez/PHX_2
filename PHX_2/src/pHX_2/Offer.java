@@ -4,18 +4,20 @@ import static repast.simphony.essentials.RepastEssentials.GetParameter;
 
 public class Offer {
 
+	private static final int MAX_X = 100, MAX_Y = 100, MIN_X = 0, MIN_Y = 0;
 	private double quality;
 	private double price;
+	private OfferType offerType;
 
 	// Read boundaries of parameters
-	private static double MinPrice = 0;
-	private static double MaxPrice = 0;
-	private static double MinQuality = 0;
-	private static double MaxQuality = 0;
+	private static double minPrice = 0;
+	private static double maxPrice = 0;
+	private static double minQuality = 0;
+	private static double maxQuality = 0;
 
 	public Offer() {
-		setQuality(MinQuality);
-		setPrice(MinPrice);
+		setQuality(minQuality);
+		setPrice(minPrice);
 	}
 
 	public double getPrice() {
@@ -24,11 +26,11 @@ public class Offer {
 
 	public void setPrice(double price) {
 
-		if (price < MinPrice)
-			this.price = MinPrice;
+		if (price < minPrice)
+			this.price = minPrice;
 
-		else if (price > MaxPrice)
-			this.price = MaxPrice;
+		else if (price > maxPrice)
+			this.price = maxPrice;
 
 		else
 			this.price = price;
@@ -41,58 +43,73 @@ public class Offer {
 
 	public void setQuality(double quality) {
 
-		if (quality < MinQuality)
-			this.quality = MinQuality;
+		if (quality < minQuality)
+			this.quality = minQuality;
 
-		else if (quality > MaxQuality)
-			this.quality = MaxQuality;
+		else if (quality > maxQuality)
+			this.quality = maxQuality;
 
 		else
 			this.quality = quality;
 
 	}
 
-	public static double getMinPrice() {
-		if (MinPrice == 0)
-			MinPrice = (double) GetParameter("minPrice");
+	public OfferType getOfferType() {
+		return offerType;
+	}
 
-		return MinPrice;
+	public void setOfferType(OfferType offerType) {
+		this.offerType = offerType;
+	}
+
+	public static double getMinPrice() {
+		if (minPrice == 0)
+			minPrice = (double) GetParameter("minPrice");
+
+		return minPrice;
 	}
 
 	public static double getMaxPrice() {
-		if (MaxPrice == 0)
-			MaxPrice = (double) GetParameter("maxPrice");
+		if (maxPrice == 0)
+			maxPrice = (double) GetParameter("maxPrice");
 
-		return MaxPrice;
+		return maxPrice;
 	}
 
 	public static double getMinQuality() {
-		if (MinQuality == 0)
-			MinQuality = (double) GetParameter("minQuality");
+		if (minQuality == 0)
+			minQuality = (double) GetParameter("minQuality");
 
-		return MinQuality;
+		return minQuality;
 	}
 
 	public static double getMaxQuality() {
-		if (MaxQuality == 0)
-			MaxQuality = (double) GetParameter("maxQuality");
+		if (maxQuality == 0)
+			maxQuality = (double) GetParameter("maxQuality");
 
-		return MaxQuality;
+		return maxQuality;
 	}
 
 	public static double getMaxX() {
-		return getMaxPrice();
+		return MAX_X;
 	}
 
 	public static double getMaxY() {
-		return getMaxQuality() - getMinQuality();
+		return MAX_Y;
 	}
 
 	public double getX() {
-		return price;
+		return (price - minPrice) / (maxPrice - minPrice) * (MAX_X - MIN_X)
+				+ MIN_X;
 	}
 
 	public double getY() {
-		return quality - getMinQuality();
+		return (quality - minQuality) / (maxQuality - minQuality)
+				* (MAX_Y - MIN_Y) + MIN_Y;
+	}
+
+	public String toString() {
+		return "Q: " + quality + " P: " + price + " T: "
+				+ ((offerType == null) ? "null" : offerType.toString());
 	}
 }

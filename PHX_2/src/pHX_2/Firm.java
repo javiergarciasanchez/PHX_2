@@ -1,7 +1,8 @@
 package pHX_2;
 
+import static repast.simphony.essentials.RepastEssentials.GetParameter;
+
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.Iterator;
 import java.util.Map;
 
@@ -11,12 +12,10 @@ import repast.simphony.random.RandomHelper;
 public abstract class Firm {
 
 	private FirmHistory history = new FirmHistory(FirmHistory.HISTORY_SIZE);
-	private QualityOfferType qualityOfferType;
-	private PriceOfferType priceOfferType;
 
 	private double accumProfit = 0;
 	private double fixedCost;
-	private ArrayList<Consumer> notYetKnownBy = new ArrayList<Consumer>();
+	private ArrayList<Consumer> notYetKnownBy;
 
 	protected static long firmIDCounter = 1;
 
@@ -24,108 +23,110 @@ public abstract class Firm {
 		Firm.firmIDCounter = firmIDCounter;
 	}
 
-	protected long firmIntID = firmIDCounter++;
-	protected String ID = "Firm " + firmIntID;
+	private long firmIntID = firmIDCounter++;
+	private String ID = "Firm " + firmIntID;
 
-	public Firm(QualityOfferType qualityOfferType, PriceOfferType priceOfferType) {
-		this.qualityOfferType = qualityOfferType;
-		this.priceOfferType = priceOfferType;
+	public Firm() {
 
 		CreateMarket.firmsContext.add(this);
 
 		fixedCost = (Double) Firms.getFixedCostDistrib().nextDouble();
 
-		makeInitialOffer();
-
 	}
 
-	private void setInitialKnownBy() {
-		Consumers consumers = CreateMarket.consumersContext;
+	@ScheduledMethod(start = 1, priority = RunPriority.MAKE_OFFER_PRIORITY, interval = 1)
+	public void makeOffer() {
+		Offer offer;
 
-		long notKnownByNum = Math.round(consumers.size()
-				* (1.0 - Firms.initiallyKnownByPerc));
+		if (history.size() == 0) {
+			// ENTRY
 
-		notYetKnownBy.addAll((Collection<? extends Consumer>) consumers
-				.getRandomObjects(Consumer.class, notKnownByNum));
-	}
+			// Entry is not aggressive against competitors
+			offer = new Offer();
 
-	protected void makeInitialOffer() {
-		Offer offer = new Offer();
+			// Set quality according to firm's strategy
+			double q;
+			q = getRandomInitialQuality();
+			offer.setQuality(q);
+			Firms.sortQFirms.put(q, this);
 
-		// Set quality
-		offer.setQuality(getRandomQuality());
-		Firms.sortQFirms.put(offer.getQuality(), this);
+			offer.setPrice(getRandomInitialPrice(q));
+			offer.setOfferType(null);
 
-		// Set price
-		offer.setPrice(Math.max(getMinimumPrice(offer.getQuality()),
-				getRandomInitialPrice()));
+			initializeNotYetKnownBy();
 
-		// Check if offer has a profit above 0 otherwise try to adapt
-		// If adaptation was unsuccessful kill firm
-		if (getEstimatedProfit(offer) > 0.0) {
+		} else {
 
-			// Set location in projection
-			CreateMarket.firmsProyection.moveTo(this, offer.getX(),
-					offer.getY());
+			Firms.sortQFirms.remove(getQuality());
 
-			setCurrentState(new FirmState(offer));
+			if (history.size() == 1) {
 
-			// Establish which consumers know the firm
-			setInitialKnownBy();
-		} else if (!adjustOffer(offer, 0.0)) {
-			killFirm();
-		}
-	}
+				// not enough history
+				offer = offerNewOfferType();
 
-	private double getEstimatedProfit(Offer offer) {
-		return (offer.getPrice() - cost(offer.getQuality()))
-				* getEstimatedDemand(offer) - fixedCost;
-	}
+			} else {
 
-	private double getMinimumPrice(double quality) {
-		// Minimum price for a positive margin
-		return cost(quality);
-	}
+				// Enough history to check improvement
+				FirmState prevState = getPreviousState();
+				if (offerTypeHasWorked(prevState)) {
+					// Offer type has worked
+					offer = offerKeepingOfferType(getOfferType());
+				} else {
+					// Offer type has NOT worked
+					offer = offerChangingOfferType(getOfferType());
+				}
 
-	private double getMinimumDemand(Offer offer) {
-		// Minimum quantity sold to afford fixed costs given price and quality
-		return fixedCost / (offer.getPrice() - cost(offer.getQuality()));
-	}
+			}
 
-	private double getEstimatedDemand(Offer offer) {
-		// TODO Auto-generated method stub
-
-		return 0;
-	}
-
-	private boolean adjustOffer(Offer offer, double minProfitExpected) {
-
-		Iterator<Offer> trailOffers = getTrailOffers(offer);
-
-		while ((getEstimatedProfit(offer) <= minProfitExpected)
-				&& (trailOffers.hasNext())) {
-
-			offer = trailOffers.next();
+			updateNotYetKnownBy();
 		}
 
-		if (getEstimatedProfit(offer) > minProfitExpected)
-			return true;
-		else
-			return false;
+		setCurrentState(new FirmState(offer));
+
+		Firms.sortQFirms.put(getQuality(), this);
+
+		CreateMarket.firmsProyection.moveTo(this, offer.getX(), offer.getY());
+
 	}
 
-	private Iterator<Offer> getTrailOffers(Offer offer) {
-		// TODO Auto-generated method stub
-		return null;
+	protected abstract double getRandomInitialQuality();
+
+	protected abstract double getRandomInitialPrice(double q);
+
+	private FirmState getCurrentState() {
+		return history.getCurrentState();
+	}
+
+	private void setCurrentState(FirmState firmState) {
+		history.add(firmState);
+	}
+
+	private void initializeNotYetKnownBy() {
+		notYetKnownBy = new ArrayList<Consumer>();
+
+		Iterator<Consumer> it = CreateMarket.consumersContext.getObjects(
+				Consumer.class).iterator();
+
+		// Put all the consumers in the list
+		while (it.hasNext())
+			notYetKnownBy.add(it.next());
+
+		// Take out of the list the initial "knower's"
+		getFromIgnorance((int) Math
+				.round((Double) GetParameter("initiallyKnownByPerc")
+						* CreateMarket.consumersContext.size()));
+
 	}
 
 	@ScheduledMethod(start = 1, priority = RunPriority.NEXT_STEP_FIRM_PRIORITY, interval = 1)
 	public void nextStep() {
+		// This is run after all offers are made and consumers have chosen
 		// Calculates profit, accumProfit and kills the firm if necessary
 		// History was kept when Current State was established
 
 		// Calculate profits of period
-		setProfit((getPrice() - cost(getQuality())) * getDemand() - fixedCost);
+		setProfit((getPrice() - unitCost(getQuality())) * getDemand()
+				- fixedCost);
 
 		accumProfit += getProfit();
 
@@ -134,166 +135,73 @@ public abstract class Firm {
 
 	}
 
-	@ScheduledMethod(start = 1, priority = RunPriority.MAKE_OFFER_PRIORITY, interval = 1)
-	public void makeOffer() {
+	private boolean offerTypeHasWorked(FirmState prevState) {
+
+		if (getProfit() > prevState.getProfit())
+			return true;
+		else
+			return false;
+
+	}
+
+	private Offer offerNewOfferType() {
+		return makeOfferOfType(OfferType.getRandomOfferType());
+	}
+
+	private Offer offerKeepingOfferType(OfferType offerType) {
+		return makeOfferOfType(offerType);
+	}
+
+	private Offer offerChangingOfferType(OfferType prevOfferType) {
+		OfferType newOfferType = OfferType.getRandomOfferType();
+
+		while (newOfferType == prevOfferType) {
+			newOfferType = OfferType.getRandomOfferType();
+		}
+
+		return makeOfferOfType(newOfferType);
+
+	}
+
+	protected Offer makeOfferOfType(OfferType offerType) {
 
 		Offer offer = new Offer();
 
-		// Quality is constant, set at moment of entry
-		offer.setQuality(getQuality());
+		offer.setOfferType(offerType);
 
-		// Set price according to two scenarios: Deepen our strategy or go back
-		// to previous price
-		int strategy;
+		switch (offerType) {
+		case INCREASE_PRICE:
+			offer.setPrice(getPrice()
+					+ Firms.getPriceStepDistrib().nextDouble());
+			offer.setQuality(getQuality());
 
-		switch (priceOfferType) {
-		case HIGH_PRICE:
-			strategy = 1;
 			break;
-		case LOW_PRICE:
-			strategy = -1;
+		case DECREASE_PRICE:
+			offer.setPrice(getPrice()
+					- Firms.getPriceStepDistrib().nextDouble());
+			offer.setQuality(getQuality());
 			break;
-		default:
-			strategy = 0;
-
-		}
-
-		// If there is not enough history to adapt (at least two periods)
-		// or profit increased or remained constant then deepen our strategy
-		// There is at least one offer, because initialOffer was called before
-		if ((getLastOffer() == null)
-				|| (getProfit() >= getLastOffer().getProfit())) {
-
-			offer.setPrice(getPrice() + strategy
-					* Firms.getPriceStepDistrib().nextDouble());
-
-		} else {
-
-			// Profit decreased so let's return to previous price
-			offer.setPrice(getLastOffer().getPrice());
-		}
-
-		setCurrentState(new FirmState(offer));
-
-		CreateMarket.firmsProyection.moveTo(this, offer.getX(), offer.getY());
-
-		updateNotYetKnownBy();
-
-	}
-
-	protected double getRandomQuality() {
-		double q;
-		BetaSubj distrib;
-
-		switch (qualityOfferType) {
-		case HIGH_QUALITY:
-			distrib = Firms.getHighQualityDistrib();
+		case INCREASE_QUALITY:
+			offer.setQuality(getQuality()
+					+ Firms.getQualityStepDistrib().nextDouble());
+			offer.setPrice(getPrice());
 			break;
-		case LOW_QUALITY:
-			distrib = Firms.getLowQualityDistrib();
+		case DECREASE_QUALITY:
+			offer.setQuality(getQuality()
+					- Firms.getQualityStepDistrib().nextDouble());
+			offer.setPrice(getPrice());
 			break;
 		default:
-			distrib = null; // it should never come here
 			break;
 
 		}
 
-		// Quality should be checked for existence
-		do {
-			q = distrib.nextDouble();
-		} while (Firms.sortQFirms.containsKey(q));
-
-		return q;
+		return offer;
 	}
 
-	protected double getRandomInitialPrice() {
+	private void getFromIgnorance(int amount) {
 
-		switch (priceOfferType) {
-		case HIGH_PRICE:
-			return Firms.getHighInitialPriceDistrib().nextDouble();
-		case LOW_PRICE:
-			return Firms.getLowInitialPriceDistrib().nextDouble();
-		default:
-			return 0.0; // it should never come here
-		}
-
-	}
-
-	private double getInitialPrice(double quality) {
-		// P/Q should be between P/Q of competitors with higher and lower
-		// quality
-		// A reference price is estimated using competitors and then the price
-		// strategy is applied
-		Firm lowerComp = getLowerCompetitor(quality);
-		Firm higherComp = getHigherCompetitor(quality);
-		double referencePrice;
-
-		if ((lowerComp != null) && (higherComp != null)) {
-
-			referencePrice = quality
-					* (lowerComp.getPrice() / lowerComp.getQuality() + higherComp
-							.getPrice() / higherComp.getQuality()) / 2.0;
-
-		} else if (lowerComp != null) {
-
-			// Entrant with highest quality
-			referencePrice = quality * lowerComp.getPrice()
-					/ lowerComp.getQuality();
-
-		} else if (higherComp != null) {
-
-			// Entrant with lowest quality
-			referencePrice = quality * higherComp.getPrice()
-					/ higherComp.getQuality();
-
-		} else {
-
-			// First entrant.
-			// Sets price and quality in the price range using the same relative
-			// position of quality
-			double relativeQ = (quality - Offer.getMinQuality())
-					/ (Offer.getMaxQuality() - Offer.getMinQuality());
-			referencePrice = relativeQ
-					* (Offer.getMaxPrice() - Offer.getMinPrice())
-					+ Offer.getMinPrice();
-		}
-
-		// Set the offer in the middle, but taking into account the price
-		// strategy
-		int strategy = 0;
-		switch (priceOfferType) {
-		case HIGH_PRICE:
-			strategy = 1;
-			break;
-		case LOW_PRICE:
-			strategy = -1;
-			break;
-		}
-
-		// Apply price strategy
-		return referencePrice + strategy
-				* Firms.getPriceStepDistrib().nextDouble();
-	}
-
-	private void updateNotYetKnownBy() {
-
-		// if all Consumers know the firm then return
-		if (notYetKnownBy.isEmpty())
-			return;
-
-		// Take some consumers out of "ignorance" and let them know this firm
-		// Knowledge is spread using standard epidemic diffusion process
-
-		double mktSize = CreateMarket.consumersContext.size();
-		double alreadyK = mktSize - notYetKnownBy.size();
-
-		int knownByIncrement = (int) Math.round(Firms.diffusionSpeedParam
-				* alreadyK * (1 - alreadyK / mktSize));
-
-		knownByIncrement = (int) Math.min(mktSize, knownByIncrement);
-		knownByIncrement = Math.max(1, knownByIncrement);
-
-		for (int k = 0; (k < knownByIncrement) && !notYetKnownBy.isEmpty(); k++) {
+		for (int k = 0; (k < amount) && !notYetKnownBy.isEmpty(); k++) {
 
 			int i = RandomHelper.getUniform().nextIntFromTo(0,
 					notYetKnownBy.size() - 1);
@@ -305,11 +213,37 @@ public abstract class Firm {
 
 	}
 
-	private void setCurrentState(FirmState firmState) {
-		history.add(firmState);
+	private void updateNotYetKnownBy() {
+		Consumers consumers = CreateMarket.consumersContext;
+		int mktSize = consumers.size();
+
+		// if all Consumers know the firm then return
+		if (notYetKnownBy.isEmpty())
+			return;
+
+		// Take some consumers out of "ignorance" and let them know this
+		// firm
+		// Knowledge is spread using the logistic growth equation (Bass
+		// model with 100% imitators)
+
+		double alreadyK = mktSize - notYetKnownBy.size();
+
+		int knownByIncrement = (int) Math.round(Firms.diffusionSpeedParam
+				* alreadyK * (1.0 - alreadyK / mktSize));
+
+		knownByIncrement = Math.min(mktSize, knownByIncrement);
+		knownByIncrement = Math.max(1, knownByIncrement);
+
+		getFromIgnorance(knownByIncrement);
+
 	}
 
-	private Firm getLowerCompetitor(double quality) {
+	protected double unitCost(double quality) {
+		// Cost grows with quality
+		return Firms.costScale * quality;
+	}
+
+	protected Firm getLowerCompetitor(double quality) {
 		Map.Entry<Double, Firm> lowComp;
 
 		lowComp = Firms.sortQFirms.lowerEntry(quality);
@@ -320,7 +254,7 @@ public abstract class Firm {
 			return lowComp.getValue();
 	}
 
-	private Firm getHigherCompetitor(double quality) {
+	protected Firm getHigherCompetitor(double quality) {
 		Map.Entry<Double, Firm> highComp;
 
 		highComp = Firms.sortQFirms.higherEntry(quality);
@@ -331,9 +265,21 @@ public abstract class Firm {
 			return highComp.getValue();
 	}
 
-	public boolean isToBeKilled() {
+	private boolean isToBeKilled() {
 		// Returns true if firm should exit the market
 		return (accumProfit < Firms.minimumProfit);
+	}
+
+	private OfferType getOfferType() {
+		return getCurrentState().getOfferType();
+	}
+
+	private void setProfit(double profit) {
+		getCurrentState().setProfit(profit);
+	}
+
+	private FirmState getPreviousState() {
+		return history.getLastState();
 	}
 
 	public void killFirm() {
@@ -343,42 +289,29 @@ public abstract class Firm {
 		CreateMarket.firmsContext.remove(this);
 	}
 
-	private double cost(double quality) {
-		// Cost grows with quality
-		return Firms.costScale * quality;
-	}
-
 	public int getDemand() {
-		return getCurrentOffer().getDemand();
+		return getCurrentState().getDemand();
 	}
 
 	public void setDemand(int i) {
-		getCurrentOffer().setDemand(i);
+		getCurrentState().setDemand(i);
 	}
+	
 
-	public FirmState getCurrentOffer() {
-		return history.getCurrentOffer();
-	}
-
-	private FirmState getLastOffer() {
-		return history.getLastOffer();
-	}
-
+	//
 	// Getters to probe
-	public double getProfit() {
-		return getCurrentOffer().getProfit();
-	}
+	//
 
-	public void setProfit(double profit) {
-		getCurrentOffer().setProfit(profit);
+	public double getProfit() {
+		return getCurrentState().getProfit();
 	}
 
 	public double getPrice() {
-		return getCurrentOffer().getPrice();
+		return getCurrentState().getPrice();
 	}
 
 	public double getQuality() {
-		return getCurrentOffer().getQuality();
+		return getCurrentState().getQuality();
 	}
 
 	public String getFirmType() {
@@ -406,11 +339,18 @@ public abstract class Firm {
 	}
 
 	public double getGrossMargin() {
-		return (getPrice() - cost(getQuality())) / getPrice();
+		return (getPrice() - unitCost(getQuality())) / getPrice();
 	}
 
 	public double getMargin() {
 		return getProfit() / (getDemand() * getPrice());
+	}
+
+	public String getOfferTypeStr() {
+		if (getOfferType() == null)
+			return "NULL";
+		else
+			return getOfferType().toString();
 	}
 
 	public String toString() {

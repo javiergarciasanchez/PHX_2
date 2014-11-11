@@ -1,6 +1,7 @@
 <repast.simphony.data2.engine.DataSetDescriptor>
-  <name>Firms pType</name>
-  <type>AGGREGATE</type>
+  <name>Firm_Data</name>
+  <type>NON_AGGREGATE</type>
+  <sourceType>pHX_2.Firm</sourceType>
   <inclTick>true</inclTick>
   <inclBatchRun>false</inclBatchRun>
   <inclRandomSeed>false</inclRandomSeed>
@@ -11,44 +12,64 @@
     <pType>LAST</pType>
     <duration>-1.0</duration>
     <frequency>REPEAT</frequency>
-    <hashCode>-930170881</hashCode>
+    <hashCode>263043529</hashCode>
   </scheduleParams>
   <atEnd>false</atEnd>
   <methodDataSources class="linked-hash-map">
     <entry>
-      <string>B_Demand</string>
+      <string>Demand</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>B_Demand</id>
-        <className>pHX_2.BasePyramidFirm</className>
+        <id>Demand</id>
+        <className>pHX_2.Firm</className>
         <methodName>getDemand</methodName>
-        <aggType>MEAN</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>O_Demand</string>
+      <string>FirmID</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>O_Demand</id>
-        <className>pHX_2.OpportunisticFirm</className>
-        <methodName>getDemand</methodName>
-        <aggType>MEAN</aggType>
+        <id>FirmID</id>
+        <className>pHX_2.Firm</className>
+        <methodName>getFirmID</methodName>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>P_Demand</string>
+      <string>FixedCost</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>P_Demand</id>
-        <className>pHX_2.PremiumFirm</className>
-        <methodName>getDemand</methodName>
-        <aggType>MEAN</aggType>
+        <id>FixedCost</id>
+        <className>pHX_2.Firm</className>
+        <methodName>getFixedCost</methodName>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>W_Demand</string>
+      <string>OfferTypeStr</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>W_Demand</id>
-        <className>pHX_2.WaitFirm</className>
-        <methodName>getDemand</methodName>
-        <aggType>MEAN</aggType>
+        <id>OfferTypeStr</id>
+        <className>pHX_2.Firm</className>
+        <methodName>getOfferTypeStr</methodName>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Price</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Price</id>
+        <className>pHX_2.Firm</className>
+        <methodName>getPrice</methodName>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Quality</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Quality</id>
+        <className>pHX_2.Firm</className>
+        <methodName>getQuality</methodName>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Profit</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Profit</id>
+        <className>pHX_2.Firm</className>
+        <methodName>getProfit</methodName>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
   </methodDataSources>

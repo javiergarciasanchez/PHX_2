@@ -6,14 +6,12 @@ import repast.simphony.engine.schedule.ScheduledMethod;
 
 public class Consumer {
 
-	private Firm chosenFirm;
-
 	private double margUtilOfQuality;
 	private ArrayList<Firm> history;
 	private ArrayList<Firm> knownFirms;
-	private double utility;
 
 	protected static long consumerIDCounter = 1;
+
 	public static void setConsumerIDCounter(long consumerIDCounter) {
 		Consumer.consumerIDCounter = consumerIDCounter;
 	}
@@ -31,17 +29,8 @@ public class Consumer {
 		assignPreferences();
 
 		// Set location in projection
-		CreateMarket.consumersProyection.moveTo(this, consumerX(), consumerY());
+		CreateMarket.consumersProyection.moveTo(this, getX(), getY());
 
-	}
-
-	private double consumerX() {
-		return margUtilOfQuality - Consumers.getMinMargUtilOfQuality();
-	}
-
-	private double consumerY() {
-		// Puts the consumer in the middle of vertical axis
-		return Consumers.getMaxY() / 2.0;
 	}
 
 	// Assigns parameters for the utility function
@@ -62,6 +51,20 @@ public class Consumer {
 
 	}
 
+	private double getX() {
+		return (margUtilOfQuality - Consumers.getMinMargUtilOfQuality())
+				/ (Consumers.getMaxMargUtilOfQuality() - Consumers
+						.getMinMargUtilOfQuality())
+				* (Consumers.getMaxX() - Consumers.getMinX())
+				+ Consumers.getMinX();
+	}
+
+	private double getY() {
+		// Puts the consumer in the middle of vertical axis
+		return (Consumers.getMaxY() - Consumers.getMinY()) / 2.0
+				+ Consumers.getMinY();
+	}
+
 	public void addToKnownFirms(Firm firm) {
 		knownFirms.add(firm);
 	}
@@ -71,9 +74,8 @@ public class Consumer {
 
 		double utility = 0;
 		Firm maxUtilFirm = null;
-		referencePoint();
 
-		// Choose firm
+		// Choose firm among the known ones
 		for (int i = 0; i < knownFirms.size(); i++) {
 
 			Firm f = knownFirms.get(i);
@@ -96,44 +98,39 @@ public class Consumer {
 			history.add(maxUtilFirm);
 		}
 
-		chosenFirm = maxUtilFirm;
-
-		return chosenFirm;
+		return maxUtilFirm;
 
 	}
 
 	private double utility(Firm f) {
 
-		utility = margUtilOfQuality * perceivedQuality(f) - f.getPrice();
-
-		return utility;
+		return margUtilOfQuality * perceivedQuality(f) - f.getPrice();
 
 	}
 
 	private double perceivedQuality(Firm f) {
 		// If consumer has already bought from firm f, the perceived quality is
-		// the real one
+		// the current real utility of firm f
 		// if f is unknown, then consumer chooses a reference quality per dollar
 		// and multiplies it by the price asked by f
 
 		double qPerDollar;
 
-		if (history.isEmpty()) {
-			// First purchase. quality per dollar is estimated using range
-			// borders
-			// Avg of Max and Min points are used to estimate quality per dollar
-
-			qPerDollar = (Offer.getMaxQuality() / Offer.getMaxPrice() + Offer
-					.getMinQuality() / Offer.getMinPrice()) / 2.0;
-
-		} else if (history.contains(f)) {
-			// The firm was chosen in the the past, use its real quality
+		if (history.contains(f)) {
+			// The firm was chosen in the the past, use its current real quality
 
 			return f.getQuality();
 
+		} else if (history.isEmpty()) {
+			// First purchase.
+			// quality per dollar is estimated using range borders
+			// avg quality / avg price
+
+			qPerDollar = ((Offer.getMaxQuality() + Offer.getMinQuality()) / 2.0)
+					/ ((Offer.getMaxPrice() + Offer.getMinPrice()) / 2.0);
+
 		} else {
 			// Use last purchase quality per dollar
-
 			// Use quality per Dollar of last purchase
 			Firm lastFirm = history.get(history.size() - 1);
 
@@ -144,69 +141,48 @@ public class Consumer {
 		return qPerDollar * f.getPrice();
 	}
 
-	private Offer referencePoint() {
-
-		int hSize = history.size();
-
-		if (hSize == 0)
-			return null;
-		else {
-			double sumPrice = 0., sumQuality = 0.;
-			Offer rPoint = new Offer();
-
-			for (int i = 0; i < hSize; i++) {
-				Firm f = history.get(i);
-
-				// Check that f still exists
-				if (!CreateMarket.consumersContext.contains(f)) {
-					history.remove(f);
-					continue;
-				}
-
-				// Price of last period is assumed known
-				sumPrice += f.getPrice();
-
-				// Quality is assumed constant, otherwise historical q should be
-				// used
-				sumQuality += f.getQuality();
-			}
-
-			rPoint.setPrice(sumPrice / hSize);
-			rPoint.setQuality(sumQuality / hSize);
-
-			return rPoint;
-
-		}
-
-	}
-
 	// Procedures for inspecting values
 	public double getMargUtilOfQuality() {
 		return margUtilOfQuality;
 	}
 
 	public String getChosenFirmID() {
-		return (chosenFirm == null) ? "Substitute" : chosenFirm.ID;
+		int size = history.size();
+
+		if (size > 0)
+			return history.get(size - 1).toString();
+		else
+			return "Substitute";
 	}
 
 	public double getChosenFirmIntID() {
-		return (chosenFirm == null) ? 0.0 : (double) chosenFirm.getFirmIntID();
+		int size = history.size();
+
+		if (size > 0)
+			return history.get(size - 1).getFirmIntID();
+		else
+			return 0.0;
+	}
+
+	public double getUtility() {
+		int size = history.size();
+
+		if (size > 0)
+			return utility(history.get(size - 1));
+		else
+			return 0.0;
 	}
 
 	public double getConsumerIntID() {
 		return consumerIntID;
 	}
-	
+
 	public String getConsumerNumID() {
 		return Long.toString(consumerIntID);
 	}
 
 	public String getConsumerID() {
 		return ID;
-	}
-
-	public double getUtility() {
-		return utility;
 	}
 
 	public String toString() {

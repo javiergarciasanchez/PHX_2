@@ -25,6 +25,5 @@ public enum FirmType {
 		return null;
 
 	}
-
-
+	
 }
