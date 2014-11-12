@@ -1,14 +1,17 @@
 package pHX_2;
 
-import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.Iterator;
 
 import repast.simphony.engine.schedule.ScheduledMethod;
 
 public class Consumer {
 
 	private double margUtilOfQuality;
-	private ArrayList<Firm> history;
-	private ArrayList<Firm> knownFirms;
+	private double explorationPref;
+	private Firm chosenFirm;
+	private HashSet<Firm> exploredFirms;
+	private HashSet<Firm> knownFirmsNotExplored;
 
 	protected static long consumerIDCounter = 1;
 
@@ -23,8 +26,8 @@ public class Consumer {
 
 		CreateMarket.consumersContext.add(this);
 
-		history = new ArrayList<Firm>();
-		knownFirms = new ArrayList<Firm>();
+		exploredFirms = new HashSet<Firm>();
+		knownFirmsNotExplored = new HashSet<Firm>();
 
 		assignPreferences();
 
@@ -33,10 +36,18 @@ public class Consumer {
 
 	}
 
-	// Assigns parameters for the utility function
+	// Assigns parameters for the choice function
 	private void assignPreferences() {
 
 		// We need to introduce randomness
+
+		setMargUtilOfQuality();
+
+		setExplorationPref();
+
+	}
+
+	private void setMargUtilOfQuality() {
 
 		// There is no need to introduce a marginal utility of money
 		// because it is implicit in the marginal utility of quality
@@ -48,6 +59,104 @@ public class Consumer {
 				margUtilOfQuality);
 		margUtilOfQuality = Math.min(Consumers.getMaxMargUtilOfQuality(),
 				margUtilOfQuality);
+
+	}
+
+	private void setExplorationPref() {
+
+		explorationPref = Consumers.getExplorationPrefDistrib().nextDouble();
+
+		// Probability should be between 0 and 1
+		explorationPref = Math.max(0.0, explorationPref);
+		explorationPref = Math.min(1.0, explorationPref);
+
+	}
+
+	public void addToKnownFirms(Firm firm) {
+		knownFirmsNotExplored.add(firm);
+	}
+
+	@ScheduledMethod(start = 1, priority = RunPriority.CHOOSE_FIRM_PRIORITY, interval = 1)
+	public void chooseFirm() {
+
+		if (exploredFirms.isEmpty()
+				|| Consumers.explorationDistrib.nextInt(1, explorationPref) == 1)
+			chosenFirm = exploreKnownFirm();
+		else
+			chosenFirm = chooseMaximizingFirm();
+
+		// Adjust demand and keep record
+		if (chosenFirm != null) {
+			chosenFirm.setDemand(chosenFirm.getDemand() + 1);
+			exploredFirms.add(chosenFirm);
+			knownFirmsNotExplored.remove(chosenFirm);
+		}
+
+	}
+
+	private Firm exploreKnownFirm() {
+		Firm f = null;
+
+		// Returns a known firm that has not been explored
+
+		if (knownFirmsNotExplored.isEmpty()) {
+			// Either all known firms are explored or there is not known firm
+			return chooseMaximizingFirm();
+		}
+		
+		for (Iterator<Firm> i = knownFirmsNotExplored.iterator(); i.hasNext();) {
+			f = i.next();
+
+			// check the firm still exists
+			if (!CreateMarket.market.contains(f)) {
+				i.remove();
+				continue;
+			} else {
+				return f;
+			}
+
+		}
+
+		// No firm was chosen because all are already dead
+		return null;
+
+	}
+
+	private Firm chooseMaximizingFirm() {
+
+		// No firms to choose from
+		if (exploredFirms.isEmpty())
+			return null;
+
+		// Search among the explored ones the one that maximizes utility
+		double utility = 0;
+		Firm maxUtilFirm = null;
+
+		for (Iterator<Firm> i = exploredFirms.iterator(); i.hasNext();) {
+
+			Firm f = i.next();
+
+			// check the firm still exists
+			if (!CreateMarket.market.contains(f)) {
+				i.remove();
+				continue;
+			}
+
+			double tmpUtil = utility(f);
+
+			if (tmpUtil > utility) {
+				maxUtilFirm = f;
+				utility = tmpUtil;
+			}
+		}
+
+		return maxUtilFirm;
+
+	}
+
+	private double utility(Firm f) {
+
+		return margUtilOfQuality * f.getQuality() - f.getPrice();
 
 	}
 
@@ -65,112 +174,31 @@ public class Consumer {
 				+ Consumers.getMinY();
 	}
 
-	public void addToKnownFirms(Firm firm) {
-		knownFirms.add(firm);
-	}
-
-	@ScheduledMethod(start = 1, priority = RunPriority.CHOOSE_FIRM_PRIORITY, interval = 1)
-	public Firm chooseFirm() {
-
-		double utility = 0;
-		Firm maxUtilFirm = null;
-
-		// Choose firm among the known ones
-		for (int i = 0; i < knownFirms.size(); i++) {
-
-			Firm f = knownFirms.get(i);
-
-			// check the firm still exists
-			if (!CreateMarket.market.contains(f))
-				continue;
-
-			double tmpUtil = utility(f);
-
-			if (tmpUtil > utility) {
-				maxUtilFirm = f;
-				utility = tmpUtil;
-			}
-		}
-
-		// Adjust demand and keep record
-		if (maxUtilFirm != null) {
-			maxUtilFirm.setDemand(maxUtilFirm.getDemand() + 1);
-			history.add(maxUtilFirm);
-		}
-
-		return maxUtilFirm;
-
-	}
-
-	private double utility(Firm f) {
-
-		return margUtilOfQuality * perceivedQuality(f) - f.getPrice();
-
-	}
-
-	private double perceivedQuality(Firm f) {
-		// If consumer has already bought from firm f, the perceived quality is
-		// the current real utility of firm f
-		// if f is unknown, then consumer chooses a reference quality per dollar
-		// and multiplies it by the price asked by f
-
-		double qPerDollar;
-
-		if (history.contains(f)) {
-			// The firm was chosen in the the past, use its current real quality
-
-			return f.getQuality();
-
-		} else if (history.isEmpty()) {
-			// First purchase.
-			// quality per dollar is estimated using range borders
-			// avg quality / avg price
-
-			qPerDollar = ((Offer.getMaxQuality() + Offer.getMinQuality()) / 2.0)
-					/ ((Offer.getMaxPrice() + Offer.getMinPrice()) / 2.0);
-
-		} else {
-			// Use last purchase quality per dollar
-			// Use quality per Dollar of last purchase
-			Firm lastFirm = history.get(history.size() - 1);
-
-			qPerDollar = lastFirm.getQuality() / lastFirm.getPrice();
-
-		}
-
-		return qPerDollar * f.getPrice();
-	}
-
 	// Procedures for inspecting values
+
 	public double getMargUtilOfQuality() {
 		return margUtilOfQuality;
 	}
 
 	public String getChosenFirmID() {
-		int size = history.size();
-
-		if (size > 0)
-			return history.get(size - 1).toString();
-		else
+		if (chosenFirm == null)
 			return "Substitute";
+		else
+			return chosenFirm.toString();
 	}
 
 	public double getChosenFirmIntID() {
-		int size = history.size();
-
-		if (size > 0)
-			return history.get(size - 1).getFirmIntID();
-		else
+		if (chosenFirm == null)
 			return 0.0;
+		else
+			return chosenFirm.getFirmIntID();
 	}
 
 	public double getUtility() {
-		int size = history.size();
-
-		if (size > 0)
-			return utility(history.get(size - 1));
-		else
+		if (chosenFirm == null)
 			return 0.0;
+		else
+			return utility(chosenFirm);
 	}
 
 	public double getConsumerIntID() {
