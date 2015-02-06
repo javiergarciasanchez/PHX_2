@@ -1,5 +1,7 @@
 package pHX_2;
 
+import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashSet;
 import java.util.Iterator;
 
@@ -11,7 +13,7 @@ public class Consumer {
 	private double explorationPref;
 	private Firm chosenFirm;
 	private HashSet<Firm> exploredFirms;
-	private HashSet<Firm> knownFirmsNotExplored;
+	private ArrayList<Firm> knownFirmsNotExplored;
 
 	protected static long consumerIDCounter = 1;
 
@@ -27,7 +29,7 @@ public class Consumer {
 		CreateMarket.consumersContext.add(this);
 
 		exploredFirms = new HashSet<Firm>();
-		knownFirmsNotExplored = new HashSet<Firm>();
+		knownFirmsNotExplored = new ArrayList<Firm>();
 
 		assignPreferences();
 
@@ -103,6 +105,8 @@ public class Consumer {
 			// Either all known firms are explored or there is not known firm
 			return chooseMaximizingFirm();
 		}
+		
+		Collections.shuffle(knownFirmsNotExplored);
 		
 		for (Iterator<Firm> i = knownFirmsNotExplored.iterator(); i.hasNext();) {
 			f = i.next();

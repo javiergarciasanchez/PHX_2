@@ -3,7 +3,6 @@ package pHX_2;
 import static repast.simphony.essentials.RepastEssentials.GetParameter;
 import cern.jet.random.Binomial;
 import cern.jet.random.Normal;
-import cern.jet.random.Uniform;
 import repast.simphony.context.DefaultContext;
 import repast.simphony.random.RandomHelper;
 
@@ -18,7 +17,7 @@ public class Consumers extends DefaultContext<Consumer> {
 	private static double minMargUtilOfQuality = 0.0;
 	private static double maxMargUtilOfQuality = 0.0;
 
-	private static Uniform margUtilOfQualityDistrib = null;
+	private static Pareto margUtilOfQualityDistrib = null;
 	private static Normal explorationPrefDistrib = null;
 	public static Binomial explorationDistrib = RandomHelper.createBinomial(1,
 			0.5);
@@ -27,10 +26,13 @@ public class Consumers extends DefaultContext<Consumer> {
 		super("Consumers_Context");
 	}
 
-	public static Uniform getMargUtilOfQualityDistrib() {
-		if (margUtilOfQualityDistrib == null)
-			margUtilOfQualityDistrib = RandomHelper.createUniform(
-					getMinMargUtilOfQuality(), getMaxMargUtilOfQuality());
+	public static Pareto getMargUtilOfQualityDistrib() {
+		if (margUtilOfQualityDistrib == null) {
+			double gini = (double) GetParameter("gini");
+			double lambda = (1.0 + gini) / (2.0 * gini);
+			margUtilOfQualityDistrib = Pareto.getPareto(lambda,
+					getMinMargUtilOfQuality());
+		}
 
 		return margUtilOfQualityDistrib;
 	}

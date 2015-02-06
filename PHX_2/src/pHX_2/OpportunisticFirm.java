@@ -21,7 +21,7 @@ public class OpportunisticFirm extends Firm {
 			tmpQ = Firms.getLowQualityDistrib().nextDouble()
 					* (higherQ - lowerQ) + lowerQ;
 
-		} while (Firms.sortQFirms.containsKey(tmpQ));
+		} while (Firms.containsQ(tmpQ));
 
 		return tmpQ;
 
