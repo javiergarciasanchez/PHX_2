@@ -1,5 +1,7 @@
 package pHX_2;
 
+import java.util.Map;
+import java.util.NavigableMap;
 import java.util.TreeMap;
 
 import cern.jet.random.Gamma;
@@ -24,7 +26,8 @@ public class Firms extends DefaultContext<Firm> {
 	private static Gamma fixedCostDistrib = null;
 
 	// Firms ordered according to quality
-	public static TreeMap<Double, Firm> sortQFirms;
+	private static TreeMap<Double, Firm> sortQFirms;
+	public static MarketLowerLimits marketLowerLimits;
 
 	// Parameters for Firms
 	static double initiallyKnownByPerc, minimumProfit, costScale,
@@ -35,6 +38,7 @@ public class Firms extends DefaultContext<Firm> {
 		super("Firms_Context");
 
 		sortQFirms = new TreeMap<Double, Firm>();
+		marketLowerLimits = new MarketLowerLimits();
 
 		// Read parameters for firms
 		initiallyKnownByPerc = (Double) GetParameter("initiallyKnownByPerc");
@@ -127,6 +131,61 @@ public class Firms extends DefaultContext<Firm> {
 		return fixedCostDistrib;
 	}
 
+	public static Firm lowestQFirm() {
+
+		return sortQFirms.firstEntry().getValue();
+
+	}
+
+	
+	public static Firm getNextQFirm(double quality) {
+		Map.Entry<Double, Firm> highComp;
+
+		highComp = sortQFirms.higherEntry(quality);
+
+		if (highComp == null)
+			return null;
+		else
+			return highComp.getValue();
+	}
+
+	public static Firm getNextQFirm(Firm f) {
+
+		return getNextQFirm(f.getQuality());
+
+	}
+
+	public static Firm getPrevQFirm(double quality) {
+		Map.Entry<Double, Firm> lowComp;
+
+		lowComp = sortQFirms.lowerEntry(quality);
+
+		if (lowComp == null)
+			return null;
+		else
+			return lowComp.getValue();
+	}
+
+	public static Firm getPrevQFirm(Firm f) {
+
+		return getPrevQFirm(f.getQuality());
+
+	}
+
+	public static boolean containsQ(double q) {
+
+		return sortQFirms.containsKey(q);
+
+	}
+
+	public static void putQ(double q, Firm firm) {
+		sortQFirms.put(q, firm);
+	}
+
+	public static void removeQ(double q) {
+		sortQFirms.remove(q);
+	}
+
 	@ScheduledMethod(start = 1, priority = RunPriority.ADD_FIRMS_PRIORITY, interval = 1)
 	public void addFirms() {
 
@@ -160,6 +219,11 @@ public class Firms extends DefaultContext<Firm> {
 
 		CreateMarket.toBeKilled.clear();
 
+	}
+
+	@ScheduledMethod(start = 1, priority = RunPriority.UPDATE_SORT_FIRMS_PER_MARKET, interval = 1)
+	public void updateMarketLowerLimits() {
+		marketLowerLimits.update();
 	}
 
 }

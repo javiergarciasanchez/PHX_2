@@ -2,7 +2,7 @@
 <parameters>
 	<parameter name="randomSeed" displayName="Default Random Seed"
 		type="int" defaultValue="__NULL__" isReadOnly="false"
-		converter="repast.simphony.parameter.StringConverterFactory$IntConverter" />
+		converter="repast.simphony.parameter.StringConverterFactory$IntConverter" /><parameter name="gini" displayName="Gini Index" type="double" defaultValue="0.7" isReadOnly="false" converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" />
 	<parameter name="numberOfConsumers" displayName="Number of Consumers"
 		type="int" defaultValue="100" isReadOnly="false"
 		converter="repast.simphony.parameter.StringConverterFactory$IntConverter" />

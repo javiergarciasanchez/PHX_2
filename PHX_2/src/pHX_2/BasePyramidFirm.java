@@ -21,7 +21,7 @@ public class BasePyramidFirm extends Firm {
 			tmpQ = Firms.getLowQualityDistrib().nextDouble()
 					* (higherQ - lowerQ) + lowerQ;
 
-		} while (Firms.sortQFirms.containsKey(tmpQ));
+		} while (Firms.containsQ(tmpQ));
 
 		return tmpQ;
 
@@ -35,8 +35,8 @@ public class BasePyramidFirm extends Firm {
 		// competitors
 		// If any of the competitors does not exists, absolute price limits are
 		// used
-		lowerComp = getLowerCompetitor(q);
-		higherComp = getHigherCompetitor(q);
+		lowerComp = Firms.getPrevQFirm(q);
+		higherComp = Firms.getNextQFirm(q);
 
 		// Set lower price limit
 		if (lowerComp != null)

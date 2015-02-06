@@ -4,7 +4,6 @@ import static repast.simphony.essentials.RepastEssentials.GetParameter;
 
 import java.util.ArrayList;
 import java.util.Iterator;
-import java.util.Map;
 
 import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.random.RandomHelper;
@@ -48,7 +47,7 @@ public abstract class Firm {
 			double q;
 			q = getRandomInitialQuality();
 			offer.setQuality(q);
-			Firms.sortQFirms.put(q, this);
+			Firms.putQ(q, this);
 
 			offer.setPrice(getRandomInitialPrice(q));
 			offer.setOfferType(null);
@@ -57,7 +56,7 @@ public abstract class Firm {
 
 		} else {
 
-			Firms.sortQFirms.remove(getQuality());
+			Firms.removeQ(getQuality());
 
 			if (history.size() == 1) {
 
@@ -83,7 +82,7 @@ public abstract class Firm {
 
 		setCurrentState(new FirmState(offer));
 
-		Firms.sortQFirms.put(getQuality(), this);
+		Firms.putQ(getQuality(), this);
 
 		CreateMarket.firmsProyection.moveTo(this, offer.getX(), offer.getY());
 
@@ -243,28 +242,6 @@ public abstract class Firm {
 		return Firms.costScale * quality;
 	}
 
-	protected Firm getLowerCompetitor(double quality) {
-		Map.Entry<Double, Firm> lowComp;
-
-		lowComp = Firms.sortQFirms.lowerEntry(quality);
-
-		if (lowComp == null)
-			return null;
-		else
-			return lowComp.getValue();
-	}
-
-	protected Firm getHigherCompetitor(double quality) {
-		Map.Entry<Double, Firm> highComp;
-
-		highComp = Firms.sortQFirms.higherEntry(quality);
-
-		if (highComp == null)
-			return null;
-		else
-			return highComp.getValue();
-	}
-
 	private boolean isToBeKilled() {
 		// Returns true if firm should exit the market
 		return (accumProfit < Firms.minimumProfit);
@@ -285,7 +262,7 @@ public abstract class Firm {
 	public void killFirm() {
 		// quality identifies firms, because we don't let two firms have the
 		// same quality
-		Firms.sortQFirms.remove(getQuality());
+		Firms.removeQ(getQuality());
 		CreateMarket.firmsContext.remove(this);
 	}
 
@@ -296,11 +273,95 @@ public abstract class Firm {
 	public void setDemand(int i) {
 		getCurrentState().setDemand(i);
 	}
-	
+
+	/*
+	 * If it is the lowest quality firm in the market, it returns a null firm
+	 * and P/Q as low limit
+	 */
+	public FirmLimit getLowerCompetitor() {
+
+		// absolute limit
+		double absLimit = getPrice() / getQuality();
+
+		Firm prevFirm = Firms.getPrevQFirm(this);
+
+		if (prevFirm == null)
+			return new FirmLimit(null, absLimit);
+
+		double limit = (getPrice() - prevFirm.getPrice())
+				/ (getQuality() - prevFirm.getQuality());
+
+		Firm antePrevFirm = prevFirm.getLowerCompetitor().f;
+
+		if (antePrevFirm == null)
+			// Prev is the lowest quality firm in the market
+			return new FirmLimit(prevFirm, Math.max(absLimit, limit));
+
+		else {
+
+			double prevLimit = (prevFirm.getPrice() - antePrevFirm.getPrice())
+					/ (prevFirm.getQuality() - antePrevFirm.getQuality());
+
+			if (prevLimit < limit)
+				// prev is in the market
+				return new FirmLimit(prevFirm, Math.max(absLimit, limit));
+
+			else {
+				// Prev is not in the market. Recalculate limit with antePrev
+				limit = (getPrice() - antePrevFirm.getPrice())
+						/ (getQuality() - antePrevFirm.getQuality());
+
+				return new FirmLimit(antePrevFirm, Math.max(absLimit, limit));
+
+			}
+
+		}
+
+	}
+
+	/*
+	 * 
+	 * Returns null if it has no place in the market It return a FirmLimit with
+	 * firm = 0 in case is the highest quality firm in the market
+	 */
+	public FirmLimit getHigherCompetitor(double lowerLimit) {
+
+		Firm nextFirm = Firms.getNextQFirm(this);
+		if (nextFirm == null)
+			return new FirmLimit(null, 0.0);
+
+		double higherLimit = (nextFirm.getPrice() - getPrice())
+				/ (nextFirm.getQuality() - getQuality());
+
+		if (lowerLimit < higherLimit) {
+			// it has a place in the market
+			// Search the neighbor
+			FirmLimit postNextFirmLimit = nextFirm
+					.getHigherCompetitor(higherLimit);
+			if (postNextFirmLimit != null)
+				// next firm has a place in the market
+				return new FirmLimit(nextFirm, higherLimit);
+			else
+				// next firm does not have a place in the market
+				return postNextFirmLimit;
+
+		} else
+			// it does not have a place in the market
+			return null;
+
+	}
 
 	//
 	// Getters to probe
 	//
+
+	public double getMarketLowerLimit() {
+		return Firms.marketLowerLimits.getLimitOfFirm(this);
+	}
+
+	public double getPoorestConsumer() {
+		return getPrice() / getQuality();
+	}
 
 	public double getProfit() {
 		return getCurrentState().getProfit();

@@ -21,7 +21,7 @@ public class PremiumFirm extends Firm {
 			tmpQ = Firms.getHighQualityDistrib().nextDouble()
 					* (higherQ - lowerQ) + lowerQ;
 
-		} while (Firms.sortQFirms.containsKey(tmpQ));
+		} while (Firms.containsQ(tmpQ));
 
 		return tmpQ;
 
@@ -35,8 +35,8 @@ public class PremiumFirm extends Firm {
 		// competitors
 		// If any of the competitors does not exists, absolute price limits are
 		// used
-		lowerComp = getLowerCompetitor(q);
-		higherComp = getHigherCompetitor(q);
+		lowerComp = getPrevFirm(q);
+		higherComp = getHigherQFirm(q);
 
 		// Set lower price limit
 		if (lowerComp != null)

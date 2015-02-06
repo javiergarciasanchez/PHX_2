@@ -23,7 +23,7 @@ public class WaitFirm extends Firm {
 			tmpQ = Firms.getHighQualityDistrib().nextDouble()
 					* (higherQ - lowerQ) + lowerQ;
 
-		} while (Firms.sortQFirms.containsKey(tmpQ));
+		} while (Firms.containsQ(tmpQ));
 
 		return tmpQ;
 

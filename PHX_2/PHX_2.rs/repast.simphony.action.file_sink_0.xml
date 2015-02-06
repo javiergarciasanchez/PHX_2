@@ -4,15 +4,15 @@
   <delimiter>,</delimiter>
   <format>TABULAR</format>
   <sourceIds class="linked-hash-set">
-    <string>Demand</string>
-    <string>FirmID</string>
-    <string>FixedCost</string>
-    <string>OfferTypeStr</string>
-    <string>Price</string>
-    <string>Quality</string>
-    <string>Profit</string>
     <string>tick</string>
+    <string>FirmID</string>
+    <string>Quality</string>
+    <string>Price</string>
+    <string>OfferTypeStr</string>
+    <string>Demand</string>
+    <string>Profit</string>
+    <string>FixedCost</string>
   </sourceIds>
-  <fileName>\\store\JGSanchez\Investigación - JGS\Sudden Stop - Phoenix Miracle II - PHX (2)\Model\Data\ModelOutput.csv</fileName>
+  <fileName>\\store\JGSanchez\Investigacion - JGS\Sudden Stop - Phoenix Miracle II - PHX (2)\Model\Data\ModelOutput.csv</fileName>
   <addTimeStamp>true</addTimeStamp>
 </repast.simphony.data2.engine.FileSinkDescriptor>
