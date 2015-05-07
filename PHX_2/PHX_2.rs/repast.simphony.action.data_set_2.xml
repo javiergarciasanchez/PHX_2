@@ -1,7 +1,7 @@
 <repast.simphony.data2.engine.DataSetDescriptor>
   <name>Consumers</name>
   <type>NON_AGGREGATE</type>
-  <sourceType>pHX_2.Consumer</sourceType>
+  <sourceType>demand.Consumer</sourceType>
   <inclTick>true</inclTick>
   <inclBatchRun>false</inclBatchRun>
   <inclRandomSeed>false</inclRandomSeed>
@@ -20,7 +20,7 @@
       <string>MargUtilOfQuality</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
         <id>MargUtilOfQuality</id>
-        <className>pHX_2.Consumer</className>
+        <className>demand.Consumer</className>
         <methodName>getMargUtilOfQuality</methodName>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
@@ -28,7 +28,7 @@
       <string>ConsumerID</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
         <id>ConsumerID</id>
-        <className>pHX_2.Consumer</className>
+        <className>demand.Consumer</className>
         <methodName>getConsumerID</methodName>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>

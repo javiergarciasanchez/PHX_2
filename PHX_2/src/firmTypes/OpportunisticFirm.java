@@ -1,0 +1,32 @@
+package firmTypes;
+
+import offer.Offer;
+import pHX_2.Firm;
+import repast.simphony.random.RandomHelper;
+
+// This firm offers high price and low quality
+public class OpportunisticFirm extends Firm {
+
+	public OpportunisticFirm() {
+		super();
+	}
+
+	protected double getRandomInitialQuality() {
+		double lowerQ = Offer.getMinQuality();
+		double higherQ = (Offer.getMinQuality() + Offer.getMaxQuality()) / 2.0;
+		return getRandomInitialQuality(lowerQ, higherQ);
+	}
+
+	protected double getRandomInitialPrice(double q) {
+
+		// Chooses a high price to take advantage of consumer ignorance
+		
+		// it uses default Uniform distribution
+		double higherPrice = Offer.getMaxPrice();
+		double lowerPrice = Math.max(unitCost(q), (Offer.getMinPrice() + Offer.getMaxPrice()) / 2.0);
+
+		return RandomHelper.nextDoubleFromTo(lowerPrice, higherPrice);
+
+	}
+
+}

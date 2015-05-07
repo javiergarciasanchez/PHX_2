@@ -12,12 +12,11 @@ public class FirmHistory extends ArrayList<FirmState> {
 		super(historySize);
 	}
 
-	@Override
-	public boolean add(FirmState firmState) {
+	public boolean addCurrentState(FirmState firmState) {
 		if (size() == HISTORY_SIZE)
 			remove(0);
 	
-		return super.add(firmState);
+		return add(firmState);
 	}
 
 	public FirmState getCurrentState() {
@@ -27,7 +26,7 @@ public class FirmHistory extends ArrayList<FirmState> {
 			return get(size() - 1);
 	}
 
-	public FirmState getLastState() {
+	public FirmState getPreviousState() {
 		if (isEmpty() || size() < 2)
 			return null;
 		else

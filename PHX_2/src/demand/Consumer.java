@@ -1,11 +1,13 @@
-package pHX_2;
+package demand;
 
 import java.util.ArrayList;
-import java.util.Collections;
 import java.util.HashSet;
-import java.util.Iterator;
 
+import pHX_2.Market;
+import pHX_2.Firm;
+import pHX_2.RunPriority;
 import repast.simphony.engine.schedule.ScheduledMethod;
+import repast.simphony.random.RandomHelper;
 
 public class Consumer {
 
@@ -16,17 +18,18 @@ public class Consumer {
 	private ArrayList<Firm> knownFirmsNotExplored;
 
 	protected static long consumerIDCounter = 1;
-
-	public static void setConsumerIDCounter(long consumerIDCounter) {
-		Consumer.consumerIDCounter = consumerIDCounter;
-	}
-
+	
 	protected long consumerIntID = consumerIDCounter++;
 	protected String ID = "Cons. " + consumerIntID;
 
+	public static void resetStaticVars() {
+		// resets static variables		
+		consumerIDCounter = 1;
+	}
+	
 	public Consumer() {
 
-		CreateMarket.consumersContext.add(this);
+		Market.consumers.add(this);
 
 		exploredFirms = new HashSet<Firm>();
 		knownFirmsNotExplored = new ArrayList<Firm>();
@@ -34,7 +37,7 @@ public class Consumer {
 		assignPreferences();
 
 		// Set location in projection
-		CreateMarket.consumersProyection.moveTo(this, getX(), getY());
+		Market.consumersProyection.moveTo(this, getX(), getY());
 
 	}
 
@@ -53,20 +56,20 @@ public class Consumer {
 
 		// There is no need to introduce a marginal utility of money
 		// because it is implicit in the marginal utility of quality
-		margUtilOfQuality = Consumers.getMargUtilOfQualityDistrib()
+		margUtilOfQuality = Market.consumers.getMargUtilOfQualityDistrib()
 				.nextDouble();
 
 		// Assign border if out range
-		margUtilOfQuality = Math.max(Consumers.getMinMargUtilOfQuality(),
+		margUtilOfQuality = Math.max(Market.consumers.getMinMargUtilOfQuality(),
 				margUtilOfQuality);
-		margUtilOfQuality = Math.min(Consumers.getMaxMargUtilOfQuality(),
+		margUtilOfQuality = Math.min(Market.consumers.getMaxMargUtilOfQuality(),
 				margUtilOfQuality);
 
 	}
 
 	private void setExplorationPref() {
 
-		explorationPref = Consumers.getExplorationPrefDistrib().nextDouble();
+		explorationPref = Market.consumers.getExplorationPrefDistrib().nextDouble();
 
 		// Probability should be between 0 and 1
 		explorationPref = Math.max(0.0, explorationPref);
@@ -78,73 +81,65 @@ public class Consumer {
 		knownFirmsNotExplored.add(firm);
 	}
 
+	public void removeFromKnownFirms(Firm firm) {
+		knownFirmsNotExplored.remove(firm);
+	}
+
+	public void removeFromExploredFirms(Firm firm) {
+		exploredFirms.remove(firm);
+	}
+
 	@ScheduledMethod(start = 1, priority = RunPriority.CHOOSE_FIRM_PRIORITY, interval = 1)
 	public void chooseFirm() {
 
-		if (exploredFirms.isEmpty()
-				|| Consumers.explorationDistrib.nextInt(1, explorationPref) == 1)
+		if (!exploredFirms.isEmpty() && !knownFirmsNotExplored.isEmpty())
+
+			if (RandomHelper.nextIntFromTo(0, 1) == 1)
+				chosenFirm = exploreKnownFirm();
+			else
+				chosenFirm = chooseMaximizingFirm();
+
+		else if (exploredFirms.isEmpty() && !knownFirmsNotExplored.isEmpty())
 			chosenFirm = exploreKnownFirm();
-		else
+
+		else if (!exploredFirms.isEmpty() && knownFirmsNotExplored.isEmpty())
 			chosenFirm = chooseMaximizingFirm();
 
-		// Adjust demand and keep record
-		if (chosenFirm != null) {
+		else
+			// It should never come here
+			chosenFirm = null;
+
+		// Adjust demand
+		if (chosenFirm != null)
 			chosenFirm.setDemand(chosenFirm.getDemand() + 1);
-			exploredFirms.add(chosenFirm);
-			knownFirmsNotExplored.remove(chosenFirm);
-		}
 
 	}
 
+	// Returns a known firm that has not been explored
+	// Before calling, it should be checked that knownFirmsNotExplored be
+	// not Empty
 	private Firm exploreKnownFirm() {
-		Firm f = null;
+		Firm f;
 
-		// Returns a known firm that has not been explored
+		int i = RandomHelper.nextIntFromTo(0, knownFirmsNotExplored.size() - 1);
+		f = knownFirmsNotExplored.get(i);
 
-		if (knownFirmsNotExplored.isEmpty()) {
-			// Either all known firms are explored or there is not known firm
-			return chooseMaximizingFirm();
-		}
-		
-		Collections.shuffle(knownFirmsNotExplored);
-		
-		for (Iterator<Firm> i = knownFirmsNotExplored.iterator(); i.hasNext();) {
-			f = i.next();
+		exploredFirms.add(f);
+		knownFirmsNotExplored.remove(f);
+		f.addToAlreadyKnownBy(this);
 
-			// check the firm still exists
-			if (!CreateMarket.market.contains(f)) {
-				i.remove();
-				continue;
-			} else {
-				return f;
-			}
-
-		}
-
-		// No firm was chosen because all are already dead
-		return null;
-
+		return f;
 	}
 
+	// Returns the explored firm that maximizes utility
+	// Before calling, it should be checked that exploredFirms be
+	// not Empty
 	private Firm chooseMaximizingFirm() {
 
-		// No firms to choose from
-		if (exploredFirms.isEmpty())
-			return null;
-
-		// Search among the explored ones the one that maximizes utility
 		double utility = 0;
 		Firm maxUtilFirm = null;
 
-		for (Iterator<Firm> i = exploredFirms.iterator(); i.hasNext();) {
-
-			Firm f = i.next();
-
-			// check the firm still exists
-			if (!CreateMarket.market.contains(f)) {
-				i.remove();
-				continue;
-			}
+		for (Firm f : exploredFirms) {
 
 			double tmpUtil = utility(f);
 
@@ -152,6 +147,7 @@ public class Consumer {
 				maxUtilFirm = f;
 				utility = tmpUtil;
 			}
+
 		}
 
 		return maxUtilFirm;
@@ -165,8 +161,8 @@ public class Consumer {
 	}
 
 	private double getX() {
-		return (margUtilOfQuality - Consumers.getMinMargUtilOfQuality())
-				/ (Consumers.getMaxMargUtilOfQuality() - Consumers
+		return (margUtilOfQuality - Market.consumers.getMinMargUtilOfQuality())
+				/ (Market.consumers.getMaxMargUtilOfQuality() - Market.consumers
 						.getMinMargUtilOfQuality())
 				* (Consumers.getMaxX() - Consumers.getMinX())
 				+ Consumers.getMinX();

@@ -67,22 +67,6 @@
 		displayName="Price Mean of firms in Higher segment (range 0-1)" type="double"
 		defaultValue="0.84" isReadOnly="false"
 		converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" />
-	<parameter name="lowQualityMean"
-		displayName="Quality mean of firms in lower segment  (range 0-1)"
-		type="double" defaultValue="0.16" isReadOnly="false"
-		converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" />
-	<parameter name="lowQualityMostLikely"
-		displayName="Most Likely Quaility in lower segment  (range 0-1)" type="double"
-		defaultValue="0.15" isReadOnly="false"
-		converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" />
-	<parameter name="highQualityMean"
-		displayName="Quality Mean of firms in higher segment (range 0-1)"
-		type="double" defaultValue="0.84" isReadOnly="false"
-		converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" />
-	<parameter name="highQualityMostLikely"
-		displayName="Most Likely Quality in Higher segment (range 0-1)" type="double"
-		defaultValue="0.85" isReadOnly="false"
-		converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" />
 	<parameter name="costScale" displayName="Scale cost parameter"
 		type="double" defaultValue="0.01" isReadOnly="false"
 		converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" />

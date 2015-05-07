@@ -1,18 +1,13 @@
-package pHX_2;
+package offer;
 
 import repast.simphony.random.RandomHelper;
-import cern.jet.random.Uniform;
 
 public enum OfferType {
 	INCREASE_PRICE, DECREASE_PRICE, INCREASE_QUALITY, DECREASE_QUALITY;
 
-	// Create distribution for Random change to be added
-	private static final Uniform changeTypeDistrib = RandomHelper
-			.createUniform(1, 4);
-
 	public static OfferType getRandomOfferType() {
 
-		switch (changeTypeDistrib.nextInt()) {
+		switch (RandomHelper.nextIntFromTo(1,4)) {
 		case 1:
 			return OfferType.INCREASE_PRICE;
 		case 2:

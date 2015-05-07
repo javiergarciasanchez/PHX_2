@@ -3,38 +3,38 @@
   <type>2D</type>
   <styles>
     <entry>
-      <string>pHX_2.BasePyramidFirm</string>
+      <string>firmTypes.BasePyramidFirm</string>
       <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
     </entry>
     <entry>
-      <string>pHX_2.PremiumFirm</string>
+      <string>firmTypes.PremiumFirm</string>
       <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
     </entry>
     <entry>
-      <string>pHX_2.WaitFirm</string>
+      <string>firmTypes.WaitFirm</string>
       <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
     </entry>
     <entry>
-      <string>pHX_2.OpportunisticFirm</string>
+      <string>firmTypes.OpportunisticFirm</string>
       <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
     </entry>
   </styles>
   <editedStyles>
     <entry>
-      <string>pHX_2.BasePyramidFirm</string>
-      <string>pHX_2.BasePyramidFirm.style_0.xml</string>
+      <string>firmTypes.BasePyramidFirm</string>
+      <string>firmTypes.BasePyramidFirm.style_0.xml</string>
     </entry>
     <entry>
-      <string>pHX_2.PremiumFirm</string>
-      <string>pHX_2.PremiumFirm.style_0.xml</string>
+      <string>firmTypes.PremiumFirm</string>
+      <string>firmTypes.PremiumFirm.style_0.xml</string>
     </entry>
     <entry>
-      <string>pHX_2.WaitFirm</string>
-      <string>pHX_2.WaitFirm.style_0.xml</string>
+      <string>firmTypes.WaitFirm</string>
+      <string>firmTypes.WaitFirm.style_0.xml</string>
     </entry>
     <entry>
-      <string>pHX_2.OpportunisticFirm</string>
-      <string>pHX_2.OpportunisticFirm.style_0.xml</string>
+      <string>firmTypes.OpportunisticFirm</string>
+      <string>firmTypes.OpportunisticFirm.style_0.xml</string>
     </entry>
   </editedStyles>
   <netStyles/>
@@ -54,19 +54,19 @@
   <layoutInterval>0</layoutInterval>
   <layerOrder>
     <entry>
-      <string>pHX_2.BasePyramidFirm</string>
+      <string>firmTypes.BasePyramidFirm</string>
       <int>3</int>
     </entry>
     <entry>
-      <string>pHX_2.PremiumFirm</string>
+      <string>firmTypes.PremiumFirm</string>
       <int>0</int>
     </entry>
     <entry>
-      <string>pHX_2.WaitFirm</string>
+      <string>firmTypes.WaitFirm</string>
       <int>1</int>
     </entry>
     <entry>
-      <string>pHX_2.OpportunisticFirm</string>
+      <string>firmTypes.OpportunisticFirm</string>
       <int>2</int>
     </entry>
   </layerOrder>

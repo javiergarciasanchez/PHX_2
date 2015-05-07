@@ -1,4 +1,4 @@
-package pHX_2;
+package demand;
 
 import repast.simphony.random.RandomHelper;
 import cern.jet.random.AbstractContinousDistribution;

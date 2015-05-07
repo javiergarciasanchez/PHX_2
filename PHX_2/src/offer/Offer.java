@@ -1,23 +1,63 @@
-package pHX_2;
+package offer;
 
 import static repast.simphony.essentials.RepastEssentials.GetParameter;
+import pHX_2.Market;
 
 public class Offer {
 
 	private static final int MAX_X = 100, MAX_Y = 100, MIN_X = 0, MIN_Y = 0;
 	private double quality;
 	private double price;
-	private OfferType offerType;
+	private OfferType offerType = null;
 
 	// Read boundaries of parameters
-	private static double minPrice = 0;
-	private static double maxPrice = 0;
-	private static double minQuality = 0;
-	private static double maxQuality = 0;
+	private static double minPrice;
+	private static double maxPrice;
+	private static double minQuality;
+	private static double maxQuality;
+
+	public static void resetStaticVars() {
+		// resets static variables
+		minPrice = (double) GetParameter("minPrice");
+		maxPrice = (double) GetParameter("maxPrice");
+
+		minQuality = (double) GetParameter("minQuality");
+		maxQuality = (double) GetParameter("maxQuality");
+	}
 
 	public Offer() {
 		setQuality(minQuality);
 		setPrice(minPrice);
+	}
+
+	public Offer(double q, double p) {
+		setQuality(q);
+		setPrice(p);
+	}
+
+	public Offer(OfferType offerType, double q, double p) {
+
+		setOfferType(offerType);
+		setQuality(q);
+		setPrice(p);
+
+		switch (offerType) {
+		case INCREASE_PRICE:
+			setPrice(p + Market.firms.getPriceStepDistrib().nextDouble());
+			break;
+		case DECREASE_PRICE:
+			setPrice(p - Market.firms.getPriceStepDistrib().nextDouble());
+			break;
+		case INCREASE_QUALITY:
+			setQuality(q + Market.firms.getQualityStepDistrib().nextDouble());
+			break;
+		case DECREASE_QUALITY:
+			setQuality(q - Market.firms.getQualityStepDistrib().nextDouble());
+			break;
+		default:
+			break;
+
+		}
 	}
 
 	public double getPrice() {
@@ -63,30 +103,22 @@ public class Offer {
 	}
 
 	public static double getMinPrice() {
-		if (minPrice == 0)
-			minPrice = (double) GetParameter("minPrice");
-
 		return minPrice;
 	}
 
 	public static double getMaxPrice() {
-		if (maxPrice == 0)
-			maxPrice = (double) GetParameter("maxPrice");
-
 		return maxPrice;
 	}
 
-	public static double getMinQuality() {
-		if (minQuality == 0)
-			minQuality = (double) GetParameter("minQuality");
+	public static void setMaxPrice(double p) {
+		maxPrice = p;
+	}
 
+	public static double getMinQuality() {
 		return minQuality;
 	}
 
 	public static double getMaxQuality() {
-		if (maxQuality == 0)
-			maxQuality = (double) GetParameter("maxQuality");
-
 		return maxQuality;
 	}
 

@@ -1,5 +1,8 @@
 package pHX_2;
 
+import offer.Offer;
+import offer.OfferType;
+
 public class FirmState {
 	private Offer offer;
 	private double profit = 0.;

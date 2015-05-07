@@ -1,10 +1,14 @@
 package pHX_2;
 
 import java.util.Map;
-import java.util.NavigableMap;
 import java.util.TreeMap;
 
 import cern.jet.random.Gamma;
+import firmTypes.BasePyramidFirm;
+import firmTypes.FirmType;
+import firmTypes.OpportunisticFirm;
+import firmTypes.PremiumFirm;
+import firmTypes.WaitFirm;
 import static repast.simphony.essentials.RepastEssentials.GetParameter;
 import repast.simphony.context.DefaultContext;
 import repast.simphony.engine.schedule.ScheduledMethod;
@@ -14,148 +18,93 @@ import repast.simphony.essentials.RepastEssentials;
 public class Firms extends DefaultContext<Firm> {
 
 	// Random distributions
-
-	// Initial quality and price distributions for different firm's strategies
-	private static BetaSubj lowQualityDistrib = null;
-	private static BetaSubj highQualityDistrib = null;
-	private static BetaSubj lowInitialPriceDistrib = null;
-	private static BetaSubj highInitialPriceDistrib = null;
-
-	private static Gamma qualityStepDistrib = null;
-	private static Gamma priceStepDistrib = null;
-	private static Gamma fixedCostDistrib = null;
+	private Gamma qualityStepDistrib;
+	private Gamma priceStepDistrib;
+	private Gamma fixedCostDistrib;
 
 	// Firms ordered according to quality
-	private static TreeMap<Double, Firm> sortQFirms;
-	public static MarketLowerLimits marketLowerLimits;
+	private TreeMap<Double, Firm> sortQFirms;
 
 	// Parameters for Firms
-	static double initiallyKnownByPerc, minimumProfit, costScale,
-			diffusionSpeedParam;
+	double initiallyKnownByPerc, minimumProfit, diffusionSpeedParam;
+
 
 	public Firms() {
-
 		super("Firms_Context");
 
 		sortQFirms = new TreeMap<Double, Firm>();
-		marketLowerLimits = new MarketLowerLimits();
 
-		// Read parameters for firms
+		// Read parameters for all firms
 		initiallyKnownByPerc = (Double) GetParameter("initiallyKnownByPerc");
 		minimumProfit = (Double) GetParameter("minimumProfit");
-		costScale = (Double) GetParameter("costScale");
 		diffusionSpeedParam = (Double) GetParameter("diffusionSpeedParam");
 
+		createProbabilityDistrib();
 	}
 
-	public static BetaSubj getLowQualityDistrib() {
-		if (lowQualityDistrib == null)
-			lowQualityDistrib = new BetaSubj(
-					(Double) GetParameter("lowQualityMostLikely"),
-					(Double) GetParameter("lowQualityMean"));
-
-		return lowQualityDistrib;
-	}
-
-	public static BetaSubj getHighQualityDistrib() {
-		if (highQualityDistrib == null)
-			highQualityDistrib = new BetaSubj(
-					(Double) GetParameter("highQualityMostLikely"),
-					(Double) GetParameter("highQualityMean"));
-
-		return highQualityDistrib;
-	}
-
-	public static BetaSubj getLowInitialPriceDistrib() {
-		if (lowInitialPriceDistrib == null)
-			lowInitialPriceDistrib = new BetaSubj(
-					(Double) GetParameter("lowInitialPriceMostLikely"),
-					(Double) GetParameter("lowInitialPriceMean"));
-
-		return lowInitialPriceDistrib;
-	}
-
-	public static BetaSubj getHighInitialPriceDistrib() {
-		if (highInitialPriceDistrib == null)
-			highInitialPriceDistrib = new BetaSubj(
-					(Double) GetParameter("highInitialPriceMostLikely"),
-					(Double) GetParameter("highInitialPriceMean"));
-
-		return highInitialPriceDistrib;
-	}
-
-	public static Gamma getQualityStepDistrib() {
-
+	public  void createProbabilityDistrib() {
+		double mean, stdDevPercent, alfa, lamda;
+	
+		// Quality Step
 		// Create distributions for strategic % steps on price and quality
 		// We use Gamma distribution because the domain is > 0
-		if (qualityStepDistrib == null) {
-			double mean = (Double) GetParameter("qualityStepMean");
-			double stdDevPercent = (Double) GetParameter("qualityStepStdDevPerc");
-			double alfa = (1 / Math.pow(stdDevPercent, 2));
-			double lamda = alfa / mean;
+		mean = (Double) GetParameter("qualityStepMean");
+		stdDevPercent = (Double) GetParameter("qualityStepStdDevPerc");
+		alfa = (1 / Math.pow(stdDevPercent, 2));
+		lamda = alfa / mean;
+		qualityStepDistrib = RandomHelper.createGamma(alfa, lamda);
+	
+		// Price Step
+		// Create distributions for strategic % steps on price and quality
+		// We use Gamma distribution because the domain is > 0
+		mean = (Double) GetParameter("priceStepMean");
+		stdDevPercent = (Double) GetParameter("priceStepStdDevPerc");
+		alfa = (1 / Math.pow(stdDevPercent, 2));
+		lamda = alfa / mean;
+		priceStepDistrib = RandomHelper.createGamma(alfa, lamda);
+	
+		// Fixed Cost
+		// We use Gamma distribution because the domain is > 0
+		mean = (Double) GetParameter("fixedCostMean");
+		stdDevPercent = (Double) GetParameter("fixedCostStdDevPerc");
+		alfa = (1 / Math.pow(stdDevPercent, 2));
+		lamda = alfa / mean;
+		fixedCostDistrib = RandomHelper.createGamma(alfa, lamda);
+	
+	}
 
-			qualityStepDistrib = RandomHelper.createGamma(alfa, lamda);
-		}
-
+	public  Gamma getQualityStepDistrib() {
 		return qualityStepDistrib;
 	}
 
-	public static Gamma getPriceStepDistrib() {
-
-		// Create distributions for strategic % steps on price and quality
-		// We use Gamma distribution because the domain is > 0
-		if (priceStepDistrib == null) {
-			double mean = (Double) GetParameter("priceStepMean");
-			double stdDevPercent = (Double) GetParameter("priceStepStdDevPerc");
-			double alfa = (1 / Math.pow(stdDevPercent, 2));
-			double lamda = alfa / mean;
-
-			priceStepDistrib = RandomHelper.createGamma(alfa, lamda);
-		}
-
+	public  Gamma getPriceStepDistrib() {
 		return priceStepDistrib;
 	}
 
-	public static Gamma getFixedCostDistrib() {
-
-		// Create distribution for firms fixed cost
-		// We use Gamma distribution because the domain is > 0
-		if (fixedCostDistrib == null) {
-			double mean = (Double) GetParameter("fixedCostMean");
-			double stdDevPercent = (Double) GetParameter("fixedCostStdDevPerc");
-			double alfa = (1 / Math.pow(stdDevPercent, 2));
-			double lamda = alfa / mean;
-
-			fixedCostDistrib = RandomHelper.createGamma(alfa, lamda);
-		}
+	public  Gamma getFixedCostDistrib() {
 		return fixedCostDistrib;
 	}
 
-	public static Firm lowestQFirm() {
-
+	public  Firm lowestQFirm() {
 		return sortQFirms.firstEntry().getValue();
-
 	}
 
-	
-	public static Firm getNextQFirm(double quality) {
-		Map.Entry<Double, Firm> highComp;
+	public Firm getNextQFirm(double quality) {
+		Map.Entry<Double, Firm> higherComp;
 
-		highComp = sortQFirms.higherEntry(quality);
+		higherComp = sortQFirms.higherEntry(quality);
 
-		if (highComp == null)
+		if (higherComp == null)
 			return null;
 		else
-			return highComp.getValue();
+			return higherComp.getValue();
 	}
 
-	public static Firm getNextQFirm(Firm f) {
-
+	public Firm getNextQFirm(Firm f) {
 		return getNextQFirm(f.getQuality());
-
 	}
 
-	public static Firm getPrevQFirm(double quality) {
+	public Firm getPrevQFirm(double quality) {
 		Map.Entry<Double, Firm> lowComp;
 
 		lowComp = sortQFirms.lowerEntry(quality);
@@ -166,23 +115,21 @@ public class Firms extends DefaultContext<Firm> {
 			return lowComp.getValue();
 	}
 
-	public static Firm getPrevQFirm(Firm f) {
-
+	public Firm getPrevQFirm(Firm f) {
 		return getPrevQFirm(f.getQuality());
-
 	}
 
-	public static boolean containsQ(double q) {
+	public boolean containsQ(double q) {
 
 		return sortQFirms.containsKey(q);
 
 	}
 
-	public static void putQ(double q, Firm firm) {
+	public void putQ(double q, Firm firm) {
 		sortQFirms.put(q, firm);
 	}
 
-	public static void removeQ(double q) {
+	public void removeQ(double q) {
 		sortQFirms.remove(q);
 	}
 
@@ -214,16 +161,11 @@ public class Firms extends DefaultContext<Firm> {
 
 	@ScheduledMethod(start = 1, priority = RunPriority.KILL_FIRMS_PRIORITY, interval = 1)
 	public void wipeDeadFirms() {
-		for (Firm f : CreateMarket.toBeKilled)
+		for (Firm f : Market.toBeKilled)
 			f.killFirm();
 
-		CreateMarket.toBeKilled.clear();
+		Market.toBeKilled.clear();
 
-	}
-
-	@ScheduledMethod(start = 1, priority = RunPriority.UPDATE_SORT_FIRMS_PER_MARKET, interval = 1)
-	public void updateMarketLowerLimits() {
-		marketLowerLimits.update();
 	}
 
 }

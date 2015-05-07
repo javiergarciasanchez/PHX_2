@@ -1,5 +1,6 @@
-package pHX_2;
+package demand;
 
+import pHX_2.Firm;
 import repast.simphony.data2.NonAggregateDataSource;
 
 public class ConsumerLimits implements
