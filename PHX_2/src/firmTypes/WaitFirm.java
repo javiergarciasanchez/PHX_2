@@ -1,5 +1,7 @@
 package firmTypes;
 
+import java.awt.Color;
+
 import offer.Offer;
 import pHX_2.Firm;
 import repast.simphony.random.RandomHelper;
@@ -29,6 +31,11 @@ public class WaitFirm extends Firm {
 
 		return RandomHelper.nextDoubleFromTo(lowerPrice, higherPrice);
 
+	}
+	
+	@Override
+	public Color getColor() {
+		return Color.GREEN;
 	}
 
 }

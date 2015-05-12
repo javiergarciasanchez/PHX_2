@@ -2,7 +2,9 @@ package pHX_2;
 
 import static repast.simphony.essentials.RepastEssentials.GetParameter;
 
+import java.awt.Color;
 import java.util.ArrayList;
+
 import offer.Offer;
 import offer.OfferType;
 import demand.Consumer;
@@ -13,6 +15,10 @@ import repast.simphony.random.RandomHelper;
 public abstract class Firm {
 
 	private FirmHistory history = new FirmHistory(FirmHistory.HISTORY_SIZE);
+
+	protected double
+		minPoorestConsumerMargUtil = Market.consumers.getMinMargUtilOfQuality(),
+		maxPoorestConsumerMargUtil = Market.consumers.getMaxMargUtilOfQuality();
 
 	private double accumProfit = 0;
 	private double fixedCost;
@@ -35,6 +41,8 @@ public abstract class Firm {
 	public Firm() {
 
 		Market.firms.add(this);
+
+		alreadyKnownBy = new ArrayList<Consumer>();
 
 		fixedCost = (Double) Market.firms.getFixedCostDistrib().nextDouble();
 
@@ -78,7 +86,7 @@ public abstract class Firm {
 
 				if (getProfit() > prevState.getProfit()) {
 					// Previous offer worked, so firm goes in the same direction
-					offer = new Offer(prevState.getOfferType(), q, p);
+					offer = new Offer(getOfferType(), q, p);
 
 				} else {
 					// Previous offer didn't work. A new type of offer is
@@ -102,11 +110,13 @@ public abstract class Firm {
 
 		Market.firms.putQ(getQuality(), this);
 
-		Market.firmsProyection.moveTo(this, offer.getX(), offer.getY());
+		updateProjections();
 
 	}
 
 	protected abstract double getRandomInitialQuality();
+
+	public abstract Color getColor();
 
 	protected double getRandomInitialQuality(double lowerQ, double higherQ) {
 		// Uses default uniform distribution between lower and high quality
@@ -117,7 +127,7 @@ public abstract class Firm {
 		// because two different firms cannot have the same quality
 		do {
 
-			tmpQ = RandomHelper.nextDouble() * (higherQ - lowerQ) + lowerQ;
+			tmpQ = RandomHelper.nextDoubleFromTo(lowerQ, higherQ);
 
 		} while (Market.firms.containsQ(tmpQ));
 
@@ -145,6 +155,9 @@ public abstract class Firm {
 		// Calculates profit, accumProfit and kills the firm if necessary
 		// History was kept when Current State was established
 
+		// Updates Projections of results
+		updateProjections();
+
 		// Calculate profits of period
 		setProfit(profit());
 
@@ -160,14 +173,18 @@ public abstract class Firm {
 	}
 
 	private void getFromIgnorance(int amount) {
+		Consumer c;
 
 		for (int k = 0; (k < amount) && !notYetKnownBy.isEmpty(); k++) {
 
 			int i = RandomHelper.getUniform().nextIntFromTo(0,
 					notYetKnownBy.size() - 1);
 
-			notYetKnownBy.get(i).addToKnownFirms(this);
+			c = notYetKnownBy.get(i);
 			notYetKnownBy.remove(i);
+
+			c.addToKnownFirms(this);
+			alreadyKnownBy.add(c);
 		}
 	}
 
@@ -215,10 +232,16 @@ public abstract class Firm {
 		history.getCurrentState().setProfit(profit);
 	}
 
+	private void updateProjections() {
+		Market.firms2DProjection.update(this);
+		Market.firmsDemandProjection.update(this);
+		Market.margUtilProjection.update(this);
+	}
+
 	public void setDemand(int i) {
 		history.getCurrentState().setDemand(i);
 	}
-
+	
 	public void killFirm() {
 		// quality identifies firms, because we don't let two firms have the
 		// same quality
@@ -234,20 +257,25 @@ public abstract class Firm {
 
 	}
 
-	public void addToAlreadyKnownBy(Consumer c) {
-		alreadyKnownBy.add(c);
+
+	public int getRed(){
+		return getColor().getRed();
 	}
-
-	public int getDemand() {
-		return history.getCurrentState().getDemand();
+	
+	public int getBlue(){
+		return getColor().getBlue();
 	}
-
-
+	
+	public int getGreen(){
+		return getColor().getGreen();
+	}
+	
 	//
 	// Getters to probe
 	//
-	public double getPoorestConsumer() {
-		return getPrice() / getQuality();
+
+	public int getDemand() {
+		return history.getCurrentState().getDemand();
 	}
 
 	public double getProfit() {
@@ -261,9 +289,13 @@ public abstract class Firm {
 	public double getQuality() {
 		return history.getCurrentState().getQuality();
 	}
+	
+	public double getPoorestConsumer(){
+		return Firms.getPoorestConsumerMargUtil(getQuality(), getPrice());
+	}
 
 	public String getFirmType() {
-		return getClass().toString().substring(12, 13);
+		return getClass().toString().substring(16, 17);
 	}
 
 	public String getFirmID() {

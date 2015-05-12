@@ -7,8 +7,6 @@ import repast.simphony.random.RandomHelper;
 
 public class Consumers extends DefaultContext<Consumer> {
 
-	private static final int MAX_X = 100, MAX_Y = 10, MIN_X = 0, MIN_Y = 0;
-
 	// Distribution of consumer's utility parameters
 	// This variables are static to access them easily
 	// Are initialized in constructor without problem because
@@ -23,7 +21,7 @@ public class Consumers extends DefaultContext<Consumer> {
 		super("Consumers_Context");
 		
 		minMargUtilOfQuality = (double) GetParameter("minMargUtilOfQuality");
-		maxMargUtilOfQuality = (double) GetParameter("maxMargUtilOfQuality");
+
 
 		createProbabilityDistrib();
 		
@@ -65,26 +63,26 @@ public class Consumers extends DefaultContext<Consumer> {
 		return explorationPrefDistrib;
 	}
 
-	public static double getMaxX() {
-		return MAX_X;
+	public static int getMaxConsumers() {
+		return (Integer) GetParameter("numberOfConsumers");
 	}
 
-	public static double getMinX() {
-		return MIN_X;
+	public void setMaxMargUtilOfQuality(double maxMargUtilOfQuality) {
+		this.maxMargUtilOfQuality = maxMargUtilOfQuality;
 	}
 
-	public static double getMaxY() {
-		return MAX_Y;
-	}
-
-	public static double getMinY() {
-		return MIN_Y;
-	}
-
-	public void addConsumers() {
+	public void createConsumers() {
 
 		for (int i = 1; i <= (Integer) GetParameter("numberOfConsumers"); i++) {
 			new Consumer();
+		}
+
+	}
+	
+	public void addConsumersToProjections() {
+
+		for (Consumer c : getObjects(Consumer.class)) {
+			c.addToProjections();
 		}
 
 	}

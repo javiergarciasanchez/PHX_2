@@ -1,6 +1,12 @@
-<context id="Market" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:noNamespaceSchemaLocation="http://repast.org/scenario/context">
-	
-	
-	
-
-<context id="Firms_Context"><projection type="continuous space" id="Firms_Proyection"></projection></context><context id="Consumers_Context"><projection type="continuous space" id="Consumers_Proyection"></projection></context></context>
+<context id="Market" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="http://repast.org/scenario/context">
+	<projection type="grid" id="MargUtilProjection"></projection>
+	<context id="Firms_Context">
+		<projection type="continuous space" id="Firms2DProjection"></projection>
+		<projection type="continuous space" id="FirmsDemandProjection"></projection>
+		<projection type="continuous space" id="FirmsProfitProjection"></projection>
+	</context>
+	<context id="Consumers_Context">
+		<projection type="continuous space" id="ConsumersProjection"></projection>
+	</context>
+</context>

@@ -32,6 +32,14 @@
         <methodName>getConsumerID</methodName>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
+    <entry>
+      <string>ChosenFirmIntID</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>ChosenFirmIntID</id>
+        <className>demand.Consumer</className>
+        <methodName>getChosenFirmIntID</methodName>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
   </methodDataSources>
   <countSources class="linked-hash-map"/>
   <customNADataSources class="linked-hash-map"/>

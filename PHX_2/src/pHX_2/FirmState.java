@@ -3,7 +3,9 @@ package pHX_2;
 import offer.Offer;
 import offer.OfferType;
 
+
 public class FirmState {
+	
 	private Offer offer;
 	private double profit = 0.;
 	private int demand = 0;
@@ -14,14 +16,6 @@ public class FirmState {
 
 	public FirmState(Offer offer) {
 		this.offer = offer;
-	}
-
-	public double productX() {
-		return offer.getX();
-	}
-
-	public double productY() {
-		return offer.getY();
 	}
 
 	public double getPrice() {

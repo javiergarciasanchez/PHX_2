@@ -9,7 +9,7 @@
   <labelPosition>bottom</labelPosition>
   <labelPrecision>3</labelPrecision>
   <labelOffset>5.0</labelOffset>
-  <labelFontSize>9</labelFontSize>
+  <labelFontSize>8</labelFontSize>
   <labelFontType>0</labelFontType>
   <labelFontFamily>Arial</labelFontFamily>
   <labelColor>
@@ -18,11 +18,10 @@
     <float>0.0</float>
   </labelColor>
   <color>
-    <float>0.2</float>
-    <float>1.0</float>
     <float>0.0</float>
+    <float>0.0</float>
+    <float>1.0</float>
   </color>
-  <redMethodName>getFirmIntID</redMethodName>
   <colorMax>
     <float>50.0</float>
     <float>10.0</float>

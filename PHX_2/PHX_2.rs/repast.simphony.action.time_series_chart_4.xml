@@ -3,7 +3,7 @@
   <dataSet>Firm_Data</dataSet>
   <xAxisLabel>Tick Count</xAxisLabel>
   <yAxisLabel></yAxisLabel>
-  <chartTitle>Demanda</chartTitle>
+  <chartTitle>Demand</chartTitle>
   <type>TIME_SERIES</type>
   <background>
     <red>192</red>

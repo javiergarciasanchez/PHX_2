@@ -1,7 +1,13 @@
 package firmTypes;
 
+import static repast.simphony.essentials.RepastEssentials.GetParameter;
+
+import java.awt.Color;
+
+import demand.Pareto;
 import offer.Offer;
 import pHX_2.Firm;
+import pHX_2.Firms;
 import pHX_2.Market;
 import repast.simphony.random.RandomHelper;
 
@@ -10,6 +16,24 @@ public class BasePyramidFirm extends Firm {
 
 	public BasePyramidFirm() {
 		super();
+		
+		assignMaxMargUtilForSegment();
+		
+	}
+	
+	private void assignMaxMargUtilForSegment() {
+
+		// Assign minimum Marginal Utility of Quality for the segment
+		double acumProb = (double) GetParameter("basePyramidSegment");
+
+		double gini = (double) GetParameter("gini");
+		double lambda = (1.0 + gini) / (2.0 * gini);
+
+		double minimum = Market.consumers.getMinMargUtilOfQuality();
+
+		maxPoorestConsumerMargUtil = Pareto.inversePareto(acumProb, minimum,
+				lambda);
+
 	}
 
 	protected double getRandomInitialQuality() {
@@ -21,6 +45,7 @@ public class BasePyramidFirm extends Firm {
 	protected double getRandomInitialPrice(double q) {
 		Firm lowerComp, higherComp;
 		double lowerPrice, higherPrice;
+		double price;
 
 		// Chooses a random price in the range delimited by lower and higher
 		// competitors
@@ -45,8 +70,18 @@ public class BasePyramidFirm extends Firm {
 
 		
 		// Uses default Uniform distribution
-		return RandomHelper.nextDoubleFromTo(lowerPrice, higherPrice);
+		price = RandomHelper.nextDoubleFromTo(lowerPrice, higherPrice);
 
+		// Check price is not too high to meet maximum poorest consumer
+		return Math
+				.min(price, Firms.getPoorestConsumerMinPrice(
+						maxPoorestConsumerMargUtil, q));
+		
+	}
+
+	@Override
+	public Color getColor() {
+		return Color.ORANGE;
 	}
 
 }

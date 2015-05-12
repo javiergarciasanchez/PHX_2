@@ -1,40 +1,24 @@
 <repast.simphony.visualization.engine.CartesianDisplayDescriptor>
-  <name>Firms</name>
+  <name>Marginal_Utility</name>
   <type>2D</type>
   <styles>
     <entry>
-      <string>firmTypes.BasePyramidFirm</string>
+      <string>demand.Consumer</string>
       <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
     </entry>
     <entry>
-      <string>firmTypes.WaitFirm</string>
-      <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
-    </entry>
-    <entry>
-      <string>firmTypes.PremiumFirm</string>
-      <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
-    </entry>
-    <entry>
-      <string>firmTypes.OpportunisticFirm</string>
+      <string>pHX_2.Firm</string>
       <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
     </entry>
   </styles>
   <editedStyles>
     <entry>
-      <string>firmTypes.BasePyramidFirm</string>
-      <string>firmTypes.BasePyramidFirm.style_0.xml</string>
+      <string>demand.Consumer</string>
+      <string>demand.Consumer.style_7.xml</string>
     </entry>
     <entry>
-      <string>firmTypes.WaitFirm</string>
-      <string>firmTypes.WaitFirm.style_0.xml</string>
-    </entry>
-    <entry>
-      <string>firmTypes.PremiumFirm</string>
-      <string>firmTypes.PremiumFirm.style_0.xml</string>
-    </entry>
-    <entry>
-      <string>firmTypes.OpportunisticFirm</string>
-      <string>firmTypes.OpportunisticFirm.style_0.xml</string>
+      <string>pHX_2.Firm</string>
+      <string>pHX_2.Firm.style_5.xml</string>
     </entry>
   </editedStyles>
   <netStyles/>
@@ -47,55 +31,47 @@
     <pType>LAST</pType>
     <duration>-1.0</duration>
     <frequency>REPEAT</frequency>
-    <hashCode>104786728</hashCode>
+    <hashCode>-319998012</hashCode>
   </schedParams>
   <layoutClassName>foo.bar.baz</layoutClassName>
-  <layoutProjection>Firms2DProjection</layoutProjection>
+  <layoutProjection>MargUtilProjection</layoutProjection>
   <layoutInterval>0</layoutInterval>
   <layerOrder>
     <entry>
-      <string>firmTypes.BasePyramidFirm</string>
-      <int>3</int>
-    </entry>
-    <entry>
-      <string>firmTypes.WaitFirm</string>
+      <string>demand.Consumer</string>
       <int>1</int>
     </entry>
     <entry>
-      <string>firmTypes.PremiumFirm</string>
+      <string>pHX_2.Firm</string>
       <int>0</int>
-    </entry>
-    <entry>
-      <string>firmTypes.OpportunisticFirm</string>
-      <int>2</int>
     </entry>
   </layerOrder>
   <projections>
     <repast.simphony.scenario.data.ProjectionData>
-      <id>Firms2DProjection</id>
+      <id>MargUtilProjection</id>
       <attributes/>
-      <type>continuous space</type>
+      <type>grid</type>
     </repast.simphony.scenario.data.ProjectionData>
   </projections>
   <visualizationProperties class="repast.simphony.visualization.UnitSizeLayoutProperties">
-    <unitSize>5.0</unitSize>
+    <unitSize>15.0</unitSize>
   </visualizationProperties>
   <projectionDescriptors>
     <entry>
-      <string>Firms2DProjection</string>
-      <repast.simphony.visualization.continuous.ContinuousProjectionDescriptor>
+      <string>MargUtilProjection</string>
+      <repast.simphony.visualization.grid.GridProjectionDescriptor>
         <proj reference="../../../../projections/repast.simphony.scenario.data.ProjectionData"/>
         <props>
           <entry>
-            <string>repast.simphony.visualization.continuous.ContinuousDecorator</string>
+            <string>repast.simphony.visualization.grid.GridDecorator</string>
             <map>
               <entry>
                 <string>UNIT_SIZE</string>
-                <float>5.0</float>
+                <float>15.0</float>
               </entry>
               <entry>
                 <string>SHOW</string>
-                <boolean>true</boolean>
+                <boolean>false</boolean>
               </entry>
               <entry>
                 <string>COLOR</string>
@@ -104,7 +80,7 @@
             </map>
           </entry>
         </props>
-      </repast.simphony.visualization.continuous.ContinuousProjectionDescriptor>
+      </repast.simphony.visualization.grid.GridProjectionDescriptor>
     </entry>
   </projectionDescriptors>
   <props/>

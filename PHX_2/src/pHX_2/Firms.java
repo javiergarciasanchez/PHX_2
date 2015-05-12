@@ -41,6 +41,14 @@ public class Firms extends DefaultContext<Firm> {
 
 		createProbabilityDistrib();
 	}
+	
+	public static double getPoorestConsumerMargUtil(double quality, double price) {
+		return price / quality;
+	}
+
+	public static double getPoorestConsumerMinPrice(double minMargUtil, double quality) {
+		return minMargUtil * quality;
+	}
 
 	public  void createProbabilityDistrib() {
 		double mean, stdDevPercent, alfa, lamda;

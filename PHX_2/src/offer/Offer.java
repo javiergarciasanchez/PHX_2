@@ -5,7 +5,6 @@ import pHX_2.Market;
 
 public class Offer {
 
-	private static final int MAX_X = 100, MAX_Y = 100, MIN_X = 0, MIN_Y = 0;
 	private double quality;
 	private double price;
 	private OfferType offerType = null;
@@ -120,24 +119,6 @@ public class Offer {
 
 	public static double getMaxQuality() {
 		return maxQuality;
-	}
-
-	public static double getMaxX() {
-		return MAX_X;
-	}
-
-	public static double getMaxY() {
-		return MAX_Y;
-	}
-
-	public double getX() {
-		return (price - minPrice) / (maxPrice - minPrice) * (MAX_X - MIN_X)
-				+ MIN_X;
-	}
-
-	public double getY() {
-		return (quality - minQuality) / (maxQuality - minQuality)
-				* (MAX_Y - MIN_Y) + MIN_Y;
 	}
 
 	public String toString() {

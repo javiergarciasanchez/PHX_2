@@ -1,5 +1,7 @@
 package firmTypes;
 
+import java.awt.Color;
+
 import offer.Offer;
 import pHX_2.Firm;
 import repast.simphony.random.RandomHelper;
@@ -29,4 +31,8 @@ public class OpportunisticFirm extends Firm {
 
 	}
 
+	@Override
+	public Color getColor() {
+		return Color.RED;
+	}
 }

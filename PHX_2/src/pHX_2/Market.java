@@ -1,6 +1,10 @@
 package pHX_2;
 
 import static repast.simphony.essentials.RepastEssentials.GetParameter;
+import graphs.ConsumersProjection;
+import graphs.Firms2DProjection;
+import graphs.FirmsDemandProjection;
+import graphs.MargUtilProjection;
 
 import java.util.ArrayList;
 
@@ -9,23 +13,21 @@ import demand.Consumer;
 import demand.Consumers;
 import repast.simphony.context.Context;
 import repast.simphony.context.DefaultContext;
-import repast.simphony.context.space.continuous.ContinuousSpaceFactoryFinder;
 import repast.simphony.dataLoader.ContextBuilder;
 import repast.simphony.random.RandomHelper;
-import repast.simphony.space.continuous.ContinuousSpace;
-import repast.simphony.space.continuous.SimpleCartesianAdder;
-import repast.simphony.space.continuous.StickyBorders;
 
 public class Market extends DefaultContext<Object> implements
 		ContextBuilder<Object> {
 
-
 	// Defining market components: consumers and firms
 	public static Consumers consumers;
-	public static ContinuousSpace<Consumer> consumersProyection;
+	public static ConsumersProjection consumersProjection;
 
 	public static Firms firms;
-	public static ContinuousSpace<Firm> firmsProyection;
+	public static Firms2DProjection firms2DProjection;
+	public static FirmsDemandProjection firmsDemandProjection;
+	
+	public static MargUtilProjection margUtilProjection; 
 
 	public static ArrayList<Firm> toBeKilled;
 
@@ -34,7 +36,7 @@ public class Market extends DefaultContext<Object> implements
 
 		// Reset seed
 		RandomHelper.setSeed((Integer) GetParameter("randomSeed"));
-		
+
 		// Reset static variables
 		Consumer.resetStaticVars();
 		Firm.resetStaticVars();
@@ -45,31 +47,32 @@ public class Market extends DefaultContext<Object> implements
 
 		context.setId("Market");
 
+		// Create Marginal utility projection
+		margUtilProjection = new MargUtilProjection(context);
+		
 		// Create Consumers
 		consumers = new Consumers();
-		context.addSubContext(consumers);		
-		consumers.addConsumers();
+		context.addSubContext(consumers);
+		consumers.createConsumers();
 
-		// Create Projections
-		// Consumers Space represents Marginal Utility of Quality
-		consumersProyection = ContinuousSpaceFactoryFinder
-				.createContinuousSpaceFactory(null).createContinuousSpace(
-						"Consumers_Proyection", consumers,
-						new SimpleCartesianAdder<Consumer>(),
-						new StickyBorders(), Consumers.getMaxX() + 0.1,
-						Consumers.getMaxY() + 0.1);
+		// Consumers Projection
+		// Dimension is Marginal Utility of Quality
+		consumersProjection = new ConsumersProjection(consumers);
+
+		// AddConsumers to projections
+		consumers.addConsumersToProjections();
 
 		// Create firms
 		firms = new Firms();
 		context.addSubContext(firms);
 
-		// Firms Space represents price and quality
-		firmsProyection = ContinuousSpaceFactoryFinder
-				.createContinuousSpaceFactory(null).createContinuousSpace(
-						"Firms_Proyection", firms,
-						new SimpleCartesianAdder<Firm>(), new StickyBorders(),
-						Offer.getMaxX() + 0.1, Offer.getMaxY() + 0.1);
+		// Firms Projections
+		// Dimensions are price, quality and demand
+		firms2DProjection = new Firms2DProjection(firms);
+		firmsDemandProjection = new FirmsDemandProjection(firms);
 
+
+		
 		return context;
 
 	}

@@ -17,35 +17,11 @@
   <atEnd>false</atEnd>
   <methodDataSources class="linked-hash-map">
     <entry>
-      <string>FirmID</string>
+      <string>AccumProfit</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>FirmID</id>
+        <id>AccumProfit</id>
         <className>pHX_2.Firm</className>
-        <methodName>getFirmID</methodName>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>Quality</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Quality</id>
-        <className>pHX_2.Firm</className>
-        <methodName>getQuality</methodName>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>Price</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Price</id>
-        <className>pHX_2.Firm</className>
-        <methodName>getPrice</methodName>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>OfferTypeStr</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>OfferTypeStr</id>
-        <className>pHX_2.Firm</className>
-        <methodName>getOfferTypeStr</methodName>
+        <methodName>getAccumProfit</methodName>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
@@ -65,27 +41,27 @@
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>FixedCost</string>
+      <string>Quality</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>FixedCost</id>
+        <id>Quality</id>
         <className>pHX_2.Firm</className>
-        <methodName>getFixedCost</methodName>
+        <methodName>getQuality</methodName>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>PoorestConsumer</string>
+      <string>Price</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>PoorestConsumer</id>
+        <id>Price</id>
         <className>pHX_2.Firm</className>
-        <methodName>getPoorestConsumer</methodName>
+        <methodName>getPrice</methodName>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>MarketLowerLimit</string>
+      <string>FirmID</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>MarketLowerLimit</id>
+        <id>FirmID</id>
         <className>pHX_2.Firm</className>
-        <methodName>getMarketLowerLimit</methodName>
+        <methodName>getFirmID</methodName>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
   </methodDataSources>

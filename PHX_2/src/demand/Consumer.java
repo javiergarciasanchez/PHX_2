@@ -1,5 +1,6 @@
 package demand;
 
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -18,15 +19,15 @@ public class Consumer {
 	private ArrayList<Firm> knownFirmsNotExplored;
 
 	protected static long consumerIDCounter = 1;
-	
+
 	protected long consumerIntID = consumerIDCounter++;
 	protected String ID = "Cons. " + consumerIntID;
 
 	public static void resetStaticVars() {
-		// resets static variables		
+		// resets static variables
 		consumerIDCounter = 1;
 	}
-	
+
 	public Consumer() {
 
 		Market.consumers.add(this);
@@ -35,9 +36,6 @@ public class Consumer {
 		knownFirmsNotExplored = new ArrayList<Firm>();
 
 		assignPreferences();
-
-		// Set location in projection
-		Market.consumersProyection.moveTo(this, getX(), getY());
 
 	}
 
@@ -52,6 +50,12 @@ public class Consumer {
 
 	}
 
+	public void addToProjections() {
+		// Set location in projections
+		Market.consumersProjection.add(this);
+		Market.margUtilProjection.add(this);
+	}
+
 	private void setMargUtilOfQuality() {
 
 		// There is no need to introduce a marginal utility of money
@@ -60,16 +64,19 @@ public class Consumer {
 				.nextDouble();
 
 		// Assign border if out range
-		margUtilOfQuality = Math.max(Market.consumers.getMinMargUtilOfQuality(),
-				margUtilOfQuality);
-		margUtilOfQuality = Math.min(Market.consumers.getMaxMargUtilOfQuality(),
-				margUtilOfQuality);
+		margUtilOfQuality = Math.max(
+				Market.consumers.getMinMargUtilOfQuality(), margUtilOfQuality);
+		
+		// Upper limit is unbounded. The max marg utility is updated to scale graphs
+		Market.consumers.setMaxMargUtilOfQuality(Math.max(
+				Market.consumers.getMaxMargUtilOfQuality(), margUtilOfQuality));
 
 	}
 
 	private void setExplorationPref() {
 
-		explorationPref = Market.consumers.getExplorationPrefDistrib().nextDouble();
+		explorationPref = Market.consumers.getExplorationPrefDistrib()
+				.nextDouble();
 
 		// Probability should be between 0 and 1
 		explorationPref = Math.max(0.0, explorationPref);
@@ -115,9 +122,14 @@ public class Consumer {
 
 	}
 
+	public Firm getChosenFirm() {
+		return chosenFirm;
+	}
+
 	// Returns a known firm that has not been explored
 	// Before calling, it should be checked that knownFirmsNotExplored be
 	// not Empty
+	// He doesn't check for negative utility because he never tried these firms
 	private Firm exploreKnownFirm() {
 		Firm f;
 
@@ -126,7 +138,6 @@ public class Consumer {
 
 		exploredFirms.add(f);
 		knownFirmsNotExplored.remove(f);
-		f.addToAlreadyKnownBy(this);
 
 		return f;
 	}
@@ -150,7 +161,11 @@ public class Consumer {
 
 		}
 
-		return maxUtilFirm;
+		// Consumer doesn't choose any firm if utility is negative
+		if (utility > 0)
+			return maxUtilFirm;
+		else
+			return null;
 
 	}
 
@@ -160,18 +175,23 @@ public class Consumer {
 
 	}
 
-	private double getX() {
-		return (margUtilOfQuality - Market.consumers.getMinMargUtilOfQuality())
-				/ (Market.consumers.getMaxMargUtilOfQuality() - Market.consumers
-						.getMinMargUtilOfQuality())
-				* (Consumers.getMaxX() - Consumers.getMinX())
-				+ Consumers.getMinX();
+	public int getRed() {
+		return getChosenFirmColor().getRed();
 	}
 
-	private double getY() {
-		// Puts the consumer in the middle of vertical axis
-		return (Consumers.getMaxY() - Consumers.getMinY()) / 2.0
-				+ Consumers.getMinY();
+	public int getBlue() {
+		return getChosenFirmColor().getBlue();
+	}
+
+	public int getGreen() {
+		return getChosenFirmColor().getGreen();
+	}
+
+	private Color getChosenFirmColor() {
+		if (chosenFirm == null)
+			return Color.BLACK;
+		else
+			return chosenFirm.getColor();
 	}
 
 	// Procedures for inspecting values
