@@ -1,4 +1,4 @@
-package demand;
+package consumers;
 
 import static repast.simphony.essentials.RepastEssentials.GetParameter;
 import cern.jet.random.Normal;

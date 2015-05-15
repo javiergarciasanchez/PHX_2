@@ -1,11 +1,11 @@
-package demand;
+package consumers;
 
 import java.awt.Color;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+import firms.Firm;
 import pHX_2.Market;
-import pHX_2.Firm;
 import pHX_2.RunPriority;
 import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.random.RandomHelper;
@@ -54,6 +54,8 @@ public class Consumer {
 		// Set location in projections
 		Market.consumersProjection.add(this);
 		Market.margUtilProjection.add(this);
+		
+		Market.consumptionProjection.update(this);
 	}
 
 	private void setMargUtilOfQuality() {
@@ -91,6 +93,10 @@ public class Consumer {
 	public void removeFromKnownFirms(Firm firm) {
 		knownFirmsNotExplored.remove(firm);
 	}
+	
+	public void addToExploredFirms(Firm firm) {
+		exploredFirms.add(firm);
+	}
 
 	public void removeFromExploredFirms(Firm firm) {
 		exploredFirms.remove(firm);
@@ -116,14 +122,15 @@ public class Consumer {
 			// It should never come here
 			chosenFirm = null;
 
-		// Adjust demand
+		// Adjust consumers
 		if (chosenFirm != null)
 			chosenFirm.setDemand(chosenFirm.getDemand() + 1);
 
 	}
-
-	public Firm getChosenFirm() {
-		return chosenFirm;
+	
+	@ScheduledMethod(start = 1, priority = RunPriority.UPDATE_PROJECTIONS_PRIORITY, interval = 1)
+	public void updateProjections() {
+		Market.consumptionProjection.update(this);
 	}
 
 	// Returns a known firm that has not been explored
@@ -175,6 +182,17 @@ public class Consumer {
 
 	}
 
+	private Color getChosenFirmColor() {
+		if (chosenFirm == null)
+			return Color.BLACK;
+		else
+			return chosenFirm.getColor();
+	}
+
+	
+	
+	// Procedures for inspecting values
+	
 	public int getRed() {
 		return getChosenFirmColor().getRed();
 	}
@@ -187,14 +205,9 @@ public class Consumer {
 		return getChosenFirmColor().getGreen();
 	}
 
-	private Color getChosenFirmColor() {
-		if (chosenFirm == null)
-			return Color.BLACK;
-		else
-			return chosenFirm.getColor();
+	public Firm getChosenFirm() {
+		return chosenFirm;
 	}
-
-	// Procedures for inspecting values
 
 	public double getMargUtilOfQuality() {
 		return margUtilOfQuality;

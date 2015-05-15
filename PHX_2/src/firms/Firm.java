@@ -1,14 +1,16 @@
-package pHX_2;
+package firms;
 
 import static repast.simphony.essentials.RepastEssentials.GetParameter;
 
 import java.awt.Color;
 import java.util.ArrayList;
 
+import consumers.Consumer;
+import consumers.Consumers;
 import offer.Offer;
 import offer.OfferType;
-import demand.Consumer;
-import demand.Consumers;
+import pHX_2.Market;
+import pHX_2.RunPriority;
 import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.random.RandomHelper;
 
@@ -16,9 +18,10 @@ public abstract class Firm {
 
 	private FirmHistory history = new FirmHistory(FirmHistory.HISTORY_SIZE);
 
-	protected double
-		minPoorestConsumerMargUtil = Market.consumers.getMinMargUtilOfQuality(),
-		maxPoorestConsumerMargUtil = Market.consumers.getMaxMargUtilOfQuality();
+	protected double minPoorestConsumerMargUtil = Market.consumers
+			.getMinMargUtilOfQuality(),
+			maxPoorestConsumerMargUtil = Market.consumers
+					.getMaxMargUtilOfQuality();
 
 	private double accumProfit = 0;
 	private double fixedCost;
@@ -43,6 +46,7 @@ public abstract class Firm {
 		Market.firms.add(this);
 
 		alreadyKnownBy = new ArrayList<Consumer>();
+		notYetKnownBy = new ArrayList<Consumer>();
 
 		fixedCost = (Double) Market.firms.getFixedCostDistrib().nextDouble();
 
@@ -66,13 +70,13 @@ public abstract class Firm {
 			double q = getRandomInitialQuality();
 			offer = new Offer(q, getRandomInitialPrice(q));
 
-			initializeNotYetKnownBy();
+			initializeConsumerKnowledge();
 
 		} else {
 			double q = getQuality();
 			double p = getPrice();
 
-			Market.firms.removeQ(getQuality());
+			Market.segments.removeFromSegments(this);
 
 			if (history.size() == 1) {
 
@@ -108,44 +112,7 @@ public abstract class Firm {
 
 		history.addCurrentState(new FirmState(offer));
 
-		Market.firms.putQ(getQuality(), this);
-
-		updateProjections();
-
-	}
-
-	protected abstract double getRandomInitialQuality();
-
-	public abstract Color getColor();
-
-	protected double getRandomInitialQuality(double lowerQ, double higherQ) {
-		// Uses default uniform distribution between lower and high quality
-
-		double tmpQ;
-
-		// Quality should be checked for existence
-		// because two different firms cannot have the same quality
-		do {
-
-			tmpQ = RandomHelper.nextDoubleFromTo(lowerQ, higherQ);
-
-		} while (Market.firms.containsQ(tmpQ));
-
-		return tmpQ;
-	}
-
-	protected abstract double getRandomInitialPrice(double q);
-
-	private void initializeNotYetKnownBy() {
-		notYetKnownBy = new ArrayList<Consumer>();
-
-		for (Consumer c : Market.consumers.getObjects(Consumer.class))
-			notYetKnownBy.add(c);
-
-		// Take out of the list the initial "knower's"
-		getFromIgnorance((int) Math
-				.round((Double) GetParameter("initiallyKnownByPerc")
-						* Market.consumers.size()));
+		Market.segments.addToSegments(this);
 
 	}
 
@@ -166,6 +133,56 @@ public abstract class Firm {
 		if (isToBeKilled())
 			Market.toBeKilled.add(this);
 
+	}
+
+	@ScheduledMethod(start = 1, priority = RunPriority.UPDATE_PROJECTIONS_PRIORITY, interval = 1)
+	public void updateProjections() {
+		Market.firms2DProjection.update(this);
+		Market.firmsDemandProjection.update(this);
+		Market.firmsProfitProjection.update(this);
+		Market.margUtilProjection.update(this);
+	}
+
+	protected abstract double getRandomInitialQuality();
+
+	public abstract Color getColor();
+
+	protected double getRandomInitialQuality(double lowerQ, double higherQ) {
+		// Uses default uniform distribution between lower and high quality
+
+		double tmpQ;
+
+		// Quality should be checked for existence
+		// because two different firms cannot have the same quality
+		do {
+
+			tmpQ = RandomHelper.nextDoubleFromTo(lowerQ, higherQ);
+
+		} while (Market.segments.containsQ(tmpQ));
+
+		return tmpQ;
+	}
+
+	protected abstract double getRandomInitialPrice(double q);
+
+	private void initializeConsumerKnowledge() {
+
+		if ((boolean) GetParameter("perfectKnowledge"))
+			// All firms immediately become explored
+			for (Consumer c : Market.consumers.getObjects(Consumer.class))
+				c.addToExploredFirms(this);
+
+		else {
+			// Firms should be known and then explored
+			for (Consumer c : Market.consumers.getObjects(Consumer.class))
+				notYetKnownBy.add(c);
+
+			// Take out of the list the initial "knower's"
+			getFromIgnorance((int) Math
+					.round((Double) GetParameter("initiallyKnownByPerc")
+							* Market.consumers.size()));
+
+		}
 	}
 
 	private double profit() {
@@ -232,20 +249,12 @@ public abstract class Firm {
 		history.getCurrentState().setProfit(profit);
 	}
 
-	private void updateProjections() {
-		Market.firms2DProjection.update(this);
-		Market.firmsDemandProjection.update(this);
-		Market.margUtilProjection.update(this);
-	}
-
 	public void setDemand(int i) {
 		history.getCurrentState().setDemand(i);
 	}
-	
+
 	public void killFirm() {
-		// quality identifies firms, because we don't let two firms have the
-		// same quality
-		Market.firms.removeQ(getQuality());
+		Market.segments.removeFromSegments(this);
 
 		// Remove firm from consumers lists
 		for (Consumer c : alreadyKnownBy) {
@@ -257,19 +266,18 @@ public abstract class Firm {
 
 	}
 
-
-	public int getRed(){
+	public int getRed() {
 		return getColor().getRed();
 	}
-	
-	public int getBlue(){
+
+	public int getBlue() {
 		return getColor().getBlue();
 	}
-	
-	public int getGreen(){
+
+	public int getGreen() {
 		return getColor().getGreen();
 	}
-	
+
 	//
 	// Getters to probe
 	//
@@ -289,8 +297,8 @@ public abstract class Firm {
 	public double getQuality() {
 		return history.getCurrentState().getQuality();
 	}
-	
-	public double getPoorestConsumer(){
+
+	public double getPoorestConsumerMargUtil() {
 		return Firms.getPoorestConsumerMargUtil(getQuality(), getPrice());
 	}
 

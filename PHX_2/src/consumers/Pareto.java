@@ -1,4 +1,4 @@
-package demand;
+package consumers;
 
 import repast.simphony.random.RandomHelper;
 import cern.jet.random.AbstractContinousDistribution;

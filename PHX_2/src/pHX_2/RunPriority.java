@@ -12,6 +12,8 @@ public class RunPriority {
 	public static final double CHOOSE_FIRM_PRIORITY = 70;														
 	public static final double NEXT_STEP_FIRM_PRIORITY = 60;
 	public static final double KILL_FIRMS_PRIORITY = 50;
-	public static final double UPDATE_SORT_FIRMS_PER_MARKET = 40;
+	public static final double CREATE_SEGMENT_LIMITS_PRIORITY = 40;
+	public static final double UPDATE_PROJECTIONS_PRIORITY = 30;
+
 
 }

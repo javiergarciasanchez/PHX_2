@@ -79,6 +79,9 @@
 		displayName="Percentage of Consumers that know the firm at entry"
 		type="double" defaultValue="1.0" isReadOnly="false"
 		converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" />
+	<parameter name="perfectKnowledge" displayName="Perfect Knowledge"
+		type="boolean" defaultValue="true" isReadOnly="false"
+		converter="repast.simphony.parameter.StringConverterFactory$BooleanConverter" />
 	<parameter name="diffusionSpeedParam" displayName="Parameter of Diffusion Speed"
 		type="double" defaultValue="1.0" isReadOnly="false"
 		converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" />

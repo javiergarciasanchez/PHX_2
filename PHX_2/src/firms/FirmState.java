@@ -1,4 +1,4 @@
-package pHX_2;
+package firms;
 
 import offer.Offer;
 import offer.OfferType;

@@ -1,8 +1,7 @@
-package pHX_2;
+package firms;
 
-import java.util.Map;
-import java.util.TreeMap;
-
+import pHX_2.Market;
+import pHX_2.RunPriority;
 import cern.jet.random.Gamma;
 import firmTypes.BasePyramidFirm;
 import firmTypes.FirmType;
@@ -22,17 +21,12 @@ public class Firms extends DefaultContext<Firm> {
 	private Gamma priceStepDistrib;
 	private Gamma fixedCostDistrib;
 
-	// Firms ordered according to quality
-	private TreeMap<Double, Firm> sortQFirms;
-
 	// Parameters for Firms
 	double initiallyKnownByPerc, minimumProfit, diffusionSpeedParam;
 
 
 	public Firms() {
 		super("Firms_Context");
-
-		sortQFirms = new TreeMap<Double, Firm>();
 
 		// Read parameters for all firms
 		initiallyKnownByPerc = (Double) GetParameter("initiallyKnownByPerc");
@@ -91,54 +85,6 @@ public class Firms extends DefaultContext<Firm> {
 
 	public  Gamma getFixedCostDistrib() {
 		return fixedCostDistrib;
-	}
-
-	public  Firm lowestQFirm() {
-		return sortQFirms.firstEntry().getValue();
-	}
-
-	public Firm getNextQFirm(double quality) {
-		Map.Entry<Double, Firm> higherComp;
-
-		higherComp = sortQFirms.higherEntry(quality);
-
-		if (higherComp == null)
-			return null;
-		else
-			return higherComp.getValue();
-	}
-
-	public Firm getNextQFirm(Firm f) {
-		return getNextQFirm(f.getQuality());
-	}
-
-	public Firm getPrevQFirm(double quality) {
-		Map.Entry<Double, Firm> lowComp;
-
-		lowComp = sortQFirms.lowerEntry(quality);
-
-		if (lowComp == null)
-			return null;
-		else
-			return lowComp.getValue();
-	}
-
-	public Firm getPrevQFirm(Firm f) {
-		return getPrevQFirm(f.getQuality());
-	}
-
-	public boolean containsQ(double q) {
-
-		return sortQFirms.containsKey(q);
-
-	}
-
-	public void putQ(double q, Firm firm) {
-		sortQFirms.put(q, firm);
-	}
-
-	public void removeQ(double q) {
-		sortQFirms.remove(q);
 	}
 
 	@ScheduledMethod(start = 1, priority = RunPriority.ADD_FIRMS_PRIORITY, interval = 1)

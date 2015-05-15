@@ -1,16 +1,16 @@
 <repast.simphony.visualization.engine.CartesianDisplayDescriptor>
-  <name>Consumers</name>
+  <name>Firms</name>
   <type>2D</type>
   <styles>
     <entry>
-      <string>demand.Consumer</string>
+      <string>firms.Firm</string>
       <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
     </entry>
   </styles>
   <editedStyles>
     <entry>
-      <string>demand.Consumer</string>
-      <string>demand.Consumer.style_2.xml</string>
+      <string>firms.Firm</string>
+      <string>firms.Firm.style_0.xml</string>
     </entry>
   </editedStyles>
   <netStyles/>
@@ -23,30 +23,30 @@
     <pType>LAST</pType>
     <duration>-1.0</duration>
     <frequency>REPEAT</frequency>
-    <hashCode>687332426</hashCode>
+    <hashCode>-1147964604</hashCode>
   </schedParams>
   <layoutClassName>foo.bar.baz</layoutClassName>
-  <layoutProjection>ConsumersProjection</layoutProjection>
+  <layoutProjection>Firms2DProjection</layoutProjection>
   <layoutInterval>0</layoutInterval>
   <layerOrder>
     <entry>
-      <string>demand.Consumer</string>
+      <string>firms.Firm</string>
       <int>0</int>
     </entry>
   </layerOrder>
   <projections>
     <repast.simphony.scenario.data.ProjectionData>
-      <id>ConsumersProjection</id>
+      <id>Firms2DProjection</id>
       <attributes/>
       <type>continuous space</type>
     </repast.simphony.scenario.data.ProjectionData>
   </projections>
   <visualizationProperties class="repast.simphony.visualization.UnitSizeLayoutProperties">
-    <unitSize>15.0</unitSize>
+    <unitSize>5.0</unitSize>
   </visualizationProperties>
   <projectionDescriptors>
     <entry>
-      <string>ConsumersProjection</string>
+      <string>Firms2DProjection</string>
       <repast.simphony.visualization.continuous.ContinuousProjectionDescriptor>
         <proj reference="../../../../projections/repast.simphony.scenario.data.ProjectionData"/>
         <props>
@@ -55,7 +55,7 @@
             <map>
               <entry>
                 <string>UNIT_SIZE</string>
-                <float>15.0</float>
+                <float>5.0</float>
               </entry>
               <entry>
                 <string>SHOW</string>

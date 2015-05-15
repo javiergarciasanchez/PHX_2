@@ -1,11 +1,12 @@
 package graphs;
 
 import static repast.simphony.essentials.RepastEssentials.GetParameter;
-import pHX_2.Firm;
-import pHX_2.Firms;
+import consumers.Consumer;
+import consumers.Pareto;
 import pHX_2.Market;
-import demand.Consumer;
-import demand.Pareto;
+import pHX_2.SegmentLimit;
+import firms.Firm;
+import firms.Firms;
 import repast.simphony.context.Context;
 import repast.simphony.context.space.grid.ContextGrid;
 import repast.simphony.space.grid.SimpleGridAdder;
@@ -16,7 +17,8 @@ public class MargUtilProjection {
 
 	private static final int MAX_X = 100, MAX_Y = 30;
 	private static final int MIN_X = 0;
-	private static final int FIRMS_HEIGHT = 4;
+	private static final int FIRMS_HEIGHT = 10;
+	private static final int SEGMENT_LIMITS_HEIGHT = 4;
 
 	private ContextGrid<Object> space;
 
@@ -35,8 +37,24 @@ public class MargUtilProjection {
 	}
 
 	public void add(Consumer c) {
-		double mUtil = c.getMargUtilOfQuality();
-		space.moveTo(c, margUtilToCoord(mUtil), getY(mUtil));
+		int x = margUtilToCoord(c.getMargUtilOfQuality());
+		space.moveTo(c, x, getFreeY(x, FIRMS_HEIGHT + SEGMENT_LIMITS_HEIGHT, 1));
+
+	}
+
+	public void update(Firm f) {
+
+		int x = margUtilToCoord(Firms.getPoorestConsumerMargUtil(
+				f.getQuality(), f.getPrice()));
+
+		space.moveTo(f, x, getFreeY(x, 0, 2));
+
+	}
+
+	public void add(SegmentLimit sL) {
+		int x = margUtilToCoord(sL.getValue());
+
+		space.moveTo(sL, x, getFreeY(x, FIRMS_HEIGHT, 2));
 
 	}
 
@@ -46,25 +64,6 @@ public class MargUtilProjection {
 				Math.round(margUtilOfQuality / getMaxUtilToDraw()
 						* (MAX_X - MIN_X))
 						+ MIN_X, MAX_X);
-	}
-
-	private int getY(double mUtil) {
-
-		int[] dims = new int[2];
-
-		dims[0] = margUtilToCoord(mUtil);
-		dims[1] = FIRMS_HEIGHT;
-
-		while (space.getObjectAt(dims) != null) {
-			dims[1] += 1;
-		}
-
-		return dims[1];
-	}
-
-	public void update(Firm f) {
-		space.moveTo(f, margUtilToCoord(Firms.getPoorestConsumerMargUtil(
-				f.getQuality(), f.getPrice())), FIRMS_HEIGHT / 2 - 1);
 	}
 
 	private double getMaxUtilToDraw() {
@@ -77,6 +76,22 @@ public class MargUtilProjection {
 		double minimum = Market.consumers.getMinMargUtilOfQuality();
 
 		return Pareto.inversePareto(acumProb, minimum, lambda);
+	}
+
+	private int getFreeY(int x, int firstY, int step) {
+		int[] dims = new int[2];
+
+		dims[0] = x;
+		dims[1] = firstY;
+
+		while (space.getObjectAt(dims) != null) {
+			if (dims[1] < MAX_Y)
+				dims[1] += step;
+			else
+				return MAX_Y;
+		}
+
+		return dims[1];
 	}
 
 }

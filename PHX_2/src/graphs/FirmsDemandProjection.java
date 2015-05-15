@@ -1,9 +1,9 @@
 package graphs;
 
-import demand.Consumers;
+import consumers.Consumers;
+import firms.Firm;
+import firms.Firms;
 import offer.Offer;
-import pHX_2.Firm;
-import pHX_2.Firms;
 import repast.simphony.context.space.continuous.ContextSpace;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.SimpleCartesianAdder;

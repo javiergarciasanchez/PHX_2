@@ -4,10 +4,10 @@ import static repast.simphony.essentials.RepastEssentials.GetParameter;
 
 import java.awt.Color;
 
-import demand.Pareto;
+import consumers.Pareto;
+import firms.Firm;
+import firms.Firms;
 import offer.Offer;
-import pHX_2.Firm;
-import pHX_2.Firms;
 import pHX_2.Market;
 import repast.simphony.random.RandomHelper;
 
@@ -50,8 +50,8 @@ public class PremiumFirm extends Firm {
 		// competitors
 		// If any of the competitors does not exists, absolute price limits are
 		// used
-		lowerComp = Market.firms.getPrevQFirm(q);
-		higherComp = Market.firms.getNextQFirm(q);
+		lowerComp = Market.segments.getPrevQFirm(q);
+		higherComp = Market.segments.getNextQFirm(q);
 		double midPrice = (Offer.getMinPrice() + Offer.getMaxPrice()) / 2.0;
 
 		// Set lower price limit

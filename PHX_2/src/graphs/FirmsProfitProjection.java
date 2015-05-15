@@ -1,9 +1,8 @@
 package graphs;
 
-import demand.Consumers;
+import firms.Firm;
+import firms.Firms;
 import offer.Offer;
-import pHX_2.Firm;
-import pHX_2.Firms;
 import repast.simphony.context.space.continuous.ContextSpace;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.SimpleCartesianAdder;
@@ -13,7 +12,8 @@ public class FirmsProfitProjection {
 
 	private static final double MAX_X = 100, MAX_Y = 100, MAX_Z = 100;
 	private static final double MIN_X = 0, MIN_Y = 0, MIN_Z = 0;
-	private static final double MIN_PROFIT = -100.0;
+	private static final double MIN_PROFIT_TO_DRAW = -100.0,
+			MAX_PROFIT_TO_DRAW = 1000.0;
 
 	private ContinuousSpace<Firm> space;
 
@@ -44,13 +44,17 @@ public class FirmsProfitProjection {
 	}
 
 	private double profitToCoord(double profit) {
-		return Math.max(profit, MIN_PROFIT) / Consumers.getMaxConsumers() * (MAX_Y - MIN_Y) + MIN_Y;
+		double profitCoord = Math.min(MAX_PROFIT_TO_DRAW,
+				Math.max(profit, MIN_PROFIT_TO_DRAW)) + ( -MIN_PROFIT_TO_DRAW );
+		return profitCoord / (MAX_PROFIT_TO_DRAW - MIN_PROFIT_TO_DRAW)
+				 * (MAX_Y - MIN_Y) + MIN_Y;
 	}
 
 	private double qualityToCoord(double quality) {
-		return MAX_Z - ((quality - Offer.getMinQuality())
-				/ (Offer.getMaxQuality() - Offer.getMinQuality())
-				* (MAX_Z - MIN_Z) + MIN_Z);
+		return MAX_Z
+				- ((quality - Offer.getMinQuality())
+						/ (Offer.getMaxQuality() - Offer.getMinQuality())
+						* (MAX_Z - MIN_Z) + MIN_Z);
 	}
 
 }

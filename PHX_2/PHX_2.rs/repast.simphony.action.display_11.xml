@@ -1,40 +1,16 @@
 <repast.simphony.visualization.engine.CartesianDisplayDescriptor>
-  <name>Firms</name>
-  <type>2D</type>
+  <name>Profit</name>
+  <type>3D</type>
   <styles>
     <entry>
-      <string>firmTypes.BasePyramidFirm</string>
-      <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
-    </entry>
-    <entry>
-      <string>firmTypes.WaitFirm</string>
-      <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
-    </entry>
-    <entry>
-      <string>firmTypes.PremiumFirm</string>
-      <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
-    </entry>
-    <entry>
-      <string>firmTypes.OpportunisticFirm</string>
-      <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
+      <string>firms.Firm</string>
+      <string>repast.simphony.visualization.editedStyle.EditedStyle3D</string>
     </entry>
   </styles>
   <editedStyles>
     <entry>
-      <string>firmTypes.BasePyramidFirm</string>
-      <string>firmTypes.BasePyramidFirm.style_0.xml</string>
-    </entry>
-    <entry>
-      <string>firmTypes.WaitFirm</string>
-      <string>firmTypes.WaitFirm.style_0.xml</string>
-    </entry>
-    <entry>
-      <string>firmTypes.PremiumFirm</string>
-      <string>firmTypes.PremiumFirm.style_0.xml</string>
-    </entry>
-    <entry>
-      <string>firmTypes.OpportunisticFirm</string>
-      <string>firmTypes.OpportunisticFirm.style_0.xml</string>
+      <string>firms.Firm</string>
+      <string>firms.Firm.style_7.xml</string>
     </entry>
   </editedStyles>
   <netStyles/>
@@ -47,42 +23,30 @@
     <pType>LAST</pType>
     <duration>-1.0</duration>
     <frequency>REPEAT</frequency>
-    <hashCode>104786728</hashCode>
+    <hashCode>250409951</hashCode>
   </schedParams>
   <layoutClassName>foo.bar.baz</layoutClassName>
-  <layoutProjection>Firms2DProjection</layoutProjection>
+  <layoutProjection>FirmsProfitProjection</layoutProjection>
   <layoutInterval>0</layoutInterval>
   <layerOrder>
     <entry>
-      <string>firmTypes.BasePyramidFirm</string>
-      <int>3</int>
-    </entry>
-    <entry>
-      <string>firmTypes.WaitFirm</string>
-      <int>1</int>
-    </entry>
-    <entry>
-      <string>firmTypes.PremiumFirm</string>
+      <string>firms.Firm</string>
       <int>0</int>
-    </entry>
-    <entry>
-      <string>firmTypes.OpportunisticFirm</string>
-      <int>2</int>
     </entry>
   </layerOrder>
   <projections>
     <repast.simphony.scenario.data.ProjectionData>
-      <id>Firms2DProjection</id>
+      <id>FirmsProfitProjection</id>
       <attributes/>
       <type>continuous space</type>
     </repast.simphony.scenario.data.ProjectionData>
   </projections>
   <visualizationProperties class="repast.simphony.visualization.UnitSizeLayoutProperties">
-    <unitSize>5.0</unitSize>
+    <unitSize>0.01</unitSize>
   </visualizationProperties>
   <projectionDescriptors>
     <entry>
-      <string>Firms2DProjection</string>
+      <string>FirmsProfitProjection</string>
       <repast.simphony.visualization.continuous.ContinuousProjectionDescriptor>
         <proj reference="../../../../projections/repast.simphony.scenario.data.ProjectionData"/>
         <props>
@@ -91,7 +55,7 @@
             <map>
               <entry>
                 <string>UNIT_SIZE</string>
-                <float>5.0</float>
+                <float>0.01</float>
               </entry>
               <entry>
                 <string>SHOW</string>
@@ -99,7 +63,7 @@
               </entry>
               <entry>
                 <string>COLOR</string>
-                <int>-16777216</int>
+                <int>-1</int>
               </entry>
             </map>
           </entry>
@@ -109,9 +73,9 @@
   </projectionDescriptors>
   <props/>
   <backgroundColor>
-    <red>255</red>
-    <green>255</green>
-    <blue>255</blue>
+    <red>0</red>
+    <green>0</green>
+    <blue>0</blue>
     <alpha>255</alpha>
   </backgroundColor>
   <valueLayers/>

@@ -1,25 +1,25 @@
-<repast.simphony.visualization.editedStyle.DefaultEditedStyleData2D>
-  <shapeWkt>triangle</shapeWkt>
-  <size>15.0</size>
-  <sizeMax>15.0</sizeMax>
-  <sizeMin>1.0</sizeMin>
+<repast.simphony.visualization.editedStyle.DefaultEditedStyleData3D>
+  <shapeWkt>sphere</shapeWkt>
+  <size>0.01</size>
+  <sizeMax>1.0</sizeMax>
+  <sizeMin>0.0</sizeMin>
   <sizeScale>1.0</sizeScale>
   <label></label>
   <labelPosition>bottom</labelPosition>
   <labelPrecision>3</labelPrecision>
-  <labelOffset>5.0</labelOffset>
+  <labelOffset>0.03</labelOffset>
   <labelFontSize>14</labelFontSize>
   <labelFontType>0</labelFontType>
   <labelFontFamily>Arial</labelFontFamily>
   <labelColor>
-    <float>0.0</float>
-    <float>0.0</float>
-    <float>0.0</float>
+    <float>1.0</float>
+    <float>1.0</float>
+    <float>1.0</float>
   </labelColor>
   <color>
-    <float>0.0</float>
-    <float>0.0</float>
     <float>1.0</float>
+    <float>0.0</float>
+    <float>0.0</float>
   </color>
   <redMethodName>getRed</redMethodName>
   <greenMethodName>getGreen</greenMethodName>
@@ -39,4 +39,4 @@
     <float>1.0</float>
     <float>1.0</float>
   </colorScale>
-</repast.simphony.visualization.editedStyle.DefaultEditedStyleData2D>
+</repast.simphony.visualization.editedStyle.DefaultEditedStyleData3D>

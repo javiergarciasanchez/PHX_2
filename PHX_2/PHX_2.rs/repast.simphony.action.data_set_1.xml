@@ -1,7 +1,7 @@
 <repast.simphony.data2.engine.DataSetDescriptor>
   <name>Firm_Data</name>
   <type>NON_AGGREGATE</type>
-  <sourceType>pHX_2.Firm</sourceType>
+  <sourceType>firms.Firm</sourceType>
   <inclTick>true</inclTick>
   <inclBatchRun>true</inclBatchRun>
   <inclRandomSeed>false</inclRandomSeed>
@@ -20,7 +20,7 @@
       <string>AccumProfit</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
         <id>AccumProfit</id>
-        <className>pHX_2.Firm</className>
+        <className>firms.Firm</className>
         <methodName>getAccumProfit</methodName>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
@@ -28,7 +28,7 @@
       <string>Demand</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
         <id>Demand</id>
-        <className>pHX_2.Firm</className>
+        <className>firms.Firm</className>
         <methodName>getDemand</methodName>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
@@ -36,7 +36,7 @@
       <string>Profit</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
         <id>Profit</id>
-        <className>pHX_2.Firm</className>
+        <className>firms.Firm</className>
         <methodName>getProfit</methodName>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
@@ -44,7 +44,7 @@
       <string>Quality</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
         <id>Quality</id>
-        <className>pHX_2.Firm</className>
+        <className>firms.Firm</className>
         <methodName>getQuality</methodName>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
@@ -52,7 +52,7 @@
       <string>Price</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
         <id>Price</id>
-        <className>pHX_2.Firm</className>
+        <className>firms.Firm</className>
         <methodName>getPrice</methodName>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
@@ -60,7 +60,7 @@
       <string>FirmID</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
         <id>FirmID</id>
-        <className>pHX_2.Firm</className>
+        <className>firms.Firm</className>
         <methodName>getFirmID</methodName>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>

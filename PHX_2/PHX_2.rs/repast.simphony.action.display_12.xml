@@ -1,40 +1,16 @@
 <repast.simphony.visualization.engine.CartesianDisplayDescriptor>
-  <name>Firms Demand</name>
+  <name>Consumption</name>
   <type>3D</type>
   <styles>
     <entry>
-      <string>firmTypes.BasePyramidFirm</string>
-      <string>repast.simphony.visualization.editedStyle.EditedStyle3D</string>
-    </entry>
-    <entry>
-      <string>firmTypes.WaitFirm</string>
-      <string>repast.simphony.visualization.editedStyle.EditedStyle3D</string>
-    </entry>
-    <entry>
-      <string>firmTypes.PremiumFirm</string>
-      <string>repast.simphony.visualization.editedStyle.EditedStyle3D</string>
-    </entry>
-    <entry>
-      <string>firmTypes.OpportunisticFirm</string>
+      <string>consumers.Consumer</string>
       <string>repast.simphony.visualization.editedStyle.EditedStyle3D</string>
     </entry>
   </styles>
   <editedStyles>
     <entry>
-      <string>firmTypes.BasePyramidFirm</string>
-      <string>firmTypes.BasePyramidFirm.style_1.xml</string>
-    </entry>
-    <entry>
-      <string>firmTypes.WaitFirm</string>
-      <string>firmTypes.WaitFirm.style_1.xml</string>
-    </entry>
-    <entry>
-      <string>firmTypes.PremiumFirm</string>
-      <string>firmTypes.PremiumFirm.style_1.xml</string>
-    </entry>
-    <entry>
-      <string>firmTypes.OpportunisticFirm</string>
-      <string>firmTypes.OpportunisticFirm.style_1.xml</string>
+      <string>consumers.Consumer</string>
+      <string>consumers.Consumer.style_8.xml</string>
     </entry>
   </editedStyles>
   <netStyles/>
@@ -47,32 +23,20 @@
     <pType>LAST</pType>
     <duration>-1.0</duration>
     <frequency>REPEAT</frequency>
-    <hashCode>687332426</hashCode>
+    <hashCode>-54706535</hashCode>
   </schedParams>
   <layoutClassName>foo.bar.baz</layoutClassName>
-  <layoutProjection>FirmsDemandProjection</layoutProjection>
+  <layoutProjection>ConsumptionProjection</layoutProjection>
   <layoutInterval>0</layoutInterval>
   <layerOrder>
     <entry>
-      <string>firmTypes.BasePyramidFirm</string>
-      <int>3</int>
-    </entry>
-    <entry>
-      <string>firmTypes.WaitFirm</string>
-      <int>2</int>
-    </entry>
-    <entry>
-      <string>firmTypes.PremiumFirm</string>
+      <string>consumers.Consumer</string>
       <int>0</int>
-    </entry>
-    <entry>
-      <string>firmTypes.OpportunisticFirm</string>
-      <int>1</int>
     </entry>
   </layerOrder>
   <projections>
     <repast.simphony.scenario.data.ProjectionData>
-      <id>FirmsDemandProjection</id>
+      <id>ConsumptionProjection</id>
       <attributes/>
       <type>continuous space</type>
     </repast.simphony.scenario.data.ProjectionData>
@@ -82,7 +46,7 @@
   </visualizationProperties>
   <projectionDescriptors>
     <entry>
-      <string>FirmsDemandProjection</string>
+      <string>ConsumptionProjection</string>
       <repast.simphony.visualization.continuous.ContinuousProjectionDescriptor>
         <proj reference="../../../../projections/repast.simphony.scenario.data.ProjectionData"/>
         <props>

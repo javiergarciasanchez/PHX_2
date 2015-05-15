@@ -1,32 +1,16 @@
 <repast.simphony.visualization.engine.CartesianDisplayDescriptor>
-  <name>Marginal_Utility</name>
-  <type>2D</type>
+  <name>Firms Demand</name>
+  <type>3D</type>
   <styles>
     <entry>
-      <string>pHX_2.SegmentLimit</string>
-      <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
-    </entry>
-    <entry>
       <string>firms.Firm</string>
-      <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
-    </entry>
-    <entry>
-      <string>consumers.Consumer</string>
-      <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
+      <string>repast.simphony.visualization.editedStyle.EditedStyle3D</string>
     </entry>
   </styles>
   <editedStyles>
     <entry>
-      <string>pHX_2.SegmentLimit</string>
-      <string>pHX_2.SegmentLimit.style_3.xml</string>
-    </entry>
-    <entry>
       <string>firms.Firm</string>
-      <string>firms.Firm.style_5.xml</string>
-    </entry>
-    <entry>
-      <string>consumers.Consumer</string>
-      <string>consumers.Consumer.style_7.xml</string>
+      <string>firms.Firm.style_1.xml</string>
     </entry>
   </editedStyles>
   <netStyles/>
@@ -39,67 +23,59 @@
     <pType>LAST</pType>
     <duration>-1.0</duration>
     <frequency>REPEAT</frequency>
-    <hashCode>255958394</hashCode>
+    <hashCode>-1147964604</hashCode>
   </schedParams>
   <layoutClassName>foo.bar.baz</layoutClassName>
-  <layoutProjection>MargUtilProjection</layoutProjection>
+  <layoutProjection>FirmsDemandProjection</layoutProjection>
   <layoutInterval>0</layoutInterval>
   <layerOrder>
     <entry>
-      <string>pHX_2.SegmentLimit</string>
-      <int>0</int>
-    </entry>
-    <entry>
       <string>firms.Firm</string>
-      <int>1</int>
-    </entry>
-    <entry>
-      <string>consumers.Consumer</string>
-      <int>2</int>
+      <int>0</int>
     </entry>
   </layerOrder>
   <projections>
     <repast.simphony.scenario.data.ProjectionData>
-      <id>MargUtilProjection</id>
+      <id>FirmsDemandProjection</id>
       <attributes/>
-      <type>grid</type>
+      <type>continuous space</type>
     </repast.simphony.scenario.data.ProjectionData>
   </projections>
   <visualizationProperties class="repast.simphony.visualization.UnitSizeLayoutProperties">
-    <unitSize>15.0</unitSize>
+    <unitSize>0.01</unitSize>
   </visualizationProperties>
   <projectionDescriptors>
     <entry>
-      <string>MargUtilProjection</string>
-      <repast.simphony.visualization.grid.GridProjectionDescriptor>
+      <string>FirmsDemandProjection</string>
+      <repast.simphony.visualization.continuous.ContinuousProjectionDescriptor>
         <proj reference="../../../../projections/repast.simphony.scenario.data.ProjectionData"/>
         <props>
           <entry>
-            <string>repast.simphony.visualization.grid.GridDecorator</string>
+            <string>repast.simphony.visualization.continuous.ContinuousDecorator</string>
             <map>
               <entry>
                 <string>UNIT_SIZE</string>
-                <float>15.0</float>
+                <float>0.01</float>
               </entry>
               <entry>
                 <string>SHOW</string>
-                <boolean>false</boolean>
+                <boolean>true</boolean>
               </entry>
               <entry>
                 <string>COLOR</string>
-                <int>-16777216</int>
+                <int>-1</int>
               </entry>
             </map>
           </entry>
         </props>
-      </repast.simphony.visualization.grid.GridProjectionDescriptor>
+      </repast.simphony.visualization.continuous.ContinuousProjectionDescriptor>
     </entry>
   </projectionDescriptors>
   <props/>
   <backgroundColor>
-    <red>255</red>
-    <green>255</green>
-    <blue>255</blue>
+    <red>0</red>
+    <green>0</green>
+    <blue>0</blue>
     <alpha>255</alpha>
   </backgroundColor>
   <valueLayers/>

@@ -1,12 +1,12 @@
 package graphs;
 
+import consumers.Consumer;
+import consumers.Consumers;
 import pHX_2.Market;
 import repast.simphony.context.space.continuous.ContextSpace;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.SimpleCartesianAdder;
 import repast.simphony.space.continuous.StickyBorders;
-import demand.Consumer;
-import demand.Consumers;
 
 public class ConsumersProjection {
 

@@ -2,8 +2,8 @@ package firmTypes;
 
 import java.awt.Color;
 
+import firms.Firm;
 import offer.Offer;
-import pHX_2.Firm;
 import repast.simphony.random.RandomHelper;
 
 // This firm offer low price and high quality
