@@ -101,6 +101,11 @@ public class Offer {
 		this.offerType = offerType;
 	}
 
+	public static double getInitialQPerD() {
+		return (getMaxQuality() - getMinQuality())
+				/ (getMaxPrice() - getMinPrice());
+	}
+
 	public static double getMinPrice() {
 		return minPrice;
 	}
