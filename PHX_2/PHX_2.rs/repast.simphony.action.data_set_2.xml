@@ -1,9 +1,9 @@
 <repast.simphony.data2.engine.DataSetDescriptor>
-  <name>Consumers</name>
+  <name>Firm_Data</name>
   <type>NON_AGGREGATE</type>
-  <sourceType>consumers.Consumer</sourceType>
+  <sourceType>firms.Firm</sourceType>
   <inclTick>true</inclTick>
-  <inclBatchRun>false</inclBatchRun>
+  <inclBatchRun>true</inclBatchRun>
   <inclRandomSeed>false</inclRandomSeed>
   <scheduleParams>
     <start>1.0</start>
@@ -12,32 +12,64 @@
     <pType>LAST</pType>
     <duration>-1.0</duration>
     <frequency>REPEAT</frequency>
-    <hashCode>-1323704716</hashCode>
+    <hashCode>263043529</hashCode>
   </scheduleParams>
   <atEnd>false</atEnd>
   <methodDataSources class="linked-hash-map">
     <entry>
-      <string>MargUtilOfQuality</string>
+      <string>AccumProfit</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>MargUtilOfQuality</id>
-        <className>consumers.Consumer</className>
-        <methodName>getMargUtilOfQuality</methodName>
+        <id>AccumProfit</id>
+        <className>firms.Firm</className>
+        <methodName>getAccumProfit</methodName>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>ConsumerID</string>
+      <string>Demand</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>ConsumerID</id>
-        <className>consumers.Consumer</className>
-        <methodName>getConsumerID</methodName>
+        <id>Demand</id>
+        <className>firms.Firm</className>
+        <methodName>getDemand</methodName>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>ChosenFirmIntID</string>
+      <string>Profit</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>ChosenFirmIntID</id>
-        <className>consumers.Consumer</className>
-        <methodName>getChosenFirmIntID</methodName>
+        <id>Profit</id>
+        <className>firms.Firm</className>
+        <methodName>getProfit</methodName>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Quality</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Quality</id>
+        <className>firms.Firm</className>
+        <methodName>getQuality</methodName>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>Price</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Price</id>
+        <className>firms.Firm</className>
+        <methodName>getPrice</methodName>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>FirmID</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>FirmID</id>
+        <className>firms.Firm</className>
+        <methodName>getFirmID</methodName>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
+    <entry>
+      <string>FirmType</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>FirmType</id>
+        <className>firms.Firm</className>
+        <methodName>getFirmType</methodName>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
   </methodDataSources>

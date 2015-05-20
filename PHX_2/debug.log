@@ -1,381 +1,761 @@
-ERROR [AWT-EventQueue-0] 2015-05-12 19:44:54,793 repast.simphony.visualization.engine.DisplayComponentControllerAction - Error while creating displays
-repast.simphony.visualization.engine.DisplayCreationException: Error while creating display.
-	at repast.simphony.visualization.engine.DisplayCreatorOGL2D.createDisplay(DisplayCreatorOGL2D.java:102)
-	at repast.simphony.visualization.engine.DisplayProducer.createDisplay(DisplayProducer.java:45)
-	at repast.simphony.visualization.engine.DisplayComponentControllerAction.runInitialize(DisplayComponentControllerAction.java:104)
-	at repast.simphony.engine.controller.DefaultController$2.visit(DefaultController.java:214)
-	at repast.simphony.engine.controller.DefaultController$2.visit(DefaultController.java:1)
-	at repast.simphony.util.collections.NaryTree.preOrderTraverals(NaryTree.java:287)
-	at repast.simphony.util.collections.NaryTree.preOrderTraverals(NaryTree.java:290)
-	at repast.simphony.util.collections.NaryTree.preOrderTraverals(NaryTree.java:290)
-	at repast.simphony.util.collections.NaryTree.preOrderTraversal(NaryTree.java:283)
-	at repast.simphony.engine.controller.DefaultController.runInitialize(DefaultController.java:212)
-	at repast.simphony.engine.controller.DefaultController.runInitialize(DefaultController.java:383)
-	at repast.simphony.ui.RSApplication.initSim(RSApplication.java:160)
-	at repast.simphony.ui.action.InitRun.actionPerformed(InitRun.java:17)
-	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source)
-	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source)
-	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source)
-	at javax.swing.DefaultButtonModel.setPressed(Unknown Source)
-	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(Unknown Source)
-	at java.awt.AWTEventMulticaster.mouseReleased(Unknown Source)
-	at java.awt.Component.processMouseEvent(Unknown Source)
-	at javax.swing.JComponent.processMouseEvent(Unknown Source)
-	at java.awt.Component.processEvent(Unknown Source)
-	at java.awt.Container.processEvent(Unknown Source)
-	at java.awt.Component.dispatchEventImpl(Unknown Source)
-	at java.awt.Container.dispatchEventImpl(Unknown Source)
-	at java.awt.Component.dispatchEvent(Unknown Source)
-	at java.awt.LightweightDispatcher.retargetMouseEvent(Unknown Source)
-	at java.awt.LightweightDispatcher.processMouseEvent(Unknown Source)
-	at java.awt.LightweightDispatcher.dispatchEvent(Unknown Source)
-	at java.awt.Container.dispatchEventImpl(Unknown Source)
-	at java.awt.Window.dispatchEventImpl(Unknown Source)
-	at java.awt.Component.dispatchEvent(Unknown Source)
-	at java.awt.EventQueue.dispatchEventImpl(Unknown Source)
-	at java.awt.EventQueue.access$300(Unknown Source)
-	at java.awt.EventQueue$3.run(Unknown Source)
-	at java.awt.EventQueue$3.run(Unknown Source)
-	at java.security.AccessController.doPrivileged(Native Method)
-	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source)
-	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source)
-	at java.awt.EventQueue$4.run(Unknown Source)
-	at java.awt.EventQueue$4.run(Unknown Source)
-	at java.security.AccessController.doPrivileged(Native Method)
-	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source)
-	at java.awt.EventQueue.dispatchEvent(Unknown Source)
-	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
-	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
-	at java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source)
-	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
-	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
-	at java.awt.EventDispatchThread.run(Unknown Source)
-Caused by: java.lang.ClassCastException: repast.simphony.context.space.grid.ContextGrid cannot be cast to repast.simphony.space.continuous.ContinuousSpace
-	at repast.simphony.visualization.continuous.Continuous2DLayout.setProjection(Continuous2DLayout.java:1)
-	at repast.simphony.visualization.engine.AbstractCartesianDisplayCreator.createLayout(AbstractCartesianDisplayCreator.java:59)
-	at repast.simphony.visualization.engine.DisplayCreatorOGL2D.createDisplay(DisplayCreatorOGL2D.java:62)
-	... 49 more
-ERROR [AWT-EventQueue-0] 2015-05-12 19:49:09,300 repast.simphony.visualization.engine.DisplayComponentControllerAction - Error while creating displays
-repast.simphony.visualization.engine.DisplayCreationException: Error while creating display.
-	at repast.simphony.visualization.engine.DisplayCreatorOGL2D.createDisplay(DisplayCreatorOGL2D.java:102)
-	at repast.simphony.visualization.engine.DisplayProducer.createDisplay(DisplayProducer.java:45)
-	at repast.simphony.visualization.engine.DisplayComponentControllerAction.runInitialize(DisplayComponentControllerAction.java:104)
-	at repast.simphony.engine.controller.DefaultController$2.visit(DefaultController.java:214)
-	at repast.simphony.engine.controller.DefaultController$2.visit(DefaultController.java:1)
-	at repast.simphony.util.collections.NaryTree.preOrderTraverals(NaryTree.java:287)
-	at repast.simphony.util.collections.NaryTree.preOrderTraverals(NaryTree.java:290)
-	at repast.simphony.util.collections.NaryTree.preOrderTraverals(NaryTree.java:290)
-	at repast.simphony.util.collections.NaryTree.preOrderTraversal(NaryTree.java:283)
-	at repast.simphony.engine.controller.DefaultController.runInitialize(DefaultController.java:212)
-	at repast.simphony.engine.controller.DefaultController.runInitialize(DefaultController.java:383)
-	at repast.simphony.ui.RSApplication.initSim(RSApplication.java:160)
-	at repast.simphony.ui.action.InitRun.actionPerformed(InitRun.java:17)
-	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source)
-	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source)
-	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source)
-	at javax.swing.DefaultButtonModel.setPressed(Unknown Source)
-	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(Unknown Source)
-	at java.awt.AWTEventMulticaster.mouseReleased(Unknown Source)
-	at java.awt.Component.processMouseEvent(Unknown Source)
-	at javax.swing.JComponent.processMouseEvent(Unknown Source)
-	at java.awt.Component.processEvent(Unknown Source)
-	at java.awt.Container.processEvent(Unknown Source)
-	at java.awt.Component.dispatchEventImpl(Unknown Source)
-	at java.awt.Container.dispatchEventImpl(Unknown Source)
-	at java.awt.Component.dispatchEvent(Unknown Source)
-	at java.awt.LightweightDispatcher.retargetMouseEvent(Unknown Source)
-	at java.awt.LightweightDispatcher.processMouseEvent(Unknown Source)
-	at java.awt.LightweightDispatcher.dispatchEvent(Unknown Source)
-	at java.awt.Container.dispatchEventImpl(Unknown Source)
-	at java.awt.Window.dispatchEventImpl(Unknown Source)
-	at java.awt.Component.dispatchEvent(Unknown Source)
-	at java.awt.EventQueue.dispatchEventImpl(Unknown Source)
-	at java.awt.EventQueue.access$300(Unknown Source)
-	at java.awt.EventQueue$3.run(Unknown Source)
-	at java.awt.EventQueue$3.run(Unknown Source)
-	at java.security.AccessController.doPrivileged(Native Method)
-	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source)
-	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source)
-	at java.awt.EventQueue$4.run(Unknown Source)
-	at java.awt.EventQueue$4.run(Unknown Source)
-	at java.security.AccessController.doPrivileged(Native Method)
-	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source)
-	at java.awt.EventQueue.dispatchEvent(Unknown Source)
-	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
-	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
-	at java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source)
-	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
-	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
-	at java.awt.EventDispatchThread.run(Unknown Source)
-Caused by: java.lang.ClassCastException: repast.simphony.context.space.grid.ContextGrid cannot be cast to repast.simphony.space.continuous.ContinuousSpace
-	at repast.simphony.visualization.continuous.Continuous2DLayout.setProjection(Continuous2DLayout.java:1)
-	at repast.simphony.visualization.engine.AbstractCartesianDisplayCreator.createLayout(AbstractCartesianDisplayCreator.java:59)
-	at repast.simphony.visualization.engine.DisplayCreatorOGL2D.createDisplay(DisplayCreatorOGL2D.java:62)
-	... 49 more
-ERROR [AWT-EventQueue-0] 2015-05-13 10:05:27,456 repast.simphony.visualization.engine.DisplayComponentControllerAction - Error while creating displays
-repast.simphony.visualization.engine.DisplayCreationException: Error while creating display.
-	at repast.simphony.visualization.engine.DisplayCreator3D.createDisplay(DisplayCreator3D.java:101)
-	at repast.simphony.visualization.engine.DisplayProducer.createDisplay(DisplayProducer.java:48)
-	at repast.simphony.visualization.engine.DisplayComponentControllerAction.runInitialize(DisplayComponentControllerAction.java:104)
-	at repast.simphony.engine.controller.DefaultController$3.visit(DefaultController.java:244)
-	at repast.simphony.engine.controller.DefaultController$3.visit(DefaultController.java:1)
-	at repast.simphony.util.collections.NaryTree.preOrderTraverals(NaryTree.java:287)
-	at repast.simphony.util.collections.NaryTree.preOrderTraverals(NaryTree.java:290)
-	at repast.simphony.util.collections.NaryTree.preOrderTraverals(NaryTree.java:290)
-	at repast.simphony.util.collections.NaryTree.preOrderTraversal(NaryTree.java:283)
-	at repast.simphony.engine.controller.DefaultController.runInitialize(DefaultController.java:242)
-	at repast.simphony.engine.controller.DefaultController.runInitialize(DefaultController.java:386)
-	at repast.simphony.ui.RSApplication.initSim(RSApplication.java:160)
-	at repast.simphony.ui.action.InitRun.actionPerformed(InitRun.java:17)
-	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source)
-	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source)
-	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source)
-	at javax.swing.DefaultButtonModel.setPressed(Unknown Source)
-	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(Unknown Source)
-	at java.awt.AWTEventMulticaster.mouseReleased(Unknown Source)
-	at java.awt.Component.processMouseEvent(Unknown Source)
-	at javax.swing.JComponent.processMouseEvent(Unknown Source)
-	at java.awt.Component.processEvent(Unknown Source)
-	at java.awt.Container.processEvent(Unknown Source)
-	at java.awt.Component.dispatchEventImpl(Unknown Source)
-	at java.awt.Container.dispatchEventImpl(Unknown Source)
-	at java.awt.Component.dispatchEvent(Unknown Source)
-	at java.awt.LightweightDispatcher.retargetMouseEvent(Unknown Source)
-	at java.awt.LightweightDispatcher.processMouseEvent(Unknown Source)
-	at java.awt.LightweightDispatcher.dispatchEvent(Unknown Source)
-	at java.awt.Container.dispatchEventImpl(Unknown Source)
-	at java.awt.Window.dispatchEventImpl(Unknown Source)
-	at java.awt.Component.dispatchEvent(Unknown Source)
-	at java.awt.EventQueue.dispatchEventImpl(Unknown Source)
-	at java.awt.EventQueue.access$300(Unknown Source)
-	at java.awt.EventQueue$3.run(Unknown Source)
-	at java.awt.EventQueue$3.run(Unknown Source)
-	at java.security.AccessController.doPrivileged(Native Method)
-	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source)
-	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source)
-	at java.awt.EventQueue$4.run(Unknown Source)
-	at java.awt.EventQueue$4.run(Unknown Source)
-	at java.security.AccessController.doPrivileged(Native Method)
-	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source)
-	at java.awt.EventQueue.dispatchEvent(Unknown Source)
-	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
-	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
-	at java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source)
-	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
-	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
-	at java.awt.EventDispatchThread.run(Unknown Source)
-Caused by: java.lang.RuntimeException: Projection 'FirmsProfitProjection' not found.
-	at repast.simphony.visualization.engine.AbstractCartesianDisplayCreator.createLayout(AbstractCartesianDisplayCreator.java:57)
-	at repast.simphony.visualization.engine.DisplayCreator3D.createDisplay(DisplayCreator3D.java:63)
-	... 49 more
-FATAL [Thread-7] 2015-05-13 12:12:23,569 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
-Current tick (1.0)
-java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
-	at repast.simphony.engine.controller.ScheduledMethodControllerAction$ScheduleMethodAllAction.execute(ScheduledMethodControllerAction.java:333)
-	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
-	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
-	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
-	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
-	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
-	at java.lang.Thread.run(Unknown Source)
-Caused by: java.lang.reflect.InvocationTargetException
-	at pHX_2.Firm$$FastClassByCGLIB$$42341239.invoke(<generated>)
-	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
-	... 7 more
-Caused by: repast.simphony.space.SpatialException: Target location -9.090909090909092 is outside of grid's dimensions.
-	at repast.simphony.space.continuous.AbstractPointTranslator.boundsCheck(AbstractPointTranslator.java:49)
-	at repast.simphony.space.continuous.AbstractPointTranslator.transform(AbstractPointTranslator.java:39)
-	at repast.simphony.space.continuous.AbstractContinuousSpace.doMove(AbstractContinuousSpace.java:144)
-	at repast.simphony.space.continuous.AbstractContinuousSpace.moveTo(AbstractContinuousSpace.java:121)
-	at graphs.FirmsProfitProjection.update(FirmsProfitProjection.java:35)
-	at firms.Firm.updateProjections(Firm.java:238)
-	at firms.Firm.makeOffer(Firm.java:113)
-	... 10 more
-WARN  [AWT-EventQueue-0] 2015-05-14 11:15:14,895 repast.simphony.engine.controller.DefaultController - Unable to initialize a subcontext: check that subcontext constructors are passed the correct name
-ERROR [AWT-EventQueue-0] 2015-05-14 11:15:14,896 repast.simphony.ui.RSApplication - Error while initializing simulation
-java.lang.RuntimeException: Unable to initialize an unfound context
-	at repast.simphony.engine.controller.DefaultController.runInitialize(DefaultController.java:238)
-	at repast.simphony.engine.controller.DefaultController.runInitialize(DefaultController.java:386)
-	at repast.simphony.ui.RSApplication.initSim(RSApplication.java:160)
-	at repast.simphony.ui.action.InitRun.actionPerformed(InitRun.java:17)
-	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source)
-	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source)
-	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source)
-	at javax.swing.DefaultButtonModel.setPressed(Unknown Source)
-	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(Unknown Source)
-	at java.awt.AWTEventMulticaster.mouseReleased(Unknown Source)
-	at java.awt.Component.processMouseEvent(Unknown Source)
-	at javax.swing.JComponent.processMouseEvent(Unknown Source)
-	at java.awt.Component.processEvent(Unknown Source)
-	at java.awt.Container.processEvent(Unknown Source)
-	at java.awt.Component.dispatchEventImpl(Unknown Source)
-	at java.awt.Container.dispatchEventImpl(Unknown Source)
-	at java.awt.Component.dispatchEvent(Unknown Source)
-	at java.awt.LightweightDispatcher.retargetMouseEvent(Unknown Source)
-	at java.awt.LightweightDispatcher.processMouseEvent(Unknown Source)
-	at java.awt.LightweightDispatcher.dispatchEvent(Unknown Source)
-	at java.awt.Container.dispatchEventImpl(Unknown Source)
-	at java.awt.Window.dispatchEventImpl(Unknown Source)
-	at java.awt.Component.dispatchEvent(Unknown Source)
-	at java.awt.EventQueue.dispatchEventImpl(Unknown Source)
-	at java.awt.EventQueue.access$300(Unknown Source)
-	at java.awt.EventQueue$3.run(Unknown Source)
-	at java.awt.EventQueue$3.run(Unknown Source)
-	at java.security.AccessController.doPrivileged(Native Method)
-	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source)
-	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source)
-	at java.awt.EventQueue$4.run(Unknown Source)
-	at java.awt.EventQueue$4.run(Unknown Source)
-	at java.security.AccessController.doPrivileged(Native Method)
-	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source)
-	at java.awt.EventQueue.dispatchEvent(Unknown Source)
-	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
-	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
-	at java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source)
-	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
-	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
-	at java.awt.EventDispatchThread.run(Unknown Source)
-WARN  [AWT-EventQueue-0] 2015-05-14 11:29:28,329 repast.simphony.engine.environment.ProjectionRegistry - Duplicate projection typegeography
-WARN  [AWT-EventQueue-0] 2015-05-14 11:29:28,329 repast.simphony.visualization.engine.VisualizationRegistry - Duplicate visualization typeGIS
-WARN  [AWT-EventQueue-0] 2015-05-14 11:29:28,329 repast.simphony.visualization.engine.VisualizationRegistry - Duplicate visualization typeGIS 3D
-WARN  [AWT-EventQueue-0] 2015-05-14 11:29:37,291 repast.simphony.engine.environment.ProjectionRegistry - Duplicate projection typegeography
-WARN  [AWT-EventQueue-0] 2015-05-14 11:29:37,292 repast.simphony.visualization.engine.VisualizationRegistry - Duplicate visualization typeGIS
-WARN  [AWT-EventQueue-0] 2015-05-14 11:29:37,292 repast.simphony.visualization.engine.VisualizationRegistry - Duplicate visualization typeGIS 3D
-FATAL [Thread-7] 2015-05-14 12:03:06,780 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
-Current tick (1.0)
-java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
-	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
-	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
-	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
-	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
-	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
-	at java.lang.Thread.run(Unknown Source)
-Caused by: java.lang.reflect.InvocationTargetException
-	at pHX_2.Segments$$FastClassByCGLIB$$693eee1b.invoke(<generated>)
-	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
-	... 6 more
-Caused by: repast.simphony.space.SpatialException: Target location -170 is outside of grid's dimensions.
-	at repast.simphony.space.grid.AbstractGridPointTranslator.boundsCheck(AbstractGridPointTranslator.java:48)
-	at repast.simphony.space.grid.AbstractGridPointTranslator.transform(AbstractGridPointTranslator.java:38)
-	at repast.simphony.space.grid.AbstractGrid.getTransformedLocation(AbstractGrid.java:252)
-	at repast.simphony.space.grid.AbstractGrid.getObjectAt(AbstractGrid.java:231)
-	at graphs.MargUtilProjection.getFreeY(MargUtilProjection.java:87)
-	at graphs.MargUtilProjection.add(MargUtilProjection.java:57)
-	at pHX_2.Segments.createSegmentsLimits(Segments.java:50)
-	... 9 more
-FATAL [Thread-7] 2015-05-14 12:03:47,161 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
-Current tick (1.0)
-java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
-	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
-	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
-	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
-	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
-	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
-	at java.lang.Thread.run(Unknown Source)
-Caused by: java.lang.reflect.InvocationTargetException
-	at pHX_2.Segments$$FastClassByCGLIB$$693eee1b.invoke(<generated>)
-	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
-	... 6 more
-Caused by: repast.simphony.space.SpatialException: Target location -1031 is outside of grid's dimensions.
-	at repast.simphony.space.grid.AbstractGridPointTranslator.boundsCheck(AbstractGridPointTranslator.java:48)
-	at repast.simphony.space.grid.AbstractGridPointTranslator.transform(AbstractGridPointTranslator.java:38)
-	at repast.simphony.space.grid.AbstractGrid.getTransformedLocation(AbstractGrid.java:252)
-	at repast.simphony.space.grid.AbstractGrid.getObjectAt(AbstractGrid.java:231)
-	at graphs.MargUtilProjection.getFreeY(MargUtilProjection.java:87)
-	at graphs.MargUtilProjection.add(MargUtilProjection.java:57)
-	at pHX_2.Segments.createSegmentsLimits(Segments.java:50)
-	... 9 more
-FATAL [Thread-7] 2015-05-14 16:14:56,530 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
-Current tick (1.0)
-java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
-	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
-	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
-	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
-	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
-	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
-	at java.lang.Thread.run(Unknown Source)
-Caused by: java.lang.reflect.InvocationTargetException
-	at pHX_2.Segments$$FastClassByCGLIB$$693eee1b.invoke(<generated>)
-	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
-	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
-	... 6 more
-Caused by: repast.simphony.space.SpatialException: Target location -164 is outside of grid's dimensions.
-	at repast.simphony.space.grid.AbstractGridPointTranslator.boundsCheck(AbstractGridPointTranslator.java:48)
-	at repast.simphony.space.grid.AbstractGridPointTranslator.transform(AbstractGridPointTranslator.java:38)
-	at repast.simphony.space.grid.AbstractGrid.getTransformedLocation(AbstractGrid.java:252)
-	at repast.simphony.space.grid.AbstractGrid.getObjectAt(AbstractGrid.java:231)
-	at graphs.MargUtilProjection.getFreeY(MargUtilProjection.java:87)
-	at graphs.MargUtilProjection.add(MargUtilProjection.java:57)
-	at pHX_2.Segments.directAddSegmentLimit(Segments.java:80)
-	at pHX_2.Segments.addSegmentLimit(Segments.java:60)
-	at pHX_2.Segments.addSegmentLimit(Segments.java:71)
-	at pHX_2.Segments.createSegmentsLimits(Segments.java:40)
-	... 9 more
-ERROR [AWT-EventQueue-0] 2015-05-15 11:07:41,408 repast.simphony.ui.RSApplication - Projection error
-repast.simphony.space.SpatialException: Target location 45 is outside of grid's dimensions.
-	at repast.simphony.space.grid.AbstractGridPointTranslator.boundsCheck(AbstractGridPointTranslator.java:48)
-	at repast.simphony.space.grid.AbstractGridPointTranslator.transform(AbstractGridPointTranslator.java:38)
-	at repast.simphony.space.grid.AbstractGrid.getTransformedLocation(AbstractGrid.java:252)
-	at repast.simphony.space.grid.AbstractGrid.getObjectAt(AbstractGrid.java:231)
-	at graphs.MargUtilProjection.getFreeY(MargUtilProjection.java:87)
-	at graphs.MargUtilProjection.add(MargUtilProjection.java:41)
-	at consumers.Consumer.addToProjections(Consumer.java:56)
-	at consumers.Consumers.addConsumersToProjections(Consumers.java:85)
-	at pHX_2.Market.build(Market.java:69)
-	at repast.simphony.dataLoader.engine.ClassNameContextBuilder.build(ClassNameContextBuilder.java:41)
-	at repast.simphony.dataLoader.engine.DataLoaderControllerAction.runInitialize(DataLoaderControllerAction.java:48)
-	at repast.simphony.engine.controller.DefaultController$2.visit(DefaultController.java:214)
-	at repast.simphony.engine.controller.DefaultController$2.visit(DefaultController.java:1)
-	at repast.simphony.util.collections.NaryTree.preOrderTraverals(NaryTree.java:287)
-	at repast.simphony.util.collections.NaryTree.preOrderTraverals(NaryTree.java:290)
-	at repast.simphony.util.collections.NaryTree.preOrderTraverals(NaryTree.java:290)
-	at repast.simphony.util.collections.NaryTree.preOrderTraversal(NaryTree.java:283)
-	at repast.simphony.engine.controller.DefaultController.runInitialize(DefaultController.java:212)
-	at repast.simphony.engine.controller.DefaultController.runInitialize(DefaultController.java:383)
-	at repast.simphony.ui.RSApplication.initSim(RSApplication.java:160)
-	at repast.simphony.ui.RSApplication.step(RSApplication.java:212)
-	at repast.simphony.ui.action.StepRun.actionPerformed(StepRun.java:17)
-	at javax.swing.AbstractButton.fireActionPerformed(Unknown Source)
-	at javax.swing.AbstractButton$Handler.actionPerformed(Unknown Source)
-	at javax.swing.DefaultButtonModel.fireActionPerformed(Unknown Source)
-	at javax.swing.DefaultButtonModel.setPressed(Unknown Source)
-	at javax.swing.plaf.basic.BasicButtonListener.mouseReleased(Unknown Source)
-	at java.awt.AWTEventMulticaster.mouseReleased(Unknown Source)
-	at java.awt.Component.processMouseEvent(Unknown Source)
-	at javax.swing.JComponent.processMouseEvent(Unknown Source)
-	at java.awt.Component.processEvent(Unknown Source)
-	at java.awt.Container.processEvent(Unknown Source)
-	at java.awt.Component.dispatchEventImpl(Unknown Source)
-	at java.awt.Container.dispatchEventImpl(Unknown Source)
-	at java.awt.Component.dispatchEvent(Unknown Source)
-	at java.awt.LightweightDispatcher.retargetMouseEvent(Unknown Source)
-	at java.awt.LightweightDispatcher.processMouseEvent(Unknown Source)
-	at java.awt.LightweightDispatcher.dispatchEvent(Unknown Source)
-	at java.awt.Container.dispatchEventImpl(Unknown Source)
-	at java.awt.Window.dispatchEventImpl(Unknown Source)
-	at java.awt.Component.dispatchEvent(Unknown Source)
-	at java.awt.EventQueue.dispatchEventImpl(Unknown Source)
-	at java.awt.EventQueue.access$300(Unknown Source)
-	at java.awt.EventQueue$3.run(Unknown Source)
-	at java.awt.EventQueue$3.run(Unknown Source)
-	at java.security.AccessController.doPrivileged(Native Method)
-	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source)
-	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source)
-	at java.awt.EventQueue$4.run(Unknown Source)
-	at java.awt.EventQueue$4.run(Unknown Source)
-	at java.security.AccessController.doPrivileged(Native Method)
-	at java.security.ProtectionDomain$1.doIntersectionPrivilege(Unknown Source)
-	at java.awt.EventQueue.dispatchEvent(Unknown Source)
-	at java.awt.EventDispatchThread.pumpOneEventForFilters(Unknown Source)
-	at java.awt.EventDispatchThread.pumpEventsForFilter(Unknown Source)
-	at java.awt.EventDispatchThread.pumpEventsForHierarchy(Unknown Source)
-	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
-	at java.awt.EventDispatchThread.pumpEvents(Unknown Source)
-	at java.awt.EventDispatchThread.run(Unknown Source)
+INFO  [Thread-6] 2015-05-18 16:50:28,361 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:28 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:28,361 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:28,548 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:28 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:28,548 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:29,080 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:29 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:29,080 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:29,252 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:29 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:29,252 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:29,752 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:29 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:29,752 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:29,923 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:29 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:29,923 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:30,361 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:30 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:30,361 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:30,533 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:30 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:30,533 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:30,988 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:30 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:30,988 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:31,160 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:31 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:31,160 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:31,597 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:31 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:31,597 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:31,753 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:31 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:31,753 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:32,222 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:32 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:32,222 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:32,363 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:32 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:32,363 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:32,816 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:32 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:32,816 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:32,941 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:32 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:32,941 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:33,442 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:33 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:33,442 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:33,580 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:33 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:33,595 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:34,190 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:34 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:34,191 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:34,341 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:34 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:34,341 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:34,841 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:34 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:34,841 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:34,997 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:34 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:34,997 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:35,482 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:35 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:35,482 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:35,654 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:35 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:35,654 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:36,154 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:36 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:36,154 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:36,341 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:36 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:36,341 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:36,825 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:36 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:36,825 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:37,013 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:36 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:37,013 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:37,482 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:37 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:37,482 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:37,669 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:37 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:37,669 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:38,247 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:38 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:38,247 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:38,372 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:38 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:38,372 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:38,935 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:38 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:38,935 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:39,076 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:39 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:39,076 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:39,638 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:39 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:39,638 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:39,841 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:39 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:39,841 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:40,294 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:40 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:40,294 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:40,497 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:40 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:40,497 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:40,966 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:40 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:40,966 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:41,201 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:41 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:41,201 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:41,607 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:41 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:41,607 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:41,826 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:41 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:41,826 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:42,216 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:42 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:42,216 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:42,404 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:42 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:42,404 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:42,841 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:42 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:42,841 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:43,044 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:43 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:43,044 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:43,451 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:43 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:43,451 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:43,623 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:43 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:43,623 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:44,076 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:44 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:44,091 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:44,295 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:44 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:44,295 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:44,763 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:44 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:44,763 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:44,951 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:44 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:44,951 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:45,388 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:45 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:45,388 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:45,591 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:45 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:45,591 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:46,072 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:46 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:46,072 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:46,259 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:46 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:46,259 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:46,666 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:46 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:46,666 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:46,869 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:46 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:46,869 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:47,288 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:47 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:47,288 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:47,476 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:47 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:47,476 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:47,992 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:47 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:47,992 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:48,179 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:48 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:48,179 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:48,773 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:48 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:48,773 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:48,961 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:48 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:48,961 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:49,498 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:49 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:49,498 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:49,654 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:49 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:49,654 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:50,169 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:50 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:50,169 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:50,357 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:50 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:50,357 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:50,810 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:50 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:50,810 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:51,021 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:51 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:51,021 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:51,413 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:51 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:51,413 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:51,631 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:51 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:51,631 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:52,100 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:52 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:52,100 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:52,319 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:52 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:52,319 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:52,694 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:52 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:52,694 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:52,960 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:52 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:52,960 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:53,288 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:53 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:53,288 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:53,522 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:53 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:53,522 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:53,882 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:53 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:53,882 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [pool-4-thread-1] 2015-05-18 16:50:54,085 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\JGSANC~1\AppData\Local\Temp\simphony_model_1431978586799 for DONE:  no
+INFO  [Thread-6] 2015-05-18 16:50:54,116 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:54 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:54,116 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:54,460 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:54 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:54,460 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:54,694 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:54 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:54,710 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:55,069 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:55 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:55,069 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:55,303 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:55 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:55,303 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:55,663 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:55 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:55,679 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:55,913 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:55 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:55,913 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:56,304 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:56 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:56,319 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:56,569 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:56 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:56,585 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:56,975 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:56 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:56,975 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:57,257 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:57 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:57,257 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:57,585 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:57 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:57,585 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:57,850 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:57 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:57,850 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:58,179 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:58 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:58,179 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:58,444 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:58 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:58,444 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:58,823 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:58 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:58,823 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:59,095 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:59 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:59,095 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:59,439 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:59 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:59,439 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:50:59,714 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:50:59 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:50:59,714 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:51:00,105 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:51:00 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:51:00,105 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:51:00,355 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:51:00 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:51:00,355 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:51:00,755 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:51:00 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:51:00,755 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:51:00,989 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:51:00 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:51:00,989 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:51:01,371 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:51:01 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:51:01,371 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:51:01,621 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:51:01 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:51:01,621 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:51:02,028 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:51:02 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:51:02,028 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:51:02,262 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:51:02 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:51:02,262 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:51:02,668 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:51:02 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:51:02,668 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:51:02,934 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:51:02 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:51:02,934 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:51:03,309 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:51:03 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:51:03,309 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:51:03,590 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:51:03 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:51:03,590 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:51:03,950 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:51:03 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:51:03,950 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:51:04,231 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:51:04 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:51:04,231 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:51:04,559 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:51:04 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:51:04,575 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:51:04,856 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:51:04 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:51:04,856 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:51:05,215 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:51:05 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:51:05,215 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:51:05,528 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:51:05 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:51:05,528 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:51:05,809 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:51:05 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:51:05,809 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:51:06,120 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:51:06 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:51:06,120 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:51:06,400 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:51:06 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:51:06,400 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:51:06,726 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:51:06 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:51:06,726 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:51:07,078 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:51:07 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:51:07,078 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:51:07,390 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:51:07 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:51:07,390 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:51:07,734 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:51:07 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:51:07,734 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:51:08,062 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:51:08 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:51:08,062 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:51:08,390 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:51:08 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:51:08,390 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:51:08,734 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:51:08 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:51:08,734 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:51:09,015 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:51:09 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:51:09,031 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:51:09,359 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:51:09 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:51:09,359 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:51:09,656 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:51:09 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:51:09,656 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:51:10,015 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:51:10 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:51:10,015 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:51:10,297 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:51:10 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:51:10,297 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:51:10,640 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:51:10 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:51:10,640 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:51:10,937 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:51:10 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:51:10,937 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:51:11,266 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:51:11 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:51:11,266 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:51:11,578 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:51:11 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:51:11,578 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:51:11,953 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:51:11 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:51:11,953 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:51:12,219 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:51:12 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:51:12,234 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:51:12,594 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:51:12 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:51:12,594 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:51:12,812 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:51:12 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:51:12,812 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:51:13,203 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:51:13 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:51:13,203 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:51:13,422 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:51:13 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:51:13,422 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:51:13,828 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:51:13 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:51:13,828 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:51:14,109 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:51:14 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:51:14,109 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:51:14,547 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:51:14 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:51:14,547 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:51:14,781 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:51:14 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:51:14,781 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:51:15,203 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:51:15 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:51:15,203 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:51:15,406 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:51:15 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:51:15,406 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:51:15,828 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:51:15 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:51:15,828 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:51:16,000 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:51:16 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:51:16,000 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:51:16,422 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:51:16 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:51:16,422 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:51:16,610 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:51:16 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:51:16,610 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:51:17,016 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:51:17 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:51:17,016 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:51:17,219 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:51:17 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:51:17,219 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:51:17,625 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:51:17 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:51:17,625 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:51:17,875 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:51:17 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:51:17,875 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:51:18,266 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:51:18 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:51:18,266 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:51:18,469 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:51:18 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:51:18,469 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:51:18,891 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:51:18 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:51:18,891 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:51:19,094 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:51:19 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:51:19,094 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:51:19,500 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:51:19 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:51:19,500 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:51:19,755 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:51:19 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:51:19,755 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:51:20,165 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:51:20 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:51:20,165 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:51:20,431 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:51:20 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:51:20,431 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:51:20,837 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:51:20 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:51:20,837 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:51:21,072 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:51:21 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:51:21,072 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:51:21,482 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:51:21 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:51:21,482 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:51:21,732 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:51:21 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:51:21,732 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-6] 2015-05-18 16:51:22,123 repast.simphony.batch.ssh.LocalSession - may 18, 2015 4:51:22 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-6] 2015-05-18 16:51:22,123 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [pool-4-thread-1] 2015-05-18 16:51:54,096 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\JGSANC~1\AppData\Local\Temp\simphony_model_1431978586799 for DONE:  yes
+INFO  [SwingWorker-pool-2-thread-2] 2015-05-18 16:51:54,096 repast.simphony.batch.ssh.SessionsDriver - Run Time: 2,0741
+INFO  [SwingWorker-pool-2-thread-2] 2015-05-18 16:51:54,096 repast.simphony.batch.ssh.LocalSession - Finding output on localhost in C:\Users\JGSANC~1\AppData\Local\Temp\simphony_model_1431978586799
+INFO  [SwingWorker-pool-2-thread-2] 2015-05-18 16:51:54,112 repast.simphony.batch.ssh.SessionsDriver - Aggregating output into C:/Users/jgsanchez/git/PHX_2/PHX_2/output
+INFO  [SwingWorker-pool-2-thread-2] 2015-05-18 16:51:54,612 repast.simphony.batch.ssh.SessionsDriver - Get Output Time: 0,0086
+INFO  [SwingWorker-pool-2-thread-2] 2015-05-18 16:51:54,612 repast.simphony.batch.ssh.SessionsDriver - Finished. Elapsed Time: 2,1307
+INFO  [AWT-EventQueue-0] 2015-05-19 16:40:53,695 repast.simphony.batch.gui.BatchConfigMediator - Writing batch run config file to: C:\Users\jgsanchez\git\PHX_2\PHX_2\output\config.props
+INFO  [AWT-EventQueue-0] 2015-05-19 16:40:54,200 repast.simphony.batch.gui.BatchConfigMediator - Unrolling batch parameter file:
+	C:\Users\jgsanchez\git\PHX_2\PHX_2\batch\batch_params.xml to
+	C:\Users\JGSANC~1\AppData\Local\Temp\unrolledParamFile.txt
+INFO  [SwingWorker-pool-2-thread-1] 2015-05-19 16:41:39,464 repast.simphony.batch.ssh.LocalSession - 
+	Copying locally C:\Users\JGSANC~1\AppData\Local\Temp\JGSanchez_localhost418273327892404408.zip to 
+C:\Users\JGSANC~1\AppData\Local\Temp\simphony_model_1432064496011 ...
+INFO  [SwingWorker-pool-2-thread-1] 2015-05-19 16:41:39,514 repast.simphony.batch.ssh.LocalSession - Copying Finished.
+INFO  [SwingWorker-pool-2-thread-1] 2015-05-19 16:41:39,655 repast.simphony.batch.ssh.SessionsDriver - Initialization Time: 0,0584
+INFO  [SwingWorker-pool-2-thread-1] 2015-05-19 16:41:39,655 repast.simphony.batch.ssh.LocalSession - Unzipping model C:\Users\JGSANC~1\AppData\Local\Temp\simphony_model_1432064496011\JGSanchez_localhost418273327892404408.zip
+INFO  [SwingWorker-pool-2-thread-1] 2015-05-19 16:41:44,767 repast.simphony.batch.ssh.LocalSession - Running model on localhost ...
+INFO  [Thread-5] 2015-05-19 16:42:10,188 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:10 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:10,189 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:11,006 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:10 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:11,007 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:11,744 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:11 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:11,744 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:11,807 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:11 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:11,807 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:12,302 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:12 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:12,302 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:12,751 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:12 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:12,751 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:13,259 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:13 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:13,259 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:13,273 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:13 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:13,274 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:13,812 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:13 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:13,813 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:14,313 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:14 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:14,314 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:14,850 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:14 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:14,850 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:14,947 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:14 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:14,947 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:15,540 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:15 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:15,541 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:16,060 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:16 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:16,060 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:16,566 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:16 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:16,567 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:16,589 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:16 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:16,589 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:17,106 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:17 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:17,107 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:17,580 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:17 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:17,580 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:18,047 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:18 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:18,048 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:18,054 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:18 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:18,054 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:18,446 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:18 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:18,446 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:18,771 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:18 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:18,771 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:19,098 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:19 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:19,098 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:19,103 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:19 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:19,103 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:19,437 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:19 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:19,437 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:19,833 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:19 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:19,833 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:20,171 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:20 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:20,171 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:20,259 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:20 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:20,260 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:20,522 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:20 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:20,523 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:20,924 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:20 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:20,925 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:21,198 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:21 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:21,198 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:21,272 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:21 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:21,273 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:21,526 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:21 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:21,526 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:21,956 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:21 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:21,956 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:22,273 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:22 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:22,274 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:22,357 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:22 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:22,358 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:22,615 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:22 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:22,615 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:23,005 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:23 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:23,006 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:23,300 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:23 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:23,300 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:23,441 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:23 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:23,441 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:23,607 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:23 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:23,607 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:24,077 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:24 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:24,077 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:24,220 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:24 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:24,220 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:24,439 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:24 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:24,440 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:24,507 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:24 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:24,507 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:25,075 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:25 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:25,075 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:25,141 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:25 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:25,141 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:25,427 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:25 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:25,427 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:25,449 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:25 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:25,450 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:26,039 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:26 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:26,039 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:26,117 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:26 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:26,117 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:26,457 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:26 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:26,457 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:26,540 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:26 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:26,540 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:27,304 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:27 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:27,304 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:27,424 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:27 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:27,424 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:27,785 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:27 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:27,785 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:27,890 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:27 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:27,890 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:28,524 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:28 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:28,524 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:28,594 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:28 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:28,595 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:28,867 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:28 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:28,868 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:28,941 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:28 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:28,942 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:29,592 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:29 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:29,592 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:29,700 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:29 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:29,700 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:29,970 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:29 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:29,970 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:30,086 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:30 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:30,086 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:30,691 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:30 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:30,691 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:30,824 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:30 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:30,824 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:31,085 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:31 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:31,086 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:31,191 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:31 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:31,191 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:31,875 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:31 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:31,875 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:32,026 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:32 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:32,026 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:32,308 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:32 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:32,308 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:32,425 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:32 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:32,425 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:33,185 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:33 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:33,185 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:33,302 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:33 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:33,302 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:33,639 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:33 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:33,639 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:33,724 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:33 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:33,725 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:34,400 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:34 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:34,401 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:34,478 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:34 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:34,479 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:34,806 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:34 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:34,806 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:34,825 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:34 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:34,825 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:35,588 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:35 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:35,588 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:35,608 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:35 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:35,609 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:35,982 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:35 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:35,982 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:35,997 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:35 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:35,997 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:36,713 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:36 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:36,713 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:36,755 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:36 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:36,755 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:37,188 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:37 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:37,188 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:37,262 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:37 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:37,262 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:37,888 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:37 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:37,888 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:38,006 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:38 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:38,007 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:38,358 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:38 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:38,358 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:38,509 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:38 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:38,509 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:39,877 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:39 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:39,877 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:40,189 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:40 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:40,189 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:40,926 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:40 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:40,926 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:40,944 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:40 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:40,944 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:42,539 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:42 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:42,539 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:42,580 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:42 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:42,581 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:42,927 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:42 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:42,927 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:42,939 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:42 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:42,939 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:43,644 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:43 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:43,645 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:43,681 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:43 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:43,681 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:44,002 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:44 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:44,003 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:44,009 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:44 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:44,009 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:44,657 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:44 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:44,657 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:44,713 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:44 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:44,714 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [pool-3-thread-1] 2015-05-19 16:42:44,792 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\JGSANC~1\AppData\Local\Temp\simphony_model_1432064496011 for DONE:  no
+INFO  [Thread-5] 2015-05-19 16:42:44,954 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:44 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:44,954 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:45,067 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:45 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:45,067 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:45,575 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:45 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:45,575 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:45,700 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:45 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:45,701 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:45,881 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:45 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:45,881 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:45,985 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:45 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:45,985 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:46,463 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:46 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:46,464 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:46,608 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:46 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:46,609 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:46,771 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:46 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:46,771 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:46,923 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:46 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:46,924 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:47,434 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:47 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:47,434 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:47,584 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:47 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:47,584 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:47,800 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:47 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:47,800 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:47,949 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:47 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:47,949 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:48,406 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:48 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:48,407 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:48,617 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:48 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:48,618 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:48,756 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:48 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:48,757 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:48,954 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:48 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:48,954 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:49,371 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:49 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:49,372 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:49,577 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:49 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:49,577 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:49,727 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:49 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:49,727 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:49,919 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:49 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:49,920 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:50,419 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:50 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:50,420 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:50,572 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:50 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:50,572 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:50,767 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:50 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:50,768 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:50,909 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:50 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:50,910 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:51,399 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:51 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:51,399 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:51,536 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:51 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:51,537 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:51,739 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:51 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:51,739 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:51,870 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:51 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:51,870 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:52,367 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:52 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:52,367 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:52,502 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:52 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:52,503 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:52,680 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:52 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:52,680 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:52,850 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:52 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:52,850 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:53,333 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:53 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:53,333 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:53,527 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:53 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:53,527 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:53,664 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:53 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:53,664 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:53,877 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:53 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:53,878 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:54,355 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:54 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:54,355 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:54,526 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:54 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:54,527 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:54,681 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:54 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:54,681 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:54,871 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:54 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:54,871 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:55,333 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:55 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:55,333 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:55,506 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:55 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:55,506 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:55,637 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:55 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:55,638 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:55,788 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:55 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:55,788 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:56,307 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:56 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:56,308 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:56,439 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:56 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:56,439 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:56,656 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:56 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:56,657 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:56,781 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:56 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:56,781 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:57,352 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:57 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:57,352 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:57,498 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:57 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:57,498 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:57,691 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:57 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:57,691 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:57,824 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:57 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:57,825 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:58,439 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:58 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:58,439 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:58,605 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:58 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:58,605 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:58,763 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:58 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:58,910 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:58,919 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:58 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:58,919 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:59,511 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:59 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:59,511 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:59,685 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:59 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:59,685 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:42:59,894 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:42:59 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:42:59,894 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:43:00,092 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:43:00 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:43:00,093 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:43:00,469 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:43:00 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:43:00,470 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:43:00,759 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:43:00 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:43:00,759 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:43:00,840 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:43:00 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:43:00,840 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:43:01,094 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:43:01 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:43:01,094 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:43:01,604 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:43:01 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:43:01,605 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:43:01,873 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:43:01 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:43:01,874 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:43:02,020 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:43:02 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:43:02,020 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:43:02,261 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:43:02 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:43:02,261 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:43:02,625 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:43:02 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:43:02,625 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:43:02,929 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:43:02 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:43:02,930 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:43:02,964 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:43:02 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:43:02,964 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:43:03,279 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:43:03 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:43:03,279 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:43:03,503 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:43:03 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:43:03,503 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:43:03,813 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:43:03 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:43:03,813 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:43:03,883 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:43:03 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:43:03,883 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:43:04,161 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:43:04 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:43:04,162 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:43:04,442 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:43:04 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:43:04,442 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:43:04,746 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:43:04 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:43:04,746 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:43:04,777 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:43:04 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:43:04,777 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:43:05,132 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:43:05 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:43:05,133 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:43:05,481 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:43:05 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:43:05,482 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:43:05,785 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:43:05 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:43:05,786 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:43:05,796 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:43:05 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:43:05,796 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:43:06,080 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:43:06 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:43:06,080 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:43:06,465 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:43:06 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:43:06,465 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:43:06,785 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:43:06 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:43:06,785 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:43:06,811 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:43:06 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:43:06,812 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:43:07,150 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:43:07 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:43:07,150 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:43:07,509 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:43:07 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:43:07,509 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:43:07,807 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:43:07 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:43:07,807 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [Thread-5] 2015-05-19 16:43:08,106 repast.simphony.batch.ssh.LocalSession - may 19, 2015 4:43:08 PM java.util.logging.LogManager$RootLogger log
+INFO  [Thread-5] 2015-05-19 16:43:08,106 repast.simphony.batch.ssh.LocalSession - ADVERTENCIA: Unevenly distributed hash code - Degraded Preformance
+INFO  [pool-3-thread-1] 2015-05-19 16:43:44,794 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\JGSANC~1\AppData\Local\Temp\simphony_model_1432064496011 for DONE:  yes
+INFO  [SwingWorker-pool-2-thread-1] 2015-05-19 16:43:44,796 repast.simphony.batch.ssh.SessionsDriver - Run Time: 2,0857
+INFO  [SwingWorker-pool-2-thread-1] 2015-05-19 16:43:44,846 repast.simphony.batch.ssh.LocalSession - Finding output on localhost in C:\Users\JGSANC~1\AppData\Local\Temp\simphony_model_1432064496011
+INFO  [SwingWorker-pool-2-thread-1] 2015-05-19 16:43:44,910 repast.simphony.batch.ssh.SessionsDriver - Aggregating output into C:/Users/jgsanchez/git/PHX_2/PHX_2/output
+INFO  [SwingWorker-pool-2-thread-1] 2015-05-19 16:43:50,129 repast.simphony.batch.ssh.SessionsDriver - Get Output Time: 0,0889
+INFO  [SwingWorker-pool-2-thread-1] 2015-05-19 16:43:50,129 repast.simphony.batch.ssh.SessionsDriver - Finished. Elapsed Time: 2,2368

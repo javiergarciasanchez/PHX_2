@@ -15,10 +15,10 @@ import repast.simphony.space.grid.StickyBorders;
 
 public class MargUtilProjection {
 
-	private static final int MAX_X = 100, MAX_Y = 30;
+	private static final int MAX_X = 100, MAX_Y = 100;
 	private static final int MIN_X = 0;
-	private static final int FIRMS_HEIGHT = 10;
-	private static final int SEGMENT_LIMITS_HEIGHT = 4;
+	private static final int FIRMS_HEIGHT = 16;
+	private static final int SEGMENT_LIMITS_HEIGHT = 10;
 
 	private ContextGrid<Object> space;
 
@@ -36,7 +36,7 @@ public class MargUtilProjection {
 
 	}
 
-	public void add(Consumer c) {
+	public void update(Consumer c) {
 		int x = margUtilToCoord(c.getMargUtilOfQuality());
 		space.moveTo(c, x, getFreeY(x, FIRMS_HEIGHT + SEGMENT_LIMITS_HEIGHT, 1));
 

@@ -9,14 +9,17 @@ import graphs.Firms2DProjection;
 import graphs.FirmsDemandProjection;
 import graphs.FirmsProfitProjection;
 import graphs.MargUtilProjection;
+import firmTypes.FirmType;
 
 import java.util.ArrayList;
+
 import consumers.Consumer;
 import consumers.Consumers;
 import offer.Offer;
 import repast.simphony.context.Context;
 import repast.simphony.context.DefaultContext;
 import repast.simphony.dataLoader.ContextBuilder;
+import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.random.RandomHelper;
 
 public class Market extends DefaultContext<Object> implements
@@ -30,29 +33,36 @@ public class Market extends DefaultContext<Object> implements
 	public static Firms2DProjection firms2DProjection;
 	public static FirmsDemandProjection firmsDemandProjection;
 	public static FirmsProfitProjection firmsProfitProjection;
-	
+
 	public static ConsumptionProjection consumptionProjection;
 	public static MargUtilProjection margUtilProjection;
-	
+
 	public static Segments segments;
-	
 	public static ArrayList<Firm> toBeKilled;
+
 	@Override
 	public Context<Object> build(Context<Object> context) {
 
 		// Reset seed
 		RandomHelper.setSeed((Integer) GetParameter("randomSeed"));
 
+		// Set end of run
+		RunEnvironment.getInstance().endAt((Double) GetParameter("stopAt"));
+
 		// Reset static variables
 		Consumer.resetStaticVars();
 		Firm.resetStaticVars();
 		Offer.resetStaticVars();
+		FirmType.resetStaticVars();
 
 		// Initialize ToBeKilled
 		toBeKilled = new ArrayList<Firm>();
 
 		context.setId("Market");
-		
+
+		// Create RecessionsHandler Handler
+		new RecessionsHandler(context);
+
 		// Create Consumers
 		consumers = new Consumers();
 		context.addSubContext(consumers);
@@ -81,7 +91,7 @@ public class Market extends DefaultContext<Object> implements
 		// Create Market Segments defined by firms prices and qualities offered
 		segments = new Segments();
 		context.addSubContext(segments);
-		
+
 		return context;
 
 	}

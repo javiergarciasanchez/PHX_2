@@ -4,7 +4,7 @@ public class RunPriority {
 	// Higher priority means being executed earlier
 
 	// Executed only once
-	public static final double CONSUMERS_PRIORITY = 100;
+	public static final double SCHEDULE_RECESSIONS_PRIORITY = 100;
 
 	// Every step
 	public static final double ADD_FIRMS_PRIORITY = 90;
@@ -14,6 +14,7 @@ public class RunPriority {
 	public static final double KILL_FIRMS_PRIORITY = 50;
 	public static final double CREATE_SEGMENT_LIMITS_PRIORITY = 40;
 	public static final double UPDATE_PROJECTIONS_PRIORITY = 30;
+
 
 
 }

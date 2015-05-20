@@ -82,7 +82,7 @@ public class Consumers extends DefaultContext<Consumer> {
 	public void addConsumersToProjections() {
 
 		for (Consumer c : getObjects(Consumer.class)) {
-			c.addToProjections();
+			c.updateProjections();
 		}
 
 	}

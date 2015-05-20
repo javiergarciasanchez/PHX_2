@@ -185,10 +185,6 @@ public abstract class Firm {
 		}
 	}
 
-	private double profit() {
-		return (getPrice() - unitCost(getQuality())) * getDemand() - fixedCost;
-	}
-
 	private void getFromIgnorance(int amount) {
 		Consumer c;
 
@@ -229,6 +225,10 @@ public abstract class Firm {
 
 		getFromIgnorance(knownByIncrement);
 
+	}
+
+	private double profit() {
+		return (getPrice() - unitCost(getQuality())) * getDemand() - fixedCost;
 	}
 
 	protected double unitCost(double quality) {

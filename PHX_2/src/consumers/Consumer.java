@@ -6,6 +6,7 @@ import java.util.HashSet;
 
 import firms.Firm;
 import pHX_2.Market;
+import pHX_2.RecessionsHandler;
 import pHX_2.RunPriority;
 import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.random.RandomHelper;
@@ -50,14 +51,6 @@ public class Consumer {
 
 	}
 
-	public void addToProjections() {
-		// Set location in projections
-		Market.consumersProjection.add(this);
-		Market.margUtilProjection.add(this);
-		
-		Market.consumptionProjection.update(this);
-	}
-
 	private void setMargUtilOfQuality() {
 
 		// There is no need to introduce a marginal utility of money
@@ -68,8 +61,9 @@ public class Consumer {
 		// Assign border if out range
 		margUtilOfQuality = Math.max(
 				Market.consumers.getMinMargUtilOfQuality(), margUtilOfQuality);
-		
-		// Upper limit is unbounded. The max marg utility is updated to scale graphs
+
+		// Upper limit is unbounded. The max marg utility is updated to scale
+		// graphs
 		Market.consumers.setMaxMargUtilOfQuality(Math.max(
 				Market.consumers.getMaxMargUtilOfQuality(), margUtilOfQuality));
 
@@ -93,7 +87,7 @@ public class Consumer {
 	public void removeFromKnownFirms(Firm firm) {
 		knownFirmsNotExplored.remove(firm);
 	}
-	
+
 	public void addToExploredFirms(Firm firm) {
 		exploredFirms.add(firm);
 	}
@@ -127,9 +121,11 @@ public class Consumer {
 			chosenFirm.setDemand(chosenFirm.getDemand() + 1);
 
 	}
-	
+
 	@ScheduledMethod(start = 1, priority = RunPriority.UPDATE_PROJECTIONS_PRIORITY, interval = 1)
 	public void updateProjections() {
+		Market.consumersProjection.update(this);
+		Market.margUtilProjection.update(this);
 		Market.consumptionProjection.update(this);
 	}
 
@@ -189,10 +185,8 @@ public class Consumer {
 			return chosenFirm.getColor();
 	}
 
-	
-	
 	// Procedures for inspecting values
-	
+
 	public int getRed() {
 		return getChosenFirmColor().getRed();
 	}
@@ -210,7 +204,8 @@ public class Consumer {
 	}
 
 	public double getMargUtilOfQuality() {
-		return margUtilOfQuality;
+		double recessionImpact = 1 - RecessionsHandler.getRecesMagnitude();
+		return margUtilOfQuality * recessionImpact;
 	}
 
 	public String getChosenFirmID() {

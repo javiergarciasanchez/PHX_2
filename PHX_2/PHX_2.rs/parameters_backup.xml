@@ -3,63 +3,67 @@
 	<parameter name="randomSeed" displayName="Default Random Seed"
 		type="int" defaultValue="__NULL__" isReadOnly="false"
 		converter="repast.simphony.parameter.StringConverterFactory$IntConverter" />
-	<parameter name="stopAt" displayName="Stop At" type="double"
-		defaultValue="10.0" isReadOnly="false"
-		converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter"></parameter>
-	<parameter name="minQuality" displayName="Minimum Quality"
-		type="double" defaultValue="1.0" isReadOnly="false"
+	<parameter name="gini" displayName="Gini Index" type="double"
+		defaultValue="0.7" isReadOnly="false"
 		converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" />
-	<parameter name="maxQuality" displayName="Maximum Quality"
-		type="double" defaultValue="100.0" isReadOnly="false"
+	<parameter name="margUtilPercentToDraw"
+		displayName="Max Percentile to Draw of Marg Util of Quality" type="double"
+		defaultValue="0.95" isReadOnly="false"
 		converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" />
-	<parameter name="minPrice" displayName="Minimum Price" type="double"
-		defaultValue="1.0" isReadOnly="false"
+	<parameter name="premiumSegment" displayName="Premium Segment: upper % of Consumers"
+		type="double" defaultValue="0.2" isReadOnly="false"
 		converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" />
-	<parameter name="maxPrice" displayName="Maximum Price" type="double"
-		defaultValue="100.0" isReadOnly="false"
-		converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" />
-	<parameter name="minMargUtilOfQuality" displayName="Minimum of Marginal Utility of Quality"
-		type="double" defaultValue="1.0" isReadOnly="false"
-		converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" />
-	<parameter name="maxMargUtilOfQuality" displayName="Maximum of Marginal Utility of Quality"
-		type="double" defaultValue="20.0" isReadOnly="false"
+	<parameter name="basePyramidSegment" displayName="Base of Piramid Segment: lower % of Consumers"
+		type="double" defaultValue="0.3" isReadOnly="false"
 		converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" />
 	<parameter name="numberOfConsumers" displayName="Number of Consumers"
 		type="int" defaultValue="100" isReadOnly="false"
 		converter="repast.simphony.parameter.StringConverterFactory$IntConverter" />
-	<parameter name="diffusionSpeedParam" displayName="Parameter of Diffusion Speed"
-		type="double" defaultValue="1" isReadOnly="false"
+	<parameter name="minMargUtilOfQuality" displayName="Minimum of Marginal Utility of Quality"
+		type="double" defaultValue="0.1" isReadOnly="false"
 		converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" />
-	<parameter name="initiallyKnownByPerc"
-		displayName="Percentage of Consumers that know the firm at entry"
-		type="double" defaultValue="1" isReadOnly="false"
+	<parameter name="explorationPrefMean"
+		displayName="Mean of Exploration Preference ( 0.0 - 1.0 )" type="double"
+		defaultValue="0.2" isReadOnly="false"
 		converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" />
+	<parameter name="explorationPrefStdDevPerc"
+		displayName="StdDev of Exploration Preference as Percent of Mean"
+		type="double" defaultValue="0.05" isReadOnly="false"
+		converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" />
+	<parameter name="firmsEntryOnlyAtStart" displayName="Firms Entry only at Start?"
+		type="boolean" defaultValue="true" isReadOnly="false"
+		converter="repast.simphony.parameter.StringConverterFactory$BooleanConverter" />
 	<parameter name="potencialFirmsPerPeriod" displayName="Potencial Firms Per Period"
 		type="int" defaultValue="5" isReadOnly="false"
-		converter="repast.simphony.parameter.StringConverterFactory$IntConverter" />
-	<parameter name="lowQualityMean" displayName="Quality mean of firms in lower segment"
-		type="double" defaultValue="0.16" isReadOnly="false"
+		converter="repast.simphony.parameter.StringConverterFactory$IntConverter"></parameter>
+	<parameter name="minPrice" displayName="Minimum Price" type="double"
+		defaultValue="1.0" isReadOnly="true"
 		converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" />
-	<parameter name="lowQualityMostLikely" displayName="Most Likely Quaility in lower segment"
-		type="double" defaultValue="0.15" isReadOnly="false"
+	<parameter name="maxPrice" displayName="Maximum Price" type="double"
+		defaultValue="100.0" isReadOnly="true"
 		converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" />
-	<parameter name="highQualityMean" displayName="Quality Mean of firms in higher segment (range 0-1)" type="double" defaultValue="0.84" isReadOnly="false" converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" /><parameter name="highQualityMostLikely" displayName="Most Likely Quality in Higher segment (range 0-1)" type="double" defaultValue="0.85" isReadOnly="false" converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" />
-	
-	
-	<parameter name="lowInitialPriceMean" displayName="Price mean of firms in Lower segment (range 0-1)"
-		type="double" defaultValue="0.16" isReadOnly="false"
+	<parameter name="minQuality" displayName="Minimum Quality"
+		type="double" defaultValue="1.0" isReadOnly="true"
 		converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" />
-	<parameter name="lowInitialPriceMostLikely" displayName="Most Likely Price in Lower segment (range 0-1)"
-		type="double" defaultValue="0.15" isReadOnly="false"
+	<parameter name="maxQuality" displayName="Maximum Quality"
+		type="double" defaultValue="100.0" isReadOnly="true"
 		converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" />
-	<parameter name="highInitialPriceMean" displayName="Price Mean of firms in Higher segment (range 0-1)"
-		type="double" defaultValue="0.84" isReadOnly="false"
+	<parameter name="priceStepMean" displayName="Mean of price variation"
+		type="double" defaultValue="1.0" isReadOnly="false"
 		converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" />
-	<parameter name="highInitialPriceMostLikely" displayName="Most Likely Price in Higher segment (range 0-1)"
-		type="double" defaultValue="0.85" isReadOnly="false"
+	<parameter name="priceStepStdDevPerc"
+		displayName="StdDev of price variation as Percent of Mean" type="double"
+		defaultValue="0.05" isReadOnly="false"
+		converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" />
+	<parameter name="qualityStepMean" displayName="Mean of quality variation"
+		type="double" defaultValue="1.0" isReadOnly="false"
+		converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" />
+	<parameter name="qualityStepStdDevPerc"
+		displayName="StdDev of quality variation as Percent of Mean" type="double"
+		defaultValue="0.05" isReadOnly="false"
 		converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" />
 	<parameter name="costScale" displayName="Scale cost parameter"
-		type="double" defaultValue="1.0" isReadOnly="false"
+		type="double" defaultValue="0.01" isReadOnly="false"
 		converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" />
 	<parameter name="fixedCostMean" displayName="Fixed Cost Mean"
 		type="double" defaultValue="5.0" isReadOnly="false"
@@ -68,23 +72,27 @@
 		displayName="Fixed Cost Standard Deviation as Percent of Mean" type="double"
 		defaultValue="0.05" isReadOnly="false"
 		converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" />
-	<parameter name="qualityStepMean" displayName="Mean of quality variation"
-		type="double" defaultValue="1" isReadOnly="false"
-		converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" />
-	<parameter name="qualityStepStdDevPerc"
-		displayName="StdDev of quality variation as Percent of Mean" type="double"
-		defaultValue="0.05" isReadOnly="false"
-		converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" />
-	<parameter name="priceStepMean" displayName="Mean of price variation"
-		type="double" defaultValue="1" isReadOnly="false"
-		converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" />
-	<parameter name="priceStepStdDevPerc"
-		displayName="StdDev of price variation as Percent of Mean" type="double"
-		defaultValue="0.05" isReadOnly="false"
-		converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" />
 	<parameter name="minimumProfit" displayName="Minimum profit to exit"
-		type="double" defaultValue="-100" isReadOnly="false"
+		type="double" defaultValue="-1000.0" isReadOnly="false"
 		converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" />
+	<parameter name="initiallyKnownByPerc"
+		displayName="Percentage of Consumers that know the firm at entry"
+		type="double" defaultValue="1.0" isReadOnly="false"
+		converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" />
+	<parameter name="perfectKnowledge" displayName="Perfect Knowledge"
+		type="boolean" defaultValue="true" isReadOnly="false"
+		converter="repast.simphony.parameter.StringConverterFactory$BooleanConverter" />
+	<parameter name="diffusionSpeedParam" displayName="Parameter of Diffusion Speed"
+		type="double" defaultValue="1.0" isReadOnly="false"
+		converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" />
+	<parameter name="recessionStart" displayName="Recessions Start (sep by :  - colon)"
+		type="java.lang.String" defaultValue="25" isReadOnly="false"
+		converter="repast.simphony.parameter.StringConverterFactory$StringStringConverter" />
+	<parameter name="recessionMagnitude" displayName="Recessions Magnitude (sep by :  - colon)"
+		type="java.lang.String" defaultValue="0.2" isReadOnly="false"
+		converter="repast.simphony.parameter.StringConverterFactory$StringStringConverter" />
+	<parameter name="recessionDuration" displayName="Recessions Duration (sep by :  - colon)"
+		type="java.lang.String" defaultValue="3" isReadOnly="false"
+		converter="repast.simphony.parameter.StringConverterFactory$StringStringConverter" />
+
 </parameters>
-
-

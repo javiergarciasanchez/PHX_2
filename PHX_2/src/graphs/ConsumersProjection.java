@@ -1,7 +1,9 @@
 package graphs;
 
+import static repast.simphony.essentials.RepastEssentials.GetParameter;
 import consumers.Consumer;
 import consumers.Consumers;
+import consumers.Pareto;
 import pHX_2.Market;
 import repast.simphony.context.space.continuous.ContextSpace;
 import repast.simphony.space.continuous.ContinuousSpace;
@@ -26,16 +28,25 @@ public class ConsumersProjection {
 		consumers.addProjection(space);
 	}
 
-	public void add(Consumer c) {
+	public void update(Consumer c) {
 		space.moveTo(c, margUtilToCoord(c.getMargUtilOfQuality()), MAX_Y / 2.0);
 	}
 
 	private double margUtilToCoord(double margUtilOfQuality) {
-		double minMUQ = Market.consumers.getMinMargUtilOfQuality();
-		double maxMUQ = Market.consumers.getMaxMargUtilOfQuality();
+		return Math.min(margUtilOfQuality / getMaxUtilToDraw()
+				* (MAX_X - MIN_X) + MIN_X, MAX_X);
+	}
 
-		return (margUtilOfQuality - minMUQ) / (maxMUQ - minMUQ)
-				* (MAX_X - MIN_X) + MIN_X;
+	private double getMaxUtilToDraw() {
+		// Assign minimum Marginal Utility of Quality for the segment
+		double acumProb = (double) GetParameter("margUtilPercentToDraw");
+
+		double gini = (double) GetParameter("gini");
+		double lambda = (1.0 + gini) / (2.0 * gini);
+
+		double minimum = Market.consumers.getMinMargUtilOfQuality();
+
+		return Pareto.inversePareto(acumProb, minimum, lambda);
 	}
 
 }

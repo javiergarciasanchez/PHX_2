@@ -6,9 +6,15 @@ import repast.simphony.random.RandomHelper;
 public enum FirmType {
 	OPPORTUNISTIC, PREMIUM, BASE_PYRAMID, WAIT;
 	
+	public static final int FIRM_TYPES=4;
+	
 	// Create distribution for Random Firm Type to be added
-	private static final Uniform firmTypeDistrib = RandomHelper.createUniform(
-			1, 4);
+	private static Uniform firmTypeDistrib;
+	
+	public static void resetStaticVars(){
+		firmTypeDistrib = RandomHelper.createUniform(
+				1, FIRM_TYPES);
+	}
 	
 	public static FirmType getRandomFirmType() {
 
