@@ -25,6 +25,7 @@ public abstract class Firm {
 
 	private double accumProfit = 0;
 	private double fixedCost;
+	private double expectedQuality = 0;
 	private ArrayList<Consumer> notYetKnownBy, alreadyKnownBy;
 
 	// Cost Scale is the same for all firms. It could be changed easily
@@ -122,8 +123,8 @@ public abstract class Firm {
 		// Calculates profit, accumProfit and kills the firm if necessary
 		// History was kept when Current State was established
 
-		// Updates Projections of results
-		updateProjections();
+		// Updates expectations
+		updateExpectedQuality();
 
 		// Calculate profits of period
 		setProfit(profit());
@@ -132,6 +133,9 @@ public abstract class Firm {
 
 		if (isToBeKilled())
 			Market.toBeKilled.add(this);
+		else
+			// Updates Projections of results
+			updateProjections();
 
 	}
 
@@ -236,17 +240,39 @@ public abstract class Firm {
 		return costScale * quality;
 	}
 
+	private OfferType getOfferType() {
+		return history.getCurrentState().getOfferType();
+	}
+
+	private void updateExpectedQuality() {
+
+		double expInertia;
+		double consumPerc;
+		double currExpQ;
+
+		consumPerc = getDemand() / Consumers.getMaxConsumers();
+		currExpQ = consumPerc * getQuality() + (1 - consumPerc)
+				* Market.getExpectedQPerDollar() * getPrice();
+
+		expInertia = (Double) GetParameter("expectationsInertia");
+		expectedQuality = expInertia * expectedQuality + (1 - expInertia)
+				* currExpQ;
+
+	}
+
+	private void setProfit(double profit) {
+		history.getCurrentState().setProfit(profit);
+	}
+
 	private boolean isToBeKilled() {
 		// Returns true if firm should exit the market
 		return (accumProfit < Market.firms.minimumProfit);
 	}
 
-	private OfferType getOfferType() {
-		return history.getCurrentState().getOfferType();
-	}
-
-	private void setProfit(double profit) {
-		history.getCurrentState().setProfit(profit);
+	public double getExpectedQuality() {
+		// Only consumers who know the firm could access
+		// to the expected quality
+		return expectedQuality;
 	}
 
 	public void setDemand(int i) {

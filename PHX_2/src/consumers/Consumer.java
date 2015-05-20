@@ -1,6 +1,7 @@
 package consumers;
 
 import java.awt.Color;
+import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashSet;
 
@@ -13,6 +14,10 @@ import repast.simphony.random.RandomHelper;
 
 public class Consumer {
 
+	// Set either "exploreKnownFirmByMaximExpect" or "randomlyExploreKnownFirm"
+//	private static final String EXPLORE_METHOD_NAME = "randomlyExploreKnownFirm";
+	private static final String EXPLORE_METHOD_NAME = "exploreKnownFirmByMaximExpect";
+	
 	private double margUtilOfQuality;
 	private double explorationPref;
 	private Firm chosenFirm;
@@ -88,8 +93,9 @@ public class Consumer {
 		knownFirmsNotExplored.remove(firm);
 	}
 
-	public void addToExploredFirms(Firm firm) {
-		exploredFirms.add(firm);
+	public void addToExploredFirms(Firm f) {
+		exploredFirms.add(f);
+		knownFirmsNotExplored.remove(f);
 	}
 
 	public void removeFromExploredFirms(Firm firm) {
@@ -98,27 +104,56 @@ public class Consumer {
 
 	@ScheduledMethod(start = 1, priority = RunPriority.CHOOSE_FIRM_PRIORITY, interval = 1)
 	public void chooseFirm() {
+		Method exploreKnownFirmsMethod = null;
 
-		if (!exploredFirms.isEmpty() && !knownFirmsNotExplored.isEmpty())
+		try {
+			exploreKnownFirmsMethod = Consumer.class
+					.getDeclaredMethod(EXPLORE_METHOD_NAME);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
 
-			if (RandomHelper.nextIntFromTo(0, 1) == 1)
-				chosenFirm = exploreKnownFirm();
-			else
-				chosenFirm = chooseMaximizingFirm();
-
-		else if (exploredFirms.isEmpty() && !knownFirmsNotExplored.isEmpty())
-			chosenFirm = exploreKnownFirm();
-
-		else if (!exploredFirms.isEmpty() && knownFirmsNotExplored.isEmpty())
-			chosenFirm = chooseMaximizingFirm();
-
+		if (RandomHelper.nextIntFromTo(0, 1) == 1)
+			chosenFirm = exploreOrChooseMax(exploreKnownFirmsMethod);
 		else
-			// It should never come here
-			chosenFirm = null;
+			chosenFirm = chooseMaxOrExplore(exploreKnownFirmsMethod);
 
 		// Adjust consumers
 		if (chosenFirm != null)
 			chosenFirm.setDemand(chosenFirm.getDemand() + 1);
+
+	}
+
+	// First explore and if no firm available then choose among explored
+	private Firm exploreOrChooseMax(Method exploreMethod) {
+		Firm f = null;
+
+		try {
+			f = (Firm) exploreMethod.invoke(this);
+		} catch (Exception e) {
+			e.printStackTrace();
+		}
+
+		if (f == null)
+			f = chooseMaximizingFirm();
+
+		return f;
+	}
+
+	// First choose among explored and if no firm available then explore
+	private Firm chooseMaxOrExplore(Method exploreMethod) {
+
+		Firm f = chooseMaximizingFirm();
+
+		if (f == null) {
+			try {
+				f = (Firm) exploreMethod.invoke(this);
+			} catch (Exception e) {
+				e.printStackTrace();
+			}
+		}
+
+		return f;
 
 	}
 
@@ -130,24 +165,58 @@ public class Consumer {
 	}
 
 	// Returns a known firm that has not been explored
-	// Before calling, it should be checked that knownFirmsNotExplored be
-	// not Empty
-	// He doesn't check for negative utility because he never tried these firms
-	private Firm exploreKnownFirm() {
-		Firm f;
+	// if knownFirmsNotExplored is empty return null
+	// it doesn't check for negative utility because he never tried these firms
+	@SuppressWarnings("unused")
+	private Firm randomlyExploreKnownFirm() {
 
-		int i = RandomHelper.nextIntFromTo(0, knownFirmsNotExplored.size() - 1);
-		f = knownFirmsNotExplored.get(i);
+		if (knownFirmsNotExplored.isEmpty())
+			return null;
+		else {
 
-		exploredFirms.add(f);
-		knownFirmsNotExplored.remove(f);
+			Firm f;
 
-		return f;
+			int i = RandomHelper.nextIntFromTo(0,
+					knownFirmsNotExplored.size() - 1);
+			f = knownFirmsNotExplored.get(i);
+
+			addToExploredFirms(f);
+
+			return f;
+		}
+	}
+
+	// Returns the known firm not explored that maximizes expected utility
+	// Returns null if all expected utilities are negative
+	@SuppressWarnings("unused")
+	private Firm exploreKnownFirmByMaximExpect() {
+
+		double utility = 0;
+		Firm maxExpectUtilFirm = null;
+
+		for (Firm f : knownFirmsNotExplored) {
+
+			// it access f expected utility because f is known
+			double tmpUtil = utility(f.getExpectedQuality(), f.getPrice());
+
+			if (tmpUtil > utility) {
+				maxExpectUtilFirm = f;
+				utility = tmpUtil;
+			}
+
+		}
+
+		// Consumer doesn't choose any firm if expected utilities are all
+		// negative
+		if (utility > 0) {
+			addToExploredFirms(maxExpectUtilFirm);
+			return maxExpectUtilFirm;
+		} else
+			return null;
 	}
 
 	// Returns the explored firm that maximizes utility
-	// Before calling, it should be checked that exploredFirms be
-	// not Empty
+	// If exploredFirms is empty returns null
 	private Firm chooseMaximizingFirm() {
 
 		double utility = 0;
@@ -174,8 +243,12 @@ public class Consumer {
 
 	private double utility(Firm f) {
 
-		return margUtilOfQuality * f.getQuality() - f.getPrice();
+		return utility(f.getQuality(), f.getPrice());
 
+	}
+
+	private double utility(double q, double p) {
+		return margUtilOfQuality * q - p;
 	}
 
 	private Color getChosenFirmColor() {

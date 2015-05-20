@@ -20,10 +20,14 @@ import repast.simphony.context.Context;
 import repast.simphony.context.DefaultContext;
 import repast.simphony.dataLoader.ContextBuilder;
 import repast.simphony.engine.environment.RunEnvironment;
+import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.random.RandomHelper;
 
 public class Market extends DefaultContext<Object> implements
 		ContextBuilder<Object> {
+
+	// Market Expected Quality Per Dollar
+	private static double mktExpQPerD;
 
 	// Defining market components: consumers and firms
 	public static Consumers consumers;
@@ -54,6 +58,9 @@ public class Market extends DefaultContext<Object> implements
 		Firm.resetStaticVars();
 		Offer.resetStaticVars();
 		FirmType.resetStaticVars();
+
+		// Initialize Expected Quality Per Dollar
+		mktExpQPerD = Offer.getInitialQPerD();
 
 		// Initialize ToBeKilled
 		toBeKilled = new ArrayList<Firm>();
@@ -94,6 +101,23 @@ public class Market extends DefaultContext<Object> implements
 
 		return context;
 
+	}
+
+	@ScheduledMethod(start = 1, priority = RunPriority.UPDATE_MKT_Q_PER_D_PRIORITY, interval = 1)
+	public void updateMktExpQPerD() {
+
+		double totMkt = consumers.size();
+		double mktSh;
+
+		for (Firm f : firms) {
+			mktSh = (double) f.getDemand() / totMkt;
+			mktExpQPerD = mktExpQPerD + mktSh * f.getQuality() / f.getPrice();
+		}
+
+	}
+
+	public static double getExpectedQPerDollar() {
+		return mktExpQPerD;
 	}
 
 }
