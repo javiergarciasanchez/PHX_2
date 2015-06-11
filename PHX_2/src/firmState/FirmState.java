@@ -1,21 +1,26 @@
-package firms;
+package firmState;
 
-import offer.Offer;
-import offer.OfferType;
 
 
 public class FirmState {
 	
-	private Offer offer;
-	private double profit = 0.;
-	private int demand = 0;
+	public class MarketResponse {
+		private int demand = 0;
+		private double profit = 0.0;
+		
+	}
 
+	private Offer offer;
+	private MarketResponse mktResponse;
+	
 	public FirmState() {
 		offer = new Offer();
+		mktResponse = new MarketResponse();
 	}
 
 	public FirmState(Offer offer) {
 		this.offer = offer;
+		mktResponse = new MarketResponse();
 	}
 
 	public double getPrice() {
@@ -35,11 +40,11 @@ public class FirmState {
 	}
 
 	public double getProfit() {
-		return profit;
+		return mktResponse.profit;
 	}
 
 	public void setProfit(double profit) {
-		this.profit = profit;
+		this.mktResponse.profit = profit;
 	}
 
 	public Offer getOffer() {
@@ -51,11 +56,11 @@ public class FirmState {
 	}
 
 	public int getDemand() {
-		return demand;
+		return mktResponse.demand;
 	}
 
 	public void setDemand(int demand) {
-		this.demand = demand;
+		this.mktResponse.demand = demand;
 	}
 
 	public OfferType getOfferType() {
@@ -67,7 +72,7 @@ public class FirmState {
 	}
 
 	public String toString() {
-		return offer.toString() + " Prof: " + profit + " D: " + demand;
+		return offer.toString() + " Prof: " + getProfit() + " D: " + getDemand();
 	}
 
 }

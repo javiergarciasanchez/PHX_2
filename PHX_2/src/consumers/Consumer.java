@@ -1,10 +1,13 @@
 package consumers;
 
+import static repast.simphony.essentials.RepastEssentials.GetParameter;
+
 import java.awt.Color;
 import java.lang.reflect.Method;
 import java.util.ArrayList;
 import java.util.HashSet;
 
+import cern.jet.random.Binomial;
 import firms.Firm;
 import pHX_2.Market;
 import pHX_2.RecessionsHandler;
@@ -15,14 +18,14 @@ import repast.simphony.random.RandomHelper;
 public class Consumer {
 
 	// Set either "exploreKnownFirmByMaximExpect" or "randomlyExploreKnownFirm"
-//	private static final String EXPLORE_METHOD_NAME = "randomlyExploreKnownFirm";
-	private static final String EXPLORE_METHOD_NAME = "exploreKnownFirmByMaximExpect";
-	
+	private static final String EXPLORE_METHOD_NAME = "randomlyExploreKnownFirm";
+//	private static final String EXPLORE_METHOD_NAME = "exploreKnownFirmByMaximExpect";
+
 	private double margUtilOfQuality;
-	private double explorationPref;
 	private Firm chosenFirm;
 	private HashSet<Firm> exploredFirms;
 	private ArrayList<Firm> knownFirmsNotExplored;
+	private Binomial explorationDistrib;
 
 	protected static long consumerIDCounter = 1;
 
@@ -52,7 +55,7 @@ public class Consumer {
 
 		setMargUtilOfQuality();
 
-		setExplorationPref();
+		setExplorationDistrib();
 
 	}
 
@@ -74,14 +77,17 @@ public class Consumer {
 
 	}
 
-	private void setExplorationPref() {
+	private void setExplorationDistrib() {
 
-		explorationPref = Market.consumers.getExplorationPrefDistrib()
-				.nextDouble();
+		// Determines the probability of exploring when choosing a firm.
+		// If consumer decides to explore it chooses randomly a firm from the
+		// known ones but one never tried
+		// Otherwise he chooses among the tried firms the one that maximizes
+		// utility
 
-		// Probability should be between 0 and 1
-		explorationPref = Math.max(0.0, explorationPref);
-		explorationPref = Math.min(1.0, explorationPref);
+		double p = (double) GetParameter("consumerExplorationProb");
+
+		explorationDistrib = RandomHelper.createBinomial(1, p);
 
 	}
 
@@ -113,7 +119,7 @@ public class Consumer {
 			e.printStackTrace();
 		}
 
-		if (RandomHelper.nextIntFromTo(0, 1) == 1)
+		if (explorationDistrib.nextInt() == 1)
 			chosenFirm = exploreOrChooseMax(exploreKnownFirmsMethod);
 		else
 			chosenFirm = chooseMaxOrExplore(exploreKnownFirmsMethod);

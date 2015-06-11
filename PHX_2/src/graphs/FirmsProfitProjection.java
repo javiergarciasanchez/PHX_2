@@ -1,8 +1,8 @@
 package graphs;
 
+import firmState.Offer;
 import firms.Firm;
 import firms.Firms;
-import offer.Offer;
 import repast.simphony.context.space.continuous.ContextSpace;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.SimpleCartesianAdder;

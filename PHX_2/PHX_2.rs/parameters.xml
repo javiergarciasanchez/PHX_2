@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <parameters>
-	
+
 	<parameter name="stopAt" displayName="Stop at" type="double"
 		defaultValue="100.0" isReadOnly="false"
 		converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" />
@@ -76,13 +76,13 @@
 	<parameter name="expectationsInertia" displayName="ExpectationsInertia"
 		type="double" defaultValue="0.8" isReadOnly="false"
 		converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" />
-	<parameter name="explorationPrefMean"
-		displayName="Mean of Exploration Preference ( 0.0 - 1.0 )" type="double"
-		defaultValue="0.2" isReadOnly="false"
+	<parameter name="consumerExplorationProb"
+		displayName="Consumer's Exploration Probability"
+		type="double" defaultValue="0.2" isReadOnly="false"
 		converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" />
-	<parameter name="explorationPrefStdDevPerc"
-		displayName="StdDev of Exploration Preference as Percent of Mean"
-		type="double" defaultValue="0.05" isReadOnly="false"
+	<parameter name="firmExplorationProb"
+		displayName="Firm's Exploration Probability"
+		type="double" defaultValue="0.2" isReadOnly="false"
 		converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" />
 	<parameter name="perfectKnowledge" displayName="Perfect Knowledge"
 		type="boolean" defaultValue="false" isReadOnly="false"

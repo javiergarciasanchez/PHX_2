@@ -1,4 +1,4 @@
-package offer;
+package firmState;
 
 import static repast.simphony.essentials.RepastEssentials.GetParameter;
 import pHX_2.Market;
@@ -34,29 +34,41 @@ public class Offer {
 		setPrice(p);
 	}
 
-	public Offer(OfferType offerType, double q, double p) {
+	public Offer(OfferType offerType, Offer currOffer) {
 
+		double p = currOffer.getPrice();
+		double q = currOffer.getQuality();
+		
 		setOfferType(offerType);
 		setQuality(q);
 		setPrice(p);
+		
+//		double priceStep = Market.firms.getPriceStepDistrib().nextDouble();
+//		double qualityStep = Market.firms.getQualityStepDistrib().nextDouble();
+		double priceStep = (Double) GetParameter("priceStepMean");
+		double qualityStep = (Double) GetParameter("qualityStepMean");
 
 		switch (offerType) {
 		case INCREASE_PRICE:
-			setPrice(p + Market.firms.getPriceStepDistrib().nextDouble());
+			setPrice(p + priceStep );
 			break;
 		case DECREASE_PRICE:
-			setPrice(p - Market.firms.getPriceStepDistrib().nextDouble());
+			setPrice(p - priceStep);
 			break;
 		case INCREASE_QUALITY:
-			setQuality(q + Market.firms.getQualityStepDistrib().nextDouble());
+			setQuality(q + qualityStep);
 			break;
 		case DECREASE_QUALITY:
-			setQuality(q - Market.firms.getQualityStepDistrib().nextDouble());
+			setQuality(q - qualityStep);
 			break;
 		default:
 			break;
 
 		}
+	}
+
+	public boolean equals(Offer o) {
+		return ((o.getPrice() == getPrice()) && (o.getQuality() == getQuality()));
 	}
 
 	public double getPrice() {

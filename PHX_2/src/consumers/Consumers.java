@@ -1,9 +1,7 @@
 package consumers;
 
 import static repast.simphony.essentials.RepastEssentials.GetParameter;
-import cern.jet.random.Normal;
 import repast.simphony.context.DefaultContext;
-import repast.simphony.random.RandomHelper;
 
 public class Consumers extends DefaultContext<Consumer> {
 
@@ -15,7 +13,6 @@ public class Consumers extends DefaultContext<Consumer> {
 	private double maxMargUtilOfQuality;
 
 	private Pareto margUtilOfQualityDistrib;
-	private Normal explorationPrefDistrib;
 
 	public Consumers() {
 		super("Consumers_Context");
@@ -28,16 +25,6 @@ public class Consumers extends DefaultContext<Consumer> {
 	}
 
 	private void createProbabilityDistrib() {
-	
-		// Exploration preference
-		// Determines the probability of exploring when choosing a firm.
-		// If consumer decides to explore it chooses randomly a firm from the
-		// known ones but one never tried
-		// Otherwise he chooses among the tried firms the one that maximizes
-		// utility
-		double mean = (double) GetParameter("explorationPrefMean");
-		explorationPrefDistrib = RandomHelper.createNormal(mean,
-				(double) GetParameter("explorationPrefStdDevPerc") * mean);
 	
 		// Marginal Utility of Quality 
 		double gini = (double) GetParameter("gini");
@@ -57,10 +44,6 @@ public class Consumers extends DefaultContext<Consumer> {
 
 	public double getMaxMargUtilOfQuality() {
 		return maxMargUtilOfQuality;
-	}
-
-	public Normal getExplorationPrefDistrib() {
-		return explorationPrefDistrib;
 	}
 
 	public static int getMaxConsumers() {

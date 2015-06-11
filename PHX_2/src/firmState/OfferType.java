@@ -1,4 +1,4 @@
-package offer;
+package firmState;
 
 import repast.simphony.random.RandomHelper;
 

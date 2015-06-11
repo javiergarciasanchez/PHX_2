@@ -5,10 +5,12 @@ import static repast.simphony.essentials.RepastEssentials.GetParameter;
 import java.awt.Color;
 import java.util.ArrayList;
 
+import cern.jet.random.Binomial;
 import consumers.Consumer;
 import consumers.Consumers;
-import offer.Offer;
-import offer.OfferType;
+import firmState.FirmState;
+import firmState.Offer;
+import firmState.OfferType;
 import pHX_2.Market;
 import pHX_2.RunPriority;
 import repast.simphony.engine.schedule.ScheduledMethod;
@@ -23,10 +25,13 @@ public abstract class Firm {
 			maxPoorestConsumerMargUtil = Market.consumers
 					.getMaxMargUtilOfQuality();
 
+	private Binomial explorationDistrib;
 	private double accumProfit = 0;
 	private double fixedCost;
 	private double expectedQuality = 0;
 	private ArrayList<Consumer> notYetKnownBy, alreadyKnownBy;
+
+	protected OfferType[] offerTypePreference = new OfferType[4];
 
 	// Cost Scale is the same for all firms. It could be changed easily
 	private static double costScale;
@@ -42,10 +47,31 @@ public abstract class Firm {
 		firmIDCounter = 1;
 	}
 
+	protected static double getRandomInitialQuality(double lowerQ,
+			double higherQ) {
+		// Uses default uniform distribution between lower and high quality
+
+		double tmpQ;
+
+		// Quality should be checked for existence
+		// because two different firms cannot have the same quality
+		do {
+
+			tmpQ = RandomHelper.nextDoubleFromTo(lowerQ, higherQ);
+
+		} while (Market.segments.containsQ(tmpQ));
+
+		return tmpQ;
+	}
+
 	public Firm() {
 
 		Market.firms.add(this);
 
+		setExplorationDistrib();
+
+		fillOfferTypePreference();
+		
 		alreadyKnownBy = new ArrayList<Consumer>();
 		notYetKnownBy = new ArrayList<Consumer>();
 
@@ -60,6 +86,16 @@ public abstract class Firm {
 
 	}
 
+	protected abstract void fillOfferTypePreference();
+
+	private void setExplorationDistrib() {
+
+		double p = (double) GetParameter("firmExplorationProb");
+
+		explorationDistrib = RandomHelper.createBinomial(1, p);
+
+	}
+
 	@ScheduledMethod(start = 1, priority = RunPriority.MAKE_OFFER_PRIORITY, interval = 1)
 	public void makeOffer() {
 		Offer offer;
@@ -67,54 +103,45 @@ public abstract class Firm {
 		if (history.size() == 0) {
 			// ENTRY
 
-			// Set quality according to firm's strategy
-			double q = getRandomInitialQuality();
-			offer = new Offer(q, getRandomInitialPrice(q));
+			offer = getInitialOffer();
 
 			initializeConsumerKnowledge();
 
 		} else {
-			double q = getQuality();
-			double p = getPrice();
 
 			Market.segments.removeFromSegments(this);
 
-			if (history.size() == 1) {
-
-				// not enough history
-				offer = new Offer(OfferType.getRandomOfferType(), q, p);
-
+			if (explorationDistrib.nextInt() == 1) {
+				offer = getExploratoryOffer();
 			} else {
-
-				// Enough history to check improvement
-				FirmState prevState = history.getPreviousState();
-
-				if (getProfit() > prevState.getProfit()) {
-					// Previous offer worked, so firm goes in the same direction
-					offer = new Offer(getOfferType(), q, p);
-
-				} else {
-					// Previous offer didn't work. A new type of offer is
-					// selected
-					OfferType newOfferType;
-
-					do {
-						newOfferType = OfferType.getRandomOfferType();
-
-					} while (newOfferType == prevState.getOfferType());
-
-					offer = new Offer(newOfferType, q, p);
-				}
-
+				offer = getMaximizingOffer();
 			}
 
 			updateNotYetKnownBy();
+
 		}
 
 		history.addCurrentState(new FirmState(offer));
 
 		Market.segments.addToSegments(this);
 
+	}
+
+	private Offer getExploratoryOffer() {
+		Offer o;
+		
+		for (OfferType oType : offerTypePreference) {
+			o = new Offer(oType, history.getMaxProfitOffer());
+			
+			if (!history.containsOffer(o))
+				return o;
+		}
+
+		return null;
+	}
+
+	private Offer getMaximizingOffer() {
+		return history.getMaxProfitOffer();
 	}
 
 	@ScheduledMethod(start = 1, priority = RunPriority.NEXT_STEP_FIRM_PRIORITY, interval = 1)
@@ -147,27 +174,9 @@ public abstract class Firm {
 		Market.margUtilProjection.update(this);
 	}
 
-	protected abstract double getRandomInitialQuality();
-
 	public abstract Color getColor();
 
-	protected double getRandomInitialQuality(double lowerQ, double higherQ) {
-		// Uses default uniform distribution between lower and high quality
-
-		double tmpQ;
-
-		// Quality should be checked for existence
-		// because two different firms cannot have the same quality
-		do {
-
-			tmpQ = RandomHelper.nextDoubleFromTo(lowerQ, higherQ);
-
-		} while (Market.segments.containsQ(tmpQ));
-
-		return tmpQ;
-	}
-
-	protected abstract double getRandomInitialPrice(double q);
+	protected abstract Offer getInitialOffer();
 
 	private void initializeConsumerKnowledge() {
 
@@ -241,7 +250,7 @@ public abstract class Firm {
 	}
 
 	private OfferType getOfferType() {
-		return history.getCurrentState().getOfferType();
+		return history.getCurrentOfferType();
 	}
 
 	private void updateExpectedQuality() {
@@ -261,7 +270,7 @@ public abstract class Firm {
 	}
 
 	private void setProfit(double profit) {
-		history.getCurrentState().setProfit(profit);
+		history.setCurrentProfit(profit);
 	}
 
 	private boolean isToBeKilled() {
@@ -276,7 +285,7 @@ public abstract class Firm {
 	}
 
 	public void setDemand(int i) {
-		history.getCurrentState().setDemand(i);
+		history.setCurrentDemand(i);
 	}
 
 	public void killFirm() {
@@ -309,19 +318,19 @@ public abstract class Firm {
 	//
 
 	public int getDemand() {
-		return history.getCurrentState().getDemand();
+		return history.getCurrentDemand();
 	}
 
 	public double getProfit() {
-		return history.getCurrentState().getProfit();
+		return history.getCurrentProfit();
 	}
 
 	public double getPrice() {
-		return history.getCurrentState().getPrice();
+		return history.getCurrentPrice();
 	}
 
 	public double getQuality() {
-		return history.getCurrentState().getQuality();
+		return history.getCurrentQuality();
 	}
 
 	public double getPoorestConsumerMargUtil() {

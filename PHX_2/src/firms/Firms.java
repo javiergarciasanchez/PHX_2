@@ -24,7 +24,6 @@ public class Firms extends DefaultContext<Firm> {
 	// Parameters for Firms
 	double initiallyKnownByPerc, minimumProfit, diffusionSpeedParam;
 
-
 	public Firms() {
 		super("Firms_Context");
 
@@ -35,18 +34,19 @@ public class Firms extends DefaultContext<Firm> {
 
 		createProbabilityDistrib();
 	}
-	
+
 	public static double getPoorestConsumerMargUtil(double quality, double price) {
 		return price / quality;
 	}
 
-	public static double getPoorestConsumerMinPrice(double minMargUtil, double quality) {
+	public static double getPoorestConsumerMinPrice(double minMargUtil,
+			double quality) {
 		return minMargUtil * quality;
 	}
 
-	public  void createProbabilityDistrib() {
+	public void createProbabilityDistrib() {
 		double mean, stdDevPercent, alfa, lamda;
-	
+
 		// Quality Step
 		// Create distributions for strategic % steps on price and quality
 		// We use Gamma distribution because the domain is > 0
@@ -55,7 +55,7 @@ public class Firms extends DefaultContext<Firm> {
 		alfa = (1 / Math.pow(stdDevPercent, 2));
 		lamda = alfa / mean;
 		qualityStepDistrib = RandomHelper.createGamma(alfa, lamda);
-	
+
 		// Price Step
 		// Create distributions for strategic % steps on price and quality
 		// We use Gamma distribution because the domain is > 0
@@ -64,7 +64,7 @@ public class Firms extends DefaultContext<Firm> {
 		alfa = (1 / Math.pow(stdDevPercent, 2));
 		lamda = alfa / mean;
 		priceStepDistrib = RandomHelper.createGamma(alfa, lamda);
-	
+
 		// Fixed Cost
 		// We use Gamma distribution because the domain is > 0
 		mean = (Double) GetParameter("fixedCostMean");
@@ -72,18 +72,18 @@ public class Firms extends DefaultContext<Firm> {
 		alfa = (1 / Math.pow(stdDevPercent, 2));
 		lamda = alfa / mean;
 		fixedCostDistrib = RandomHelper.createGamma(alfa, lamda);
-	
+
 	}
 
-	public  Gamma getQualityStepDistrib() {
+	public Gamma getQualityStepDistrib() {
 		return qualityStepDistrib;
 	}
 
-	public  Gamma getPriceStepDistrib() {
+	public Gamma getPriceStepDistrib() {
 		return priceStepDistrib;
 	}
 
-	public  Gamma getFixedCostDistrib() {
+	public Gamma getFixedCostDistrib() {
 		return fixedCostDistrib;
 	}
 

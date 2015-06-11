@@ -2,8 +2,9 @@ package firmTypes;
 
 import java.awt.Color;
 
+import firmState.Offer;
+import firmState.OfferType;
 import firms.Firm;
-import offer.Offer;
 import repast.simphony.random.RandomHelper;
 
 // This firm offers high price and low quality
@@ -12,14 +13,23 @@ public class OpportunisticFirm extends Firm {
 	public OpportunisticFirm() {
 		super();
 	}
+	
+	@Override
+	protected Offer getInitialOffer() {
+		
+		double q = getRandomInitialQuality();
+		Offer offer = new Offer(q, getRandomInitialPrice(q));
+		return offer;
 
-	protected double getRandomInitialQuality() {
+	}
+	
+	private double getRandomInitialQuality() {
 		double lowerQ = Offer.getMinQuality();
 		double higherQ = (Offer.getMinQuality() + Offer.getMaxQuality()) / 2.0;
-		return getRandomInitialQuality(lowerQ, higherQ);
+		return Firm.getRandomInitialQuality(lowerQ, higherQ);
 	}
 
-	protected double getRandomInitialPrice(double q) {
+	private double getRandomInitialPrice(double q) {
 
 		// Chooses a high price to take advantage of consumer ignorance
 		
@@ -34,5 +44,15 @@ public class OpportunisticFirm extends Firm {
 	@Override
 	public Color getColor() {
 		return Color.RED;
+	}
+
+	@Override
+	protected void fillOfferTypePreference() {
+		
+		offerTypePreference[0] = OfferType.INCREASE_PRICE;
+		offerTypePreference[1] = OfferType.DECREASE_QUALITY;
+		offerTypePreference[2]= OfferType.DECREASE_PRICE;
+		offerTypePreference[3] = OfferType.INCREASE_QUALITY;
+		
 	}
 }

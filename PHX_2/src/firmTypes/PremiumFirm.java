@@ -5,13 +5,14 @@ import static repast.simphony.essentials.RepastEssentials.GetParameter;
 import java.awt.Color;
 
 import consumers.Pareto;
+import firmState.Offer;
+import firmState.OfferType;
 import firms.Firm;
 import firms.Firms;
-import offer.Offer;
 import pHX_2.Market;
 import repast.simphony.random.RandomHelper;
 
-// This firm offer high price and high quality
+// This firm firmState high price and high quality
 public class PremiumFirm extends Firm {
 
 	public PremiumFirm() {
@@ -35,13 +36,22 @@ public class PremiumFirm extends Firm {
 
 	}
 
-	protected double getRandomInitialQuality() {
+	@Override
+	protected Offer getInitialOffer() {
+		
+		double q = getRandomInitialQuality();
+		Offer offer = new Offer(q, getRandomInitialPrice(q));
+		return offer;
+
+	}
+	
+	private double getRandomInitialQuality() {
 		double lowerQ = (Offer.getMinQuality() + Offer.getMaxQuality()) / 2.0;
 		double higherQ = Offer.getMaxQuality();
-		return getRandomInitialQuality(lowerQ, higherQ);
+		return Firm.getRandomInitialQuality(lowerQ, higherQ);
 	}
 
-	protected double getRandomInitialPrice(double q) {
+	private double getRandomInitialPrice(double q) {
 		Firm lowerComp, higherComp;
 		double lowerPrice, higherPrice;
 		double price;
@@ -79,5 +89,13 @@ public class PremiumFirm extends Firm {
 	@Override
 	public Color getColor() {
 		return Color.BLUE;
+	}
+
+	@Override
+	protected void fillOfferTypePreference() {
+		offerTypePreference[0] = OfferType.INCREASE_QUALITY;		
+		offerTypePreference[1] = OfferType.INCREASE_PRICE;
+		offerTypePreference[2]= OfferType.DECREASE_PRICE;
+		offerTypePreference[3] = OfferType.DECREASE_QUALITY;
 	}
 }

@@ -5,9 +5,10 @@ import static repast.simphony.essentials.RepastEssentials.GetParameter;
 import java.awt.Color;
 
 import consumers.Pareto;
+import firmState.Offer;
+import firmState.OfferType;
 import firms.Firm;
 import firms.Firms;
-import offer.Offer;
 import pHX_2.Market;
 import repast.simphony.random.RandomHelper;
 
@@ -36,13 +37,32 @@ public class BasePyramidFirm extends Firm {
 
 	}
 
-	protected double getRandomInitialQuality() {
-		double lowerQ = Offer.getMinQuality();
-		double higherQ = (Offer.getMinQuality() + Offer.getMaxQuality()) / 2.0;
-		return getRandomInitialQuality(lowerQ, higherQ);
+	@Override
+	protected void fillOfferTypePreference() {
+
+		offerTypePreference[0]= OfferType.DECREASE_PRICE;
+		offerTypePreference[1] = OfferType.DECREASE_QUALITY;
+		offerTypePreference[2] = OfferType.INCREASE_PRICE;
+		offerTypePreference[3] = OfferType.INCREASE_QUALITY;
+		
 	}
 
-	protected double getRandomInitialPrice(double q) {
+	@Override
+	protected Offer getInitialOffer() {
+		
+		double q = getRandomInitialQuality();
+		Offer offer = new Offer(q, getRandomInitialPrice(q));
+		return offer;
+
+	}
+
+	private double getRandomInitialQuality() {
+		double lowerQ = Offer.getMinQuality();
+		double higherQ = (Offer.getMinQuality() + Offer.getMaxQuality()) / 2.0;
+		return Firm.getRandomInitialQuality(lowerQ, higherQ);
+	}
+
+	private double getRandomInitialPrice(double q) {
 		Firm lowerComp, higherComp;
 		double lowerPrice, higherPrice;
 		double price;

@@ -9,13 +9,13 @@ import graphs.Firms2DProjection;
 import graphs.FirmsDemandProjection;
 import graphs.FirmsProfitProjection;
 import graphs.MargUtilProjection;
+import firmState.Offer;
 import firmTypes.FirmType;
 
 import java.util.ArrayList;
 
 import consumers.Consumer;
 import consumers.Consumers;
-import offer.Offer;
 import repast.simphony.context.Context;
 import repast.simphony.context.DefaultContext;
 import repast.simphony.dataLoader.ContextBuilder;
