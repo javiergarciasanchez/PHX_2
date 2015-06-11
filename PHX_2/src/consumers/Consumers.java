@@ -18,7 +18,9 @@ public class Consumers extends DefaultContext<Consumer> {
 		super("Consumers_Context");
 		
 		minMargUtilOfQuality = (double) GetParameter("minMargUtilOfQuality");
-
+		
+		// Max marginal utility is updated every time a consumer is created
+		maxMargUtilOfQuality = 0.;
 
 		createProbabilityDistrib();
 		

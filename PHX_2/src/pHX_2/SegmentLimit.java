@@ -11,25 +11,28 @@ public class SegmentLimit {
 	public SegmentLimit(Firm loF, Firm hiF) {
 		this.lowerFirm = loF;
 		this.higherFirm = hiF;
-		double maxMU = Market.consumers.getMaxMargUtilOfQuality();
 
-		if (loF == null && hiF != null)
-			value = Math.min(maxMU, hiF.getPrice() / hiF.getQuality());
-		else if (loF != null && hiF == null)
-			value = maxMU;
-		else if (loF != null && hiF != null)
+		if (loF == null && hiF != null) {
+			hiF.setLoSegment(this);
+			value = hiF.getPoorestConsumerMargUtil();
+		} else if (loF != null && hiF == null) {
+			loF.setHiSegment(this);
+			value = Double.MAX_VALUE;
+		} else if (loF != null && hiF != null) {
+			loF.setHiSegment(this);
+			hiF.setLoSegment(this);
 			value = calcLimit(loF, hiF);
-		else
+		} else
 			// Both are null. It shouldn't come here
 			value = 0.0;
 	}
 
 	public static double calcLimit(Firm loF, Firm hiF) {
-		if ((loF == null) || (hiF == null))
-			return 0.0;
-		else
-			return (hiF.getPrice() - loF.getPrice())
-					/ (hiF.getQuality() - loF.getQuality());
+		// it is assumed that loF and hiF are not null
+		double limit = (hiF.getPrice() - loF.getPrice())
+				/ (hiF.getQuality() - loF.getQuality());
+
+		return Math.max(hiF.getPoorestConsumerMargUtil(), limit);
 	}
 
 	private Color getColor() {

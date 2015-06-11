@@ -1,7 +1,8 @@
 package pHX_2;
 
 import java.util.ArrayList;
-import java.util.Collections;
+import java.util.Map;
+import java.util.TreeMap;
 
 import repast.simphony.context.DefaultContext;
 import repast.simphony.engine.schedule.ScheduledMethod;
@@ -11,28 +12,25 @@ public class Segments extends DefaultContext<SegmentLimit> {
 
 	// Firms ordered according to quality
 	private ArrayList<SegmentLimit> segmentsLimits;
-	private ArrayList<Firm> sortQFirms;
-	private QualityComparator qComp = new QualityComparator();
+	private TreeMap<Double, Firm> sortQFirms;
 
 	public Segments() {
 		super("Segments_Context");
 
 		segmentsLimits = new ArrayList<SegmentLimit>();
-		sortQFirms = new ArrayList<Firm>();
+		sortQFirms = new TreeMap<Double, Firm>();
 
 	}
 
 	@ScheduledMethod(start = 1, priority = RunPriority.CREATE_SEGMENT_LIMITS_PRIORITY, interval = 1)
 	public void createSegmentsLimits() {
 
-		Collections.sort(sortQFirms, qComp);
-
 		clearSegments();
 
 		if (!sortQFirms.isEmpty()) {
 
-			for (Firm f : sortQFirms) {
-				addSegmentLimit(f);
+			for (Double key : sortQFirms.navigableKeySet()) {
+				addSegmentLimit(sortQFirms.get(key));
 			}
 
 			// add the last limit
@@ -43,6 +41,21 @@ public class Segments extends DefaultContext<SegmentLimit> {
 	}
 
 	private void clearSegments() {
+
+		// Clean firm pointers
+		for (SegmentLimit sL : segmentsLimits) {
+
+			Firm loF = sL.getLowerFirm();
+			Firm hiF = sL.getHigherFirm();
+
+			if (loF != null)
+				loF.setHiSegment(null);
+
+			if (hiF != null)
+				hiF.setHiSegment(null);
+
+		}
+
 		segmentsLimits = new ArrayList<SegmentLimit>();
 		clear();
 
@@ -63,20 +76,22 @@ public class Segments extends DefaultContext<SegmentLimit> {
 	}
 
 	private boolean isConsistentToDirectlyAddToSL(Firm f) {
-		Firm lastF = getLastFirmOfLastSegment();
 
 		if (f == null)
-			// lastF is the last firm
-			return true;
-		else if (lastF == null)
-			// f is the first firm
+			// last firm limit
 			return true;
 		else {
-			double limit = SegmentLimit.calcLimit(lastF, f);
-			double absMin = f.getPoorestConsumerMargUtil();
-			return (limit > absMin);
-		}
+			Firm lastF = getLastFirmOfLastSegment();
+			if (lastF == null)
+				// f is the first firm
+				return true;
+			else {
+				double limit = SegmentLimit.calcLimit(lastF, f);
+				double prevLimit = lastF.getSegmentLowerLimit();
+				return (limit > prevLimit);
+			}
 
+		}
 	}
 
 	private Firm getLastFirmOfLastSegment() {
@@ -102,6 +117,17 @@ public class Segments extends DefaultContext<SegmentLimit> {
 		SegmentLimit sL;
 
 		sL = segmentsLimits.get(size - 1);
+
+		// remove firms' pointers
+		Firm loF = sL.getLowerFirm();
+		Firm hiF = sL.getHigherFirm();
+
+		if (loF != null)
+			loF.setHiSegment(null);
+
+		if (hiF != null)
+			hiF.setHiSegment(null);
+
 		segmentsLimits.remove(size - 1);
 		remove(sL);
 	}
@@ -110,17 +136,17 @@ public class Segments extends DefaultContext<SegmentLimit> {
 		if (sortQFirms.isEmpty())
 			return null;
 		else
-			return sortQFirms.get(0);
+			return sortQFirms.firstEntry().getValue();
 	}
 
 	public Firm getNextQFirm(double quality) {
 
-		for (Firm f : sortQFirms) {
-			if (f.getQuality() > quality)
-				return f;
-		}
+		Map.Entry<Double, Firm> e = sortQFirms.ceilingEntry(quality);
 
-		return null;
+		if (e != null)
+			return e.getValue();
+		else
+			return null;
 
 	}
 
@@ -130,16 +156,12 @@ public class Segments extends DefaultContext<SegmentLimit> {
 
 	public Firm getPrevQFirm(double quality) {
 
-		Firm retF = null;
+		Map.Entry<Double, Firm> e = sortQFirms.floorEntry(quality);
 
-		for (Firm f : sortQFirms) {
-			if (f.getQuality() < quality)
-				retF = f;
-			else
-				return retF;
-		}
-
-		return retF;
+		if (e != null)
+			return e.getValue();
+		else
+			return null;
 
 	}
 
@@ -148,22 +170,15 @@ public class Segments extends DefaultContext<SegmentLimit> {
 	}
 
 	public boolean containsQ(double q) {
-		for (Firm f : sortQFirms) {
-			if (f.getQuality() == q)
-				return true;
-			else if (f.getQuality() > q)
-				return false;
-		}
-
-		return false;
+		return sortQFirms.containsKey(q);
 	}
 
 	public void removeFromSegments(Firm f) {
-		sortQFirms.remove(f);
+		sortQFirms.remove(f.getQuality());		
 	}
 
 	public void addToSegments(Firm f) {
-		sortQFirms.add(f);
+		sortQFirms.put(f.getQuality(),f);
 	}
 
 }

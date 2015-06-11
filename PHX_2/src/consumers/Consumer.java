@@ -66,10 +66,6 @@ public class Consumer {
 		margUtilOfQuality = Market.consumers.getMargUtilOfQualityDistrib()
 				.nextDouble();
 
-		// Assign border if out range
-		margUtilOfQuality = Math.max(
-				Market.consumers.getMinMargUtilOfQuality(), margUtilOfQuality);
-
 		// Upper limit is unbounded. The max marg utility is updated to scale
 		// graphs
 		Market.consumers.setMaxMargUtilOfQuality(Math.max(

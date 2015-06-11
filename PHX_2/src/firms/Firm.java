@@ -13,6 +13,7 @@ import firmState.Offer;
 import firmState.OfferType;
 import pHX_2.Market;
 import pHX_2.RunPriority;
+import pHX_2.SegmentLimit;
 import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.random.RandomHelper;
 
@@ -30,6 +31,8 @@ public abstract class Firm {
 	private double fixedCost;
 	private double expectedQuality = 0;
 	private ArrayList<Consumer> notYetKnownBy, alreadyKnownBy;
+
+	private SegmentLimit loSegment, hiSegment;
 
 	protected OfferType[] offerTypePreference = new OfferType[4];
 
@@ -50,17 +53,17 @@ public abstract class Firm {
 	protected static double getRandomInitialQuality(double lowerQ,
 			double higherQ) {
 		// Uses default uniform distribution between lower and high quality
-	
+
 		double tmpQ;
-	
+
 		// Quality should be checked for existence
 		// because two different firms cannot have the same quality
 		do {
-	
+
 			tmpQ = RandomHelper.nextDoubleFromTo(lowerQ, higherQ);
-	
+
 		} while (Market.segments.containsQ(tmpQ));
-	
+
 		return tmpQ;
 	}
 
@@ -71,7 +74,7 @@ public abstract class Firm {
 		setExplorationDistrib();
 
 		fillOfferTypePreference();
-		
+
 		alreadyKnownBy = new ArrayList<Consumer>();
 		notYetKnownBy = new ArrayList<Consumer>();
 
@@ -129,10 +132,10 @@ public abstract class Firm {
 
 	private Offer getExploratoryOffer() {
 		Offer o;
-		
+
 		for (OfferType oType : offerTypePreference) {
 			o = new Offer(oType, history.getMaxProfitOffer());
-			
+
 			if (!history.containsOffer(o))
 				return o;
 		}
@@ -299,6 +302,38 @@ public abstract class Firm {
 
 		Market.firms.remove(this);
 
+	}
+
+	public Double getSegmentLowerLimit() {
+		SegmentLimit sL = getLoSegment();
+		if (sL != null)
+			return sL.getValue();
+		else
+			return null;
+	}
+
+	public Double getSegmentHigherLimit() {
+		SegmentLimit sL = getHiSegment();
+		if (sL != null)
+			return sL.getValue();
+		else
+			return null;
+	}
+
+	public SegmentLimit getLoSegment() {
+		return loSegment;
+	}
+
+	public void setLoSegment(SegmentLimit loSegment) {
+		this.loSegment = loSegment;
+	}
+
+	public SegmentLimit getHiSegment() {
+		return hiSegment;
+	}
+
+	public void setHiSegment(SegmentLimit hiSegment) {
+		this.hiSegment = hiSegment;
 	}
 
 	public int getRed() {

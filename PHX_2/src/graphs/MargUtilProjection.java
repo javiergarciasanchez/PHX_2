@@ -52,7 +52,9 @@ public class MargUtilProjection {
 	}
 
 	public void add(SegmentLimit sL) {
-		int x = margUtilToCoord(sL.getValue());
+		double val = Math.min(sL.getValue(),
+				Market.consumers.getMaxMargUtilOfQuality());
+		int x = margUtilToCoord(val);
 
 		space.moveTo(sL, x, getFreeY(x, FIRMS_HEIGHT, 2));
 
