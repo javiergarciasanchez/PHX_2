@@ -50,17 +50,17 @@ public abstract class Firm {
 	protected static double getRandomInitialQuality(double lowerQ,
 			double higherQ) {
 		// Uses default uniform distribution between lower and high quality
-
+	
 		double tmpQ;
-
+	
 		// Quality should be checked for existence
 		// because two different firms cannot have the same quality
 		do {
-
+	
 			tmpQ = RandomHelper.nextDoubleFromTo(lowerQ, higherQ);
-
+	
 		} while (Market.segments.containsQ(tmpQ));
-
+	
 		return tmpQ;
 	}
 

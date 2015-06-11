@@ -120,6 +120,7 @@ public class Consumer {
 		}
 
 		if (explorationDistrib.nextInt() == 1)
+
 			chosenFirm = exploreOrChooseMax(exploreKnownFirmsMethod);
 		else
 			chosenFirm = chooseMaxOrExplore(exploreKnownFirmsMethod);
