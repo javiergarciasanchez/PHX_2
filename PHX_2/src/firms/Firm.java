@@ -49,23 +49,6 @@ public abstract class Firm {
 		firmIDCounter = 1;
 	}
 
-	protected static double getRandomInitialQuality(double lowerQ,
-			double higherQ) {
-		// Uses default uniform distribution between lower and high quality
-
-		double tmpQ;
-
-		// Quality should be checked for existence
-		// because two different firms cannot have the same quality
-		do {
-
-			tmpQ = RandomHelper.nextDoubleFromTo(lowerQ, higherQ);
-
-		} while (Market.segments.containsQ(tmpQ));
-
-		return tmpQ;
-	}
-
 	public Firm() {
 
 		Market.firms.add(this);
@@ -109,13 +92,13 @@ public abstract class Firm {
 
 			history.addCurrentState(new FirmState(offer));
 
-			Market.segments.addToSegments(this);
+			Market.firms.addToSegments(this);
 			
 			initializeConsumerKnowledge();
 
 		} else {
 
-			Market.segments.removeFromSegments(this);
+			Market.firms.removeFromSegments(this);
 
 			if (explorationDistrib.nextInt() == 1) {
 				offer = getExploratoryOffer();
@@ -125,7 +108,7 @@ public abstract class Firm {
 			
 			history.addCurrentState(new FirmState(offer));
 			
-			Market.segments.updateLimitingFirms(this);
+			Market.firms.updateLimitingFirms(this);
 
 			updateNotYetKnownBy();
 		}
@@ -290,7 +273,7 @@ public abstract class Firm {
 	}
 
 	public void killFirm() {
-		Market.segments.removeFromSegments(this);
+		Market.firms.removeFromSegments(this);
 	
 		// Remove firm from consumers lists
 		for (Consumer c : alreadyKnownBy) {
@@ -363,7 +346,7 @@ public abstract class Firm {
 	}
 
 	public double getPoorestConsumerMargUtil() {
-		return Firms.getPoorestConsumerMargUtil(getQuality(), getPrice());
+		return Utils.getPoorestConsumerMargUtil(getQuality(), getPrice());
 	}
 
 	public String getFirmType() {

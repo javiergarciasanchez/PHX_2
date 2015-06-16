@@ -19,7 +19,7 @@
 		defaultValue="0.98" isReadOnly="false"
 		converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" />
 	<parameter name="potencialFirmsPerPeriod" displayName="Potencial Firms Per Period"
-		type="int" defaultValue="10" isReadOnly="false"
+		type="int" defaultValue="1" isReadOnly="false"
 		converter="repast.simphony.parameter.StringConverterFactory$IntConverter" />
 	<parameter name="fixedCostMean" displayName="Fixed Cost Mean"
 		type="double" defaultValue="5.0" isReadOnly="false"
@@ -71,7 +71,7 @@
 		type="int" defaultValue="400" isReadOnly="false"
 		converter="repast.simphony.parameter.StringConverterFactory$IntConverter" />
 	<parameter name="firmsEntryOnlyAtStart" displayName="Firms Entry only at Start?"
-		type="boolean" defaultValue="true" isReadOnly="false"
+		type="boolean" defaultValue="false" isReadOnly="false"
 		converter="repast.simphony.parameter.StringConverterFactory$BooleanConverter" />
 	<parameter name="expectationsInertia" displayName="ExpectationsInertia"
 		type="double" defaultValue="0.8" isReadOnly="false"

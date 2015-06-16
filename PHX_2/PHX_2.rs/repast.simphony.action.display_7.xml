@@ -3,7 +3,7 @@
   <type>2D</type>
   <styles>
     <entry>
-      <string>pHX_2.SegmentLimit</string>
+      <string>graphs.SegmentLimit</string>
       <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
     </entry>
     <entry>
@@ -17,8 +17,8 @@
   </styles>
   <editedStyles>
     <entry>
-      <string>pHX_2.SegmentLimit</string>
-      <string>pHX_2.SegmentLimit.style_3.xml</string>
+      <string>graphs.SegmentLimit</string>
+      <string>graphs.SegmentLimit.style_3.xml</string>
     </entry>
     <entry>
       <string>firms.Firm</string>
@@ -46,7 +46,7 @@
   <layoutInterval>0</layoutInterval>
   <layerOrder>
     <entry>
-      <string>pHX_2.SegmentLimit</string>
+      <string>graphs.SegmentLimit</string>
       <int>0</int>
     </entry>
     <entry>

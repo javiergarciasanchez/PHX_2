@@ -1,10 +1,10 @@
-package pHX_2;
+package graphs;
 
 import java.awt.Color;
 
 import firmState.Offer;
 import firms.Firm;
-import firms.Firms;
+import firms.Utils;
 
 public class SegmentLimit {
 	private Firm lowerFirm, higherFirm;
@@ -28,7 +28,7 @@ public class SegmentLimit {
 	public static double calcLimit(Offer loOffer, Offer hiOffer) {
 
 		if (loOffer == null && hiOffer != null) {
-			double poorest = Firms.getPoorestConsumerMargUtil(
+			double poorest = Utils.getPoorestConsumerMargUtil(
 					hiOffer.getQuality(), hiOffer.getPrice());
 			return poorest;
 		} else if (loOffer != null && hiOffer == null)
@@ -38,7 +38,7 @@ public class SegmentLimit {
 			double limit = (hiOffer.getPrice() - loOffer.getPrice())
 					/ (hiOffer.getQuality() - loOffer.getQuality());
 
-			double poorest = Firms.getPoorestConsumerMargUtil(
+			double poorest = Utils.getPoorestConsumerMargUtil(
 					hiOffer.getQuality(), hiOffer.getPrice());
 
 			return Math.max(poorest, limit);

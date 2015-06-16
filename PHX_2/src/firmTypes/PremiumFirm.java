@@ -8,9 +8,8 @@ import consumers.Pareto;
 import firmState.Offer;
 import firmState.OfferType;
 import firms.Firm;
-import firms.Firms;
+import firms.Utils;
 import pHX_2.Market;
-import repast.simphony.random.RandomHelper;
 
 // This firm firmState high price and high quality
 public class PremiumFirm extends Firm {
@@ -38,54 +37,40 @@ public class PremiumFirm extends Firm {
 
 	@Override
 	protected Offer getInitialOffer() {
-		
+
 		double q = getRandomInitialQuality();
 		Offer offer = new Offer(q, getRandomInitialPrice(q));
 		return offer;
 
 	}
-	
+
 	private double getRandomInitialQuality() {
 		double lowerQ = (Offer.getMinQuality() + Offer.getMaxQuality()) / 2.0;
 		double higherQ = Offer.getMaxQuality();
-		return Firm.getRandomInitialQuality(lowerQ, higherQ);
+		return Utils.getRandomInitialQuality(lowerQ, higherQ);
 	}
 
 	private double getRandomInitialPrice(double q) {
-		Firm lowerComp, higherComp;
-		double lowerPrice, higherPrice;
-		double price;
 
-		// Chooses a random price in the range delimited by lower and higher
-		// competitors
-		// If any of the competitors does not exists, absolute price limits are
-		// used
-		lowerComp = Market.segments.getPrevQFirm(q);
-		higherComp = Market.segments.getNextQFirm(q);
-		double midPrice = (Offer.getMinPrice() + Offer.getMaxPrice()) / 2.0;
+		// Chooses a price that is one step below maximum competitive price
+		double price = Utils.getMaxCompetitivePriceToEntry(q);
+		double priceStep = Market.firms.getPriceStepDistrib().nextDouble();
+		price = price - priceStep;
 
-		// Set lower price limit
-		lowerPrice = Math.max(unitCost(q), midPrice);
+		// Price cannot be lower than the required by the premium segment
+		// The limit is established in terms of minimal marginal utility of the
+		// poorest consumer
+		double premiumSegmentLimit = Utils.getPoorestConsumerMinPrice(
+				minPoorestConsumerMargUtil, q);
+		price = Math.max(price, premiumSegmentLimit);
 
-		if (lowerComp != null)
-			lowerPrice = Math.max(lowerComp.getPrice(), lowerPrice);
+		// Price cannot be lower than cost (This overcomes segment limit)
+		price = Math.max(price, unitCost(q));
 
-		// Set higher price limit
-		if (higherComp != null && higherComp.getPrice() > lowerPrice)
-			higherPrice = higherComp.getPrice();
-		else
-			higherPrice = Offer.getMaxPrice();
-
-		// Uses default Uniform distribution
-		price = RandomHelper.nextDoubleFromTo(lowerPrice, higherPrice);
-
-		// Check price is high enough to meet minimum poorest consumer
-		return Math
-				.max(price, Firms.getPoorestConsumerMinPrice(
-						minPoorestConsumerMargUtil, q));
+		return price;
 
 	}
-	
+
 	@Override
 	public Color getColor() {
 		return Color.BLUE;
@@ -93,9 +78,9 @@ public class PremiumFirm extends Firm {
 
 	@Override
 	protected void fillOfferTypePreference() {
-		offerTypePreference[0] = OfferType.INCREASE_QUALITY;		
+		offerTypePreference[0] = OfferType.INCREASE_QUALITY;
 		offerTypePreference[1] = OfferType.INCREASE_PRICE;
-		offerTypePreference[2]= OfferType.DECREASE_PRICE;
+		offerTypePreference[2] = OfferType.DECREASE_PRICE;
 		offerTypePreference[3] = OfferType.DECREASE_QUALITY;
 	}
 }

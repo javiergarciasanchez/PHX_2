@@ -5,6 +5,7 @@ import java.awt.Color;
 import firmState.Offer;
 import firmState.OfferType;
 import firms.Firm;
+import firms.Utils;
 import repast.simphony.random.RandomHelper;
 
 // This firm firmState low price and high quality
@@ -27,7 +28,7 @@ public class WaitFirm extends Firm {
 		double lowerQ = (Offer.getMinQuality() + Offer.getMaxQuality()) / 2.0;;
 		double higherQ = Offer.getMaxQuality();
 
-		return Firm.getRandomInitialQuality(lowerQ, higherQ);
+		return Utils.getRandomInitialQuality(lowerQ, higherQ);
 	}
 
 	private double getRandomInitialPrice(double q) {

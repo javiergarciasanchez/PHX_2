@@ -9,6 +9,7 @@ import graphs.Firms2DProjection;
 import graphs.FirmsDemandProjection;
 import graphs.FirmsProfitProjection;
 import graphs.MargUtilProjection;
+import graphs.SegmentLimit;
 import firmState.Offer;
 import firmTypes.FirmType;
 
@@ -41,7 +42,7 @@ public class Market extends DefaultContext<Object> implements
 	public static ConsumptionProjection consumptionProjection;
 	public static MargUtilProjection margUtilProjection;
 
-	public static Segments segments;
+	public static DefaultContext<SegmentLimit> segments;
 	public static ArrayList<Firm> toBeKilled;
 
 	@Override
@@ -96,7 +97,7 @@ public class Market extends DefaultContext<Object> implements
 		firmsProfitProjection = new FirmsProfitProjection(firms);
 
 		// Create Market Segments defined by firms prices and qualities offered
-		segments = new Segments();
+		segments = new DefaultContext<SegmentLimit>("Segments_Context");
 		context.addSubContext(segments);
 
 		return context;

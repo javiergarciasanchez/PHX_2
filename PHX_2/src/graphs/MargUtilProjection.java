@@ -4,9 +4,8 @@ import static repast.simphony.essentials.RepastEssentials.GetParameter;
 import consumers.Consumer;
 import consumers.Pareto;
 import pHX_2.Market;
-import pHX_2.SegmentLimit;
 import firms.Firm;
-import firms.Firms;
+import firms.Utils;
 import repast.simphony.context.Context;
 import repast.simphony.context.space.grid.ContextGrid;
 import repast.simphony.space.grid.SimpleGridAdder;
@@ -44,7 +43,7 @@ public class MargUtilProjection {
 
 	public void update(Firm f) {
 
-		int x = margUtilToCoord(Firms.getPoorestConsumerMargUtil(
+		int x = margUtilToCoord(Utils.getPoorestConsumerMargUtil(
 				f.getQuality(), f.getPrice()));
 
 		space.moveTo(f, x, getFreeY(x, 0, 2));

@@ -1,7 +1,7 @@
 <repast.simphony.data2.engine.DataSetDescriptor>
   <name>Segments</name>
   <type>NON_AGGREGATE</type>
-  <sourceType>pHX_2.SegmentLimit</sourceType>
+  <sourceType>graphs.SegmentLimit</sourceType>
   <inclTick>true</inclTick>
   <inclBatchRun>true</inclBatchRun>
   <inclRandomSeed>false</inclRandomSeed>
@@ -20,7 +20,7 @@
       <string>Value</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
         <id>Value</id>
-        <className>pHX_2.SegmentLimit</className>
+        <className>graphs.SegmentLimit</className>
         <methodName>getValue</methodName>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
@@ -28,7 +28,7 @@
       <string>Label</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
         <id>Label</id>
-        <className>pHX_2.SegmentLimit</className>
+        <className>graphs.SegmentLimit</className>
         <methodName>getLabel</methodName>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
