@@ -43,10 +43,10 @@ public class Offer {
 		setQuality(q);
 		setPrice(p);
 		
-//		double priceStep = Market.firms.getPriceStepDistrib().nextDouble();
-//		double qualityStep = Market.firms.getQualityStepDistrib().nextDouble();
-		double priceStep = (Double) GetParameter("priceStepMean");
-		double qualityStep = (Double) GetParameter("qualityStepMean");
+		double priceStep = Market.firms.getPriceStepDistrib().nextDouble();
+		double qualityStep = Market.firms.getQualityStepDistrib().nextDouble();
+//		double priceStep = (Double) GetParameter("priceStepMean");
+//		double qualityStep = (Double) GetParameter("qualityStepMean");
 
 		switch (offerType) {
 		case INCREASE_PRICE:

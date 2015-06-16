@@ -1,23 +1,22 @@
 package pHX_2;
 
-import java.util.ArrayList;
 import java.util.Map;
 import java.util.TreeMap;
 
 import repast.simphony.context.DefaultContext;
 import repast.simphony.engine.schedule.ScheduledMethod;
+import firmState.Offer;
 import firms.Firm;
 
 public class Segments extends DefaultContext<SegmentLimit> {
 
 	// Firms ordered according to quality
-	private ArrayList<SegmentLimit> segmentsLimits;
 	private TreeMap<Double, Firm> sortQFirms;
+	private Firm firstLimitingFirm;
 
 	public Segments() {
 		super("Segments_Context");
 
-		segmentsLimits = new ArrayList<SegmentLimit>();
 		sortQFirms = new TreeMap<Double, Firm>();
 
 	}
@@ -25,128 +24,209 @@ public class Segments extends DefaultContext<SegmentLimit> {
 	@ScheduledMethod(start = 1, priority = RunPriority.CREATE_SEGMENT_LIMITS_PRIORITY, interval = 1)
 	public void createSegmentsLimits() {
 
-		clearSegments();
-
-		if (!sortQFirms.isEmpty()) {
-
-			for (Double key : sortQFirms.navigableKeySet()) {
-				addSegmentLimit(sortQFirms.get(key));
-			}
-
-			// add the last limit
-			addSegmentLimit(null);
-
-		}
-
-	}
-
-	private void clearSegments() {
-
-		// Clean firm pointers
-		for (SegmentLimit sL : segmentsLimits) {
-
-			Firm loF = sL.getLowerFirm();
-			Firm hiF = sL.getHigherFirm();
-
-			if (loF != null)
-				loF.setHiSegment(null);
-
-			if (hiF != null)
-				hiF.setHiSegment(null);
-
-		}
-
-		segmentsLimits = new ArrayList<SegmentLimit>();
 		clear();
 
-	}
-
-	// Recursively add a limit using firm
-	// It is assumed the firms are provided using an ordered by quality list of
-	// firms
-	private void addSegmentLimit(Firm firm) {
-
-		if (isConsistentToDirectlyAddToSL(firm)) {
-			directAddSegmentLimit(firm);
-		} else {
-			removeLastSegmentLimit();
-			addSegmentLimit(firm);
-		}
-
-	}
-
-	private boolean isConsistentToDirectlyAddToSL(Firm f) {
-
-		if (f == null)
-			// last firm limit
-			return true;
+		if (firstLimitingFirm == null)
+			return;
 		else {
-			Firm lastF = getLastFirmOfLastSegment();
-			if (lastF == null)
-				// f is the first firm
-				return true;
-			else {
-				double limit = SegmentLimit.calcLimit(lastF, f);
-				double prevLimit = lastF.getSegmentLowerLimit();
-				return (limit > prevLimit);
+			SegmentLimit sL = new SegmentLimit(null, firstLimitingFirm);
+			addSegmentLimit(sL);
+			Firm f = firstLimitingFirm;
+			Firm nextF = f.getHiLimitFirm();
+			while (nextF != null) {
+				sL = new SegmentLimit(f, nextF);
+				addSegmentLimit(sL);
+				f = nextF;
+				nextF = f.getHiLimitFirm();
 			}
 
+			sL = new SegmentLimit(f, null);
+			addSegmentLimit(sL);
+
 		}
+
 	}
 
-	private Firm getLastFirmOfLastSegment() {
-		if (segmentsLimits.isEmpty())
-			return null;
-		else
-			return segmentsLimits.get(segmentsLimits.size() - 1)
-					.getHigherFirm();
+	public void updateLimitingFirms(Firm firm) {
+		double firmQ = firm.getQuality();
+
+		// First we need to remove previous links
+		removeLimitingLinks(firm);
+
+		// Get Tentative neighbors
+		Firm prevF = null;
+		Firm nextF = firstLimitingFirm;
+		while (nextF != null && nextF.getQuality() < firmQ) {
+			prevF = nextF;
+			nextF = nextF.getHiLimitFirm();
+		}
+
+		Offer o = new Offer(firm.getQuality(), firm.getPrice());
+		Firm lowerLimitFirm = getLowerLimitFirm(prevF, o, true);
+		Firm higherLimitFirm = getHigherLimitFirm(nextF, o, true);
+
+		Offer loOffer = (lowerLimitFirm == null ? null : lowerLimitFirm
+				.getOffer());
+		Offer hiOffer = (higherLimitFirm == null ? null : higherLimitFirm
+				.getOffer());
+
+		double loLimit = SegmentLimit.calcLimit(loOffer, o);
+		double hiLimit = SegmentLimit.calcLimit(o, hiOffer);
+
+		if (loLimit < hiLimit) {
+			if (lowerLimitFirm != null)
+				lowerLimitFirm.setHiLimitFirm(firm);
+			else
+				firstLimitingFirm = firm;
+
+			firm.setLoLimitFirm(lowerLimitFirm);
+			firm.setHiLimitFirm(higherLimitFirm);
+
+			if (higherLimitFirm != null)
+				higherLimitFirm.setLoLimitFirm(firm);
+		}
+
 	}
 
-	private void directAddSegmentLimit(Firm firm) {
-
-		SegmentLimit sL = new SegmentLimit(getLastFirmOfLastSegment(), firm);
-
-		segmentsLimits.add(sL);
+	private void addSegmentLimit(SegmentLimit sL) {
 		add(sL);
 		Market.margUtilProjection.add(sL);
+	}
+
+	private Firm getLowerLimitFirm(Firm prevFirm, Offer o, boolean clean) {
+
+		if (prevFirm == null)
+			return null;
+		else {
+
+			Offer prevOffer = prevFirm.getOffer();
+			double limit = SegmentLimit.calcLimit(prevOffer, o);
+
+			Firm prevPrevFirm = prevFirm.getLoLimitFirm();
+			Offer prevPrevOffer = ((prevPrevFirm == null) ? null : prevPrevFirm
+					.getOffer());
+
+			double prevLimit = SegmentLimit.calcLimit(prevPrevOffer, prevOffer);
+
+			if (prevLimit < limit)
+				return prevFirm;
+			else {
+				if (clean)
+					removeLimitingLinks(prevFirm);
+
+				return getLowerLimitFirm(prevPrevFirm, o, clean);
+			}
+		}
 
 	}
 
-	private void removeLastSegmentLimit() {
-		int size = segmentsLimits.size();
-		SegmentLimit sL;
+	private Firm getHigherLimitFirm(Firm nextFirm, Offer o, boolean clean) {
 
-		sL = segmentsLimits.get(size - 1);
+		if (nextFirm == null)
+			return null;
+		else {
 
-		// remove firms' pointers
-		Firm loF = sL.getLowerFirm();
-		Firm hiF = sL.getHigherFirm();
+			Offer nextOffer = nextFirm.getOffer();
+			double limit = SegmentLimit.calcLimit(o, nextOffer);
 
-		if (loF != null)
-			loF.setHiSegment(null);
+			Firm nextNextFirm = nextFirm.getHiLimitFirm();
+			Offer nextNextOffer = ((nextNextFirm == null) ? null : nextNextFirm
+					.getOffer());
 
-		if (hiF != null)
-			hiF.setHiSegment(null);
+			double nextLimit = SegmentLimit.calcLimit(nextOffer, nextNextOffer);
 
-		segmentsLimits.remove(size - 1);
-		remove(sL);
+			if (limit < nextLimit)
+				return nextFirm;
+			else {
+				if (clean)
+					removeLimitingLinks(nextFirm);
+
+				return getHigherLimitFirm(nextNextFirm, o, clean);
+			}
+		}
+
+	}
+
+	private void removeLimitingLinks(Firm f) {
+		if (sortQFirms.size() == 1)
+			return;
+
+		// connect links if it had
+		Firm loF = f.getLoLimitFirm();
+		Firm hiF = f.getHiLimitFirm();
+
+		if (firstLimitingFirm == f && hiF != null) {
+			firstLimitingFirm = hiF;
+			hiF.setLoLimitFirm(null);
+
+		} else if (firstLimitingFirm == f && hiF == null) {
+			// f was the first and the last, it had all the market
+			// we need to rebuild the whole chain
+			rebuildLimitsExcluding(f);
+			return;
+
+		} else if (firstLimitingFirm != f) {
+
+			if (loF != null)
+				loF.setHiLimitFirm(hiF);
+			
+			if (hiF != null)
+				hiF.setLoLimitFirm(loF);
+
+		}
+
+		f.setLoLimitFirm(null);
+		f.setHiLimitFirm(null);
+	}
+
+	private void rebuildLimitsExcluding(Firm exclF) {
+		firstLimitingFirm = null;
+		exclF.setLoLimitFirm(null);
+		exclF.setHiLimitFirm(null);
+
+		for (double q : sortQFirms.navigableKeySet()) {
+			Firm f = sortQFirms.get(q);
+			if (f != exclF)
+				updateLimitingFirms(f);
+		}
+
 	}
 
 	public Firm lowestQFirm() {
-		if (sortQFirms.isEmpty())
-			return null;
-		else
-			return sortQFirms.firstEntry().getValue();
+
+		Map.Entry<Double, Firm> e = sortQFirms.firstEntry();
+		return (e == null ? null : e.getValue());
+
+	}
+
+	public Firm getLowerLimitFirm(double q, boolean clean) {
+
+		Firm prevF = null;
+		Firm f = firstLimitingFirm;
+		while (f != null && f.getQuality() < q) {
+			prevF = f;
+			f = f.getHiLimitFirm();
+		}
+
+		return prevF;
+
+	}
+
+	public Firm getHigherLimitFirm(double q, boolean clean) {
+
+		Firm f = firstLimitingFirm;
+		while (f != null && f.getQuality() < q) {
+			f = f.getHiLimitFirm();
+		}
+
+		return f;
+
 	}
 
 	public Firm getNextQFirm(double quality) {
 
 		Map.Entry<Double, Firm> e = sortQFirms.ceilingEntry(quality);
-
-		if (e != null)
-			return e.getValue();
-		else
-			return null;
+		return (e == null ? null : e.getValue());
 
 	}
 
@@ -157,11 +237,7 @@ public class Segments extends DefaultContext<SegmentLimit> {
 	public Firm getPrevQFirm(double quality) {
 
 		Map.Entry<Double, Firm> e = sortQFirms.floorEntry(quality);
-
-		if (e != null)
-			return e.getValue();
-		else
-			return null;
+		return (e == null ? null : e.getValue());
 
 	}
 
@@ -173,12 +249,14 @@ public class Segments extends DefaultContext<SegmentLimit> {
 		return sortQFirms.containsKey(q);
 	}
 
-	public void removeFromSegments(Firm f) {
-		sortQFirms.remove(f.getQuality());		
+	public void addToSegments(Firm f) {
+		sortQFirms.put(f.getQuality(), f);
+		updateLimitingFirms(f);
 	}
 
-	public void addToSegments(Firm f) {
-		sortQFirms.put(f.getQuality(),f);
+	public void removeFromSegments(Firm f) {
+		removeLimitingLinks(f);
+		sortQFirms.remove(f.getQuality());
 	}
 
 }

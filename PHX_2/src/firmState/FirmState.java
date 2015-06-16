@@ -1,7 +1,5 @@
 package firmState;
 
-
-
 public class FirmState {
 	
 	public class MarketResponse {

@@ -2,7 +2,9 @@ package pHX_2;
 
 import java.awt.Color;
 
+import firmState.Offer;
 import firms.Firm;
+import firms.Firms;
 
 public class SegmentLimit {
 	private Firm lowerFirm, higherFirm;
@@ -13,18 +15,37 @@ public class SegmentLimit {
 		this.higherFirm = hiF;
 
 		if (loF == null && hiF != null) {
-			hiF.setLoSegment(this);
 			value = hiF.getPoorestConsumerMargUtil();
 		} else if (loF != null && hiF == null) {
-			loF.setHiSegment(this);
 			value = Double.MAX_VALUE;
 		} else if (loF != null && hiF != null) {
-			loF.setHiSegment(this);
-			hiF.setLoSegment(this);
 			value = calcLimit(loF, hiF);
 		} else
 			// Both are null. It shouldn't come here
 			value = 0.0;
+	}
+
+	public static double calcLimit(Offer loOffer, Offer hiOffer) {
+
+		if (loOffer == null && hiOffer != null) {
+			double poorest = Firms.getPoorestConsumerMargUtil(
+					hiOffer.getQuality(), hiOffer.getPrice());
+			return poorest;
+		} else if (loOffer != null && hiOffer == null)
+			return Double.MAX_VALUE;
+
+		else if (loOffer != null && hiOffer != null) {
+			double limit = (hiOffer.getPrice() - loOffer.getPrice())
+					/ (hiOffer.getQuality() - loOffer.getQuality());
+
+			double poorest = Firms.getPoorestConsumerMargUtil(
+					hiOffer.getQuality(), hiOffer.getPrice());
+
+			return Math.max(poorest, limit);
+		} else
+			// Both are null. It shouldn't come here
+			return 0.0;
+
 	}
 
 	public static double calcLimit(Firm loF, Firm hiF) {

@@ -13,7 +13,6 @@ import firmState.Offer;
 import firmState.OfferType;
 import pHX_2.Market;
 import pHX_2.RunPriority;
-import pHX_2.SegmentLimit;
 import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.random.RandomHelper;
 
@@ -22,9 +21,9 @@ public abstract class Firm {
 	private FirmHistory history = new FirmHistory(FirmHistory.HISTORY_SIZE);
 
 	protected double minPoorestConsumerMargUtil = Market.consumers
-			.getMinMargUtilOfQuality(),
-			maxPoorestConsumerMargUtil = Market.consumers
-					.getMaxMargUtilOfQuality();
+			.getMinMargUtilOfQuality();
+	protected double maxPoorestConsumerMargUtil = Market.consumers
+			.getMaxMargUtilOfQuality();
 
 	private Binomial explorationDistrib;
 	private double accumProfit = 0;
@@ -32,7 +31,7 @@ public abstract class Firm {
 	private double expectedQuality = 0;
 	private ArrayList<Consumer> notYetKnownBy, alreadyKnownBy;
 
-	private SegmentLimit loSegment, hiSegment;
+	private Firm loLimitFirm, hiLimitFirm;
 
 	protected OfferType[] offerTypePreference = new OfferType[4];
 
@@ -102,12 +101,16 @@ public abstract class Firm {
 	@ScheduledMethod(start = 1, priority = RunPriority.MAKE_OFFER_PRIORITY, interval = 1)
 	public void makeOffer() {
 		Offer offer;
-
+		
 		if (history.size() == 0) {
 			// ENTRY
 
 			offer = getInitialOffer();
 
+			history.addCurrentState(new FirmState(offer));
+
+			Market.segments.addToSegments(this);
+			
 			initializeConsumerKnowledge();
 
 		} else {
@@ -119,14 +122,13 @@ public abstract class Firm {
 			} else {
 				offer = getMaximizingOffer();
 			}
+			
+			history.addCurrentState(new FirmState(offer));
+			
+			Market.segments.updateLimitingFirms(this);
 
 			updateNotYetKnownBy();
-
 		}
-
-		history.addCurrentState(new FirmState(offer));
-
-		Market.segments.addToSegments(this);
 
 	}
 
@@ -287,55 +289,51 @@ public abstract class Firm {
 		return expectedQuality;
 	}
 
-	public void setDemand(int i) {
-		history.setCurrentDemand(i);
-	}
-
 	public void killFirm() {
 		Market.segments.removeFromSegments(this);
-
+	
 		// Remove firm from consumers lists
 		for (Consumer c : alreadyKnownBy) {
 			c.removeFromKnownFirms(this);
 			c.removeFromExploredFirms(this);
 		}
-
+	
 		Market.firms.remove(this);
-
+	
 	}
 
-	public Double getSegmentLowerLimit() {
-		SegmentLimit sL = getLoSegment();
-		if (sL != null)
-			return sL.getValue();
-		else
-			return null;
+	public void setDemand(int i) {
+		history.setCurrentDemand(i);
 	}
 
-	public Double getSegmentHigherLimit() {
-		SegmentLimit sL = getHiSegment();
-		if (sL != null)
-			return sL.getValue();
-		else
-			return null;
+	//
+	// Getters to probe
+	//
+	
+	public int getDemand() {
+		return history.getCurrentDemand();
 	}
 
-	public SegmentLimit getLoSegment() {
-		return loSegment;
+	public Offer getOffer() {
+		return history.getCurrentOffer();		
 	}
 
-	public void setLoSegment(SegmentLimit loSegment) {
-		this.loSegment = loSegment;
+	public Firm getLoLimitFirm() {
+		return loLimitFirm;
 	}
 
-	public SegmentLimit getHiSegment() {
-		return hiSegment;
+	public void setLoLimitFirm(Firm loSegmentFirm) {
+		this.loLimitFirm = loSegmentFirm;
 	}
 
-	public void setHiSegment(SegmentLimit hiSegment) {
-		this.hiSegment = hiSegment;
+	public Firm getHiLimitFirm() {
+		return hiLimitFirm;
 	}
 
+	public void setHiLimitFirm(Firm hiSegmentFirm) {
+		this.hiLimitFirm = hiSegmentFirm;
+	}
+	
 	public int getRed() {
 		return getColor().getRed();
 	}
@@ -351,10 +349,6 @@ public abstract class Firm {
 	//
 	// Getters to probe
 	//
-
-	public int getDemand() {
-		return history.getCurrentDemand();
-	}
 
 	public double getProfit() {
 		return history.getCurrentProfit();
