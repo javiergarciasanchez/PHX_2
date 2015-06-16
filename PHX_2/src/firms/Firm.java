@@ -20,9 +20,9 @@ public abstract class Firm {
 
 	private FirmHistory history = new FirmHistory(FirmHistory.HISTORY_SIZE);
 
-	protected double minPoorestConsumerMargUtil = Market.consumers
+	protected double minPoorestConsumerMargUtil = Consumers
 			.getMinMargUtilOfQuality();
-	protected double maxPoorestConsumerMargUtil = Market.consumers
+	protected double maxPoorestConsumerMargUtil = Consumers
 			.getMaxMargUtilOfQuality();
 
 	private Binomial explorationDistrib;
@@ -69,6 +69,20 @@ public abstract class Firm {
 					+ Market.firms.getPriceStepDistrib().nextDouble());
 		}
 
+		makeInitialOffer();
+
+	}
+
+	private void makeInitialOffer() {
+
+		Offer offer = getInitialOffer();
+
+		history.addCurrentState(new FirmState(offer));
+
+		Market.firms.initializeLimitingFirms(this);
+
+		initializeConsumerKnowledge();
+
 	}
 
 	protected abstract void fillOfferTypePreference();
@@ -83,35 +97,22 @@ public abstract class Firm {
 
 	@ScheduledMethod(start = 1, priority = RunPriority.MAKE_OFFER_PRIORITY, interval = 1)
 	public void makeOffer() {
+
 		Offer offer;
-		
-		if (history.size() == 0) {
-			// ENTRY
 
-			offer = getInitialOffer();
+		Market.firms.removeFromSegments(this);
 
-			history.addCurrentState(new FirmState(offer));
-
-			Market.firms.addToSegments(this);
-			
-			initializeConsumerKnowledge();
-
+		if (explorationDistrib.nextInt() == 1) {
+			offer = getExploratoryOffer();
 		} else {
-
-			Market.firms.removeFromSegments(this);
-
-			if (explorationDistrib.nextInt() == 1) {
-				offer = getExploratoryOffer();
-			} else {
-				offer = getMaximizingOffer();
-			}
-			
-			history.addCurrentState(new FirmState(offer));
-			
-			Market.firms.updateLimitingFirms(this);
-
-			updateNotYetKnownBy();
+			offer = getMaximizingOffer();
 		}
+
+		history.addCurrentState(new FirmState(offer));
+
+		Market.firms.updateLimitingFirms(this);
+
+		updateNotYetKnownBy();
 
 	}
 
@@ -129,7 +130,27 @@ public abstract class Firm {
 	}
 
 	private Offer getMaximizingOffer() {
-		return history.getMaxProfitOffer();
+
+		double margProfQ = Utils.getMarginalProfitOfQuality(this);
+		double margProfP = Utils.getMarginalProfitOfPrice(this);
+
+		if (Math.abs(margProfP) > Math.abs(margProfQ)) {
+			// Modify price
+			double priceStep = Market.firms.getPriceStepDistrib().nextDouble();
+			if (margProfP > 0)
+				return new Offer(getQuality(), getPrice() + priceStep);
+			else
+				return new Offer(getQuality(), getPrice() - priceStep);
+		} else {
+			// Modify quality
+			double qualityStep = Market.firms.getQualityStepDistrib()
+					.nextDouble();
+			if (margProfQ > 0)
+				return new Offer(getQuality() + qualityStep, getPrice());
+			else
+				return new Offer(getQuality() - qualityStep, getPrice());
+		}
+
 	}
 
 	@ScheduledMethod(start = 1, priority = RunPriority.NEXT_STEP_FIRM_PRIORITY, interval = 1)
@@ -237,6 +258,10 @@ public abstract class Firm {
 		return costScale * quality;
 	}
 
+	protected double getMarginalCostOfQuality() {
+		return costScale;
+	}
+
 	private OfferType getOfferType() {
 		return history.getCurrentOfferType();
 	}
@@ -247,7 +272,7 @@ public abstract class Firm {
 		double consumPerc;
 		double currExpQ;
 
-		consumPerc = getDemand() / Consumers.getMaxConsumers();
+		consumPerc = getDemand() / Consumers.getNumberOfConsumers();
 		currExpQ = consumPerc * getQuality() + (1 - consumPerc)
 				* Market.getExpectedQPerDollar() * getPrice();
 
@@ -274,15 +299,15 @@ public abstract class Firm {
 
 	public void killFirm() {
 		Market.firms.removeFromSegments(this);
-	
+
 		// Remove firm from consumers lists
 		for (Consumer c : alreadyKnownBy) {
 			c.removeFromKnownFirms(this);
 			c.removeFromExploredFirms(this);
 		}
-	
+
 		Market.firms.remove(this);
-	
+
 	}
 
 	public void setDemand(int i) {
@@ -292,13 +317,13 @@ public abstract class Firm {
 	//
 	// Getters to probe
 	//
-	
+
 	public int getDemand() {
 		return history.getCurrentDemand();
 	}
 
 	public Offer getOffer() {
-		return history.getCurrentOffer();		
+		return history.getCurrentOffer();
 	}
 
 	public Firm getLoLimitFirm() {
@@ -316,7 +341,7 @@ public abstract class Firm {
 	public void setHiLimitFirm(Firm hiSegmentFirm) {
 		this.hiLimitFirm = hiSegmentFirm;
 	}
-	
+
 	public int getRed() {
 		return getColor().getRed();
 	}
@@ -328,10 +353,6 @@ public abstract class Firm {
 	public int getGreen() {
 		return getColor().getGreen();
 	}
-
-	//
-	// Getters to probe
-	//
 
 	public double getProfit() {
 		return history.getCurrentProfit();

@@ -63,13 +63,13 @@ public class Consumer {
 
 		// There is no need to introduce a marginal utility of money
 		// because it is implicit in the marginal utility of quality
-		margUtilOfQuality = Market.consumers.getMargUtilOfQualityDistrib()
+		margUtilOfQuality = Consumers.getMargUtilOfQualityDistrib()
 				.nextDouble();
 
 		// Upper limit is unbounded. The max marg utility is updated to scale
 		// graphs
-		Market.consumers.setMaxMargUtilOfQuality(Math.max(
-				Market.consumers.getMaxMargUtilOfQuality(), margUtilOfQuality));
+		Consumers.setMaxMargUtilOfQuality(Math.max(
+				Consumers.getMaxMargUtilOfQuality(), margUtilOfQuality));
 
 	}
 

@@ -4,6 +4,7 @@ import static repast.simphony.essentials.RepastEssentials.GetParameter;
 
 import java.awt.Color;
 
+import consumers.Consumers;
 import consumers.Pareto;
 import firmState.Offer;
 import firmState.OfferType;
@@ -28,7 +29,7 @@ public class PremiumFirm extends Firm {
 		double gini = (double) GetParameter("gini");
 		double lambda = (1.0 + gini) / (2.0 * gini);
 
-		double minimum = Market.consumers.getMinMargUtilOfQuality();
+		double minimum = Consumers.getMinMargUtilOfQuality();
 
 		minPoorestConsumerMargUtil = Pareto.inversePareto(acumProb, minimum,
 				lambda);

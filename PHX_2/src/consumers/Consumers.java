@@ -9,10 +9,10 @@ public class Consumers extends DefaultContext<Consumer> {
 	// This variables are static to access them easily
 	// Are initialized in constructor without problem because
 	// only one instance is always created
-	private double minMargUtilOfQuality;
-	private double maxMargUtilOfQuality;
+	private static double minMargUtilOfQuality;
+	private static double maxMargUtilOfQuality;
 
-	private Pareto margUtilOfQualityDistrib;
+	private static Pareto margUtilOfQualityDistrib;
 
 	public Consumers() {
 		super("Consumers_Context");
@@ -26,7 +26,7 @@ public class Consumers extends DefaultContext<Consumer> {
 		
 	}
 
-	private void createProbabilityDistrib() {
+	private static void createProbabilityDistrib() {
 	
 		// Marginal Utility of Quality 
 		double gini = (double) GetParameter("gini");
@@ -36,27 +36,27 @@ public class Consumers extends DefaultContext<Consumer> {
 	
 	}
 
-	public Pareto getMargUtilOfQualityDistrib() {
+	public static Pareto getMargUtilOfQualityDistrib() {
 		return margUtilOfQualityDistrib;
 	}
 
-	public double getMinMargUtilOfQuality() {
+	public static double getMinMargUtilOfQuality() {
 		return minMargUtilOfQuality;
 	}
 
-	public double getMaxMargUtilOfQuality() {
+	public static double getMaxMargUtilOfQuality() {
 		return maxMargUtilOfQuality;
 	}
 
-	public static int getMaxConsumers() {
+	public static int getNumberOfConsumers() {
 		return (Integer) GetParameter("numberOfConsumers");
 	}
 
-	public void setMaxMargUtilOfQuality(double maxMargUtilOfQuality) {
-		this.maxMargUtilOfQuality = maxMargUtilOfQuality;
+	public static void setMaxMargUtilOfQuality(double maxMargUtilOfQuality) {
+		Consumers.maxMargUtilOfQuality = maxMargUtilOfQuality;
 	}
 
-	public void createConsumers() {
+	public static void createConsumers() {
 
 		for (int i = 1; i <= (Integer) GetParameter("numberOfConsumers"); i++) {
 			new Consumer();

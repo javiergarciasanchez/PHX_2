@@ -71,7 +71,6 @@ public class Firms extends DefaultContext<Firm> {
 
 	}
 	public void updateLimitingFirms(Firm firm) {
-		double firmQ = firm.getQuality();
 
 		// First we need to remove previous links
 		removeLimitingLinks(firm);
@@ -79,7 +78,7 @@ public class Firms extends DefaultContext<Firm> {
 		// Get Tentative neighbors
 		Firm prevF = null;
 		Firm nextF = firstLimitingFirm;
-		while (nextF != null && nextF.getQuality() < firmQ) {
+		while (nextF != null && nextF.getQuality() < firm.getQuality()) {
 			prevF = nextF;
 			nextF = nextF.getHiLimitFirm();
 		}
@@ -93,8 +92,8 @@ public class Firms extends DefaultContext<Firm> {
 		Offer hiOffer = (higherLimitFirm == null ? null : higherLimitFirm
 				.getOffer());
 
-		double loLimit = SegmentLimit.calcLimit(loOffer, o);
-		double hiLimit = SegmentLimit.calcLimit(o, hiOffer);
+		double loLimit = Utils.calcLimit(loOffer, o);
+		double hiLimit = Utils.calcLimit(o, hiOffer);
 
 		if (loLimit < hiLimit) {
 			if (lowerLimitFirm != null)
@@ -123,13 +122,13 @@ public class Firms extends DefaultContext<Firm> {
 		else {
 
 			Offer prevOffer = prevFirm.getOffer();
-			double limit = SegmentLimit.calcLimit(prevOffer, o);
+			double limit = Utils.calcLimit(prevOffer, o);
 
 			Firm prevPrevFirm = prevFirm.getLoLimitFirm();
 			Offer prevPrevOffer = ((prevPrevFirm == null) ? null : prevPrevFirm
 					.getOffer());
 
-			double prevLimit = SegmentLimit.calcLimit(prevPrevOffer, prevOffer);
+			double prevLimit = Utils.calcLimit(prevPrevOffer, prevOffer);
 
 			if (prevLimit < limit)
 				return prevFirm;
@@ -150,13 +149,13 @@ public class Firms extends DefaultContext<Firm> {
 		else {
 
 			Offer nextOffer = nextFirm.getOffer();
-			double limit = SegmentLimit.calcLimit(o, nextOffer);
+			double limit = Utils.calcLimit(o, nextOffer);
 
 			Firm nextNextFirm = nextFirm.getHiLimitFirm();
 			Offer nextNextOffer = ((nextNextFirm == null) ? null : nextNextFirm
 					.getOffer());
 
-			double nextLimit = SegmentLimit.calcLimit(nextOffer, nextNextOffer);
+			double nextLimit = Utils.calcLimit(nextOffer, nextNextOffer);
 
 			if (limit < nextLimit)
 				return nextFirm;
@@ -250,7 +249,7 @@ public class Firms extends DefaultContext<Firm> {
 		return sortQFirms.containsKey(q);
 	}
 
-	public void addToSegments(Firm f) {
+	public void initializeLimitingFirms(Firm f) {
 		sortQFirms.put(f.getQuality(), f);
 		updateLimitingFirms(f);
 	}
@@ -315,16 +314,17 @@ public class Firms extends DefaultContext<Firm> {
 
 			switch (FirmType.getRandomFirmType()) {
 			case OPPORTUNISTIC:
-				new OpportunisticFirm();
-				break;
+//				new OpportunisticFirm();
+//				break;
 			case PREMIUM:
 				new PremiumFirm();
 				break;
+			case WAIT:
+//				new WaitFirm();
+//				break;
 			case BASE_PYRAMID:
 				new BasePyramidFirm();
 				break;
-			case WAIT:
-				new WaitFirm();
 			}
 		}
 

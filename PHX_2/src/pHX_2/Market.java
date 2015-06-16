@@ -74,7 +74,7 @@ public class Market extends DefaultContext<Object> implements
 		// Create Consumers
 		consumers = new Consumers();
 		context.addSubContext(consumers);
-		consumers.createConsumers();
+		Consumers.createConsumers();
 
 		// Consumers Projection
 		// Dimension is Marginal Utility of Quality

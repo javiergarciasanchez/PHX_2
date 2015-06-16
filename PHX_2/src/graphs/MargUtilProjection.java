@@ -2,8 +2,8 @@ package graphs;
 
 import static repast.simphony.essentials.RepastEssentials.GetParameter;
 import consumers.Consumer;
+import consumers.Consumers;
 import consumers.Pareto;
-import pHX_2.Market;
 import firms.Firm;
 import firms.Utils;
 import repast.simphony.context.Context;
@@ -52,7 +52,7 @@ public class MargUtilProjection {
 
 	public void add(SegmentLimit sL) {
 		double val = Math.min(sL.getValue(),
-				Market.consumers.getMaxMargUtilOfQuality());
+				Consumers.getMaxMargUtilOfQuality());
 		int x = margUtilToCoord(val);
 
 		space.moveTo(sL, x, getFreeY(x, FIRMS_HEIGHT, 2));
@@ -74,7 +74,7 @@ public class MargUtilProjection {
 		double gini = (double) GetParameter("gini");
 		double lambda = (1.0 + gini) / (2.0 * gini);
 
-		double minimum = Market.consumers.getMinMargUtilOfQuality();
+		double minimum = Consumers.getMinMargUtilOfQuality();
 
 		return Pareto.inversePareto(acumProb, minimum, lambda);
 	}

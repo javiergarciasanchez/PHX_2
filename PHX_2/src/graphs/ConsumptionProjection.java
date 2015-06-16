@@ -6,7 +6,6 @@ import consumers.Consumers;
 import consumers.Pareto;
 import firmState.Offer;
 import firms.Firm;
-import pHX_2.Market;
 import repast.simphony.context.space.continuous.ContextSpace;
 import repast.simphony.space.continuous.ContinuousSpace;
 import repast.simphony.space.continuous.SimpleCartesianAdder;
@@ -61,7 +60,7 @@ public class ConsumptionProjection {
 		double gini = (double) GetParameter("gini");
 		double lambda = (1.0 + gini) / (2.0 * gini);
 
-		double minimum = Market.consumers.getMinMargUtilOfQuality();
+		double minimum = Consumers.getMinMargUtilOfQuality();
 
 		return Pareto.inversePareto(acumProb, minimum, lambda);
 	}

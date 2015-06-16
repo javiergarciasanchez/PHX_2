@@ -43,7 +43,7 @@ public class FirmsDemandProjection {
 	}
 
 	private double demandToCoord(int demand) {
-		return (double)demand / Consumers.getMaxConsumers() * (MAX_Y - MIN_Y) + MIN_Y;
+		return (double)demand / Consumers.getNumberOfConsumers() * (MAX_Y - MIN_Y) + MIN_Y;
 	}
 
 	private double qualityToCoord(double quality) {
