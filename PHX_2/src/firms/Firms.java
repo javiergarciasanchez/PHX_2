@@ -2,7 +2,6 @@ package firms;
 
 import java.util.Map;
 import java.util.TreeMap;
-
 import pHX_2.Market;
 import pHX_2.RunPriority;
 import cern.jet.random.Gamma;
@@ -41,10 +40,10 @@ public class Firms extends DefaultContext<Firm> {
 		diffusionSpeedParam = (Double) GetParameter("diffusionSpeedParam");
 
 		createProbabilityDistrib();
-		
+
 		sortQFirms = new TreeMap<Double, Firm>();
 	}
-	
+
 	@ScheduledMethod(start = 1, priority = RunPriority.CREATE_SEGMENT_LIMITS_PRIORITY, interval = 1)
 	public void createSegmentsLimits() {
 
@@ -70,9 +69,22 @@ public class Firms extends DefaultContext<Firm> {
 		}
 
 	}
+
 	public void updateLimitingFirms(Firm firm) {
 
-		// First we need to remove previous links
+		// Handle special cases
+		if (firstLimitingFirm == null) {
+			// It is the first firm
+			firm.setLoLimitFirm(null);
+			firm.setHiLimitFirm(null);
+			firstLimitingFirm = firm;
+			return;
+		} else if (firstAndLast(firm)) {
+			// Nothing to update
+			return;
+		}
+
+		// Remove previous links
 		removeLimitingLinks(firm);
 
 		// Get Tentative neighbors
@@ -84,8 +96,8 @@ public class Firms extends DefaultContext<Firm> {
 		}
 
 		Offer o = new Offer(firm.getQuality(), firm.getPrice());
-		Firm lowerLimitFirm = getLowerLimitFirm(prevF, o, true);
-		Firm higherLimitFirm = getHigherLimitFirm(nextF, o, true);
+		Firm lowerLimitFirm = getLowerLimitFirm(prevF, o, firm);
+		Firm higherLimitFirm = getHigherLimitFirm(nextF, o, firm);
 
 		Offer loOffer = (lowerLimitFirm == null ? null : lowerLimitFirm
 				.getOffer());
@@ -110,12 +122,16 @@ public class Firms extends DefaultContext<Firm> {
 
 	}
 
+	public boolean firstAndLast(Firm firm) {
+		return firstLimitingFirm == firm && firm.getHiLimitFirm() == null;
+	}
+
 	private void addSegmentLimit(SegmentLimit sL) {
 		Market.segments.add(sL);
 		Market.margUtilProjection.add(sL);
 	}
 
-	private Firm getLowerLimitFirm(Firm prevFirm, Offer o, boolean clean) {
+	private Firm getLowerLimitFirm(Firm prevFirm, Offer o, Firm firstCandidate) {
 
 		if (prevFirm == null)
 			return null;
@@ -133,16 +149,20 @@ public class Firms extends DefaultContext<Firm> {
 			if (prevLimit < limit)
 				return prevFirm;
 			else {
-				if (clean)
+				if (firstCandidate != null && firstAndLast(prevFirm)) {
+					prevFirm.setLoLimitFirm(null);
+					firstLimitingFirm = firstCandidate;
+					return null;
+				} else if (firstCandidate != null && !firstAndLast(prevFirm))
 					removeLimitingLinks(prevFirm);
 
-				return getLowerLimitFirm(prevPrevFirm, o, clean);
+				return getLowerLimitFirm(prevPrevFirm, o, firstCandidate);
 			}
 		}
 
 	}
 
-	private Firm getHigherLimitFirm(Firm nextFirm, Offer o, boolean clean) {
+	private Firm getHigherLimitFirm(Firm nextFirm, Offer o, Firm firstCandidate) {
 
 		if (nextFirm == null)
 			return null;
@@ -160,20 +180,28 @@ public class Firms extends DefaultContext<Firm> {
 			if (limit < nextLimit)
 				return nextFirm;
 			else {
-				if (clean)
+				if (firstCandidate != null && firstAndLast(nextFirm)) {
+					nextFirm.setLoLimitFirm(null);
+					firstLimitingFirm = firstCandidate;
+				} else if (firstCandidate != null && !firstAndLast(nextFirm))
 					removeLimitingLinks(nextFirm);
 
-				return getHigherLimitFirm(nextNextFirm, o, clean);
+				return getHigherLimitFirm(nextNextFirm, o, firstCandidate);
 			}
 		}
 
 	}
 
-	private void removeLimitingLinks(Firm f) {
-		if (sortQFirms.size() == 1)
+	public void removeLimitingLinks(Firm f) {
+		if (sortQFirms.size() == 1) {
+			// It is the unique firm
+			f.setLoLimitFirm(null);
+			f.setHiLimitFirm(null);
+			firstLimitingFirm = null;
 			return;
+		}
 
-		// connect links if it had
+		// connect links if it had them and reset firstLimitingFirm if necessary
 		Firm loF = f.getLoLimitFirm();
 		Firm hiF = f.getHiLimitFirm();
 
@@ -182,16 +210,15 @@ public class Firms extends DefaultContext<Firm> {
 			hiF.setLoLimitFirm(null);
 
 		} else if (firstLimitingFirm == f && hiF == null) {
-			// f was the first and the last, it had all the market
-			// we need to rebuild the whole chain
-			rebuildLimitsExcluding(f);
-			return;
+			// It shouldn't come here because it is the first and last
+			throw new Error("It was intended to remove the first and last firm");
 
-		} else if (firstLimitingFirm != f) {
+		} else {
+			// firstLimitingFirm != f
 
 			if (loF != null)
 				loF.setHiLimitFirm(hiF);
-			
+
 			if (hiF != null)
 				hiF.setLoLimitFirm(loF);
 
@@ -201,24 +228,15 @@ public class Firms extends DefaultContext<Firm> {
 		f.setHiLimitFirm(null);
 	}
 
-	private void rebuildLimitsExcluding(Firm exclF) {
-		firstLimitingFirm = null;
-		exclF.setLoLimitFirm(null);
-		exclF.setHiLimitFirm(null);
-
-		for (double q : sortQFirms.navigableKeySet()) {
-			Firm f = sortQFirms.get(q);
-			if (f != exclF)
-				updateLimitingFirms(f);
-		}
-
-	}
-
 	public Firm lowestQFirm() {
 
 		Map.Entry<Double, Firm> e = sortQFirms.firstEntry();
 		return (e == null ? null : e.getValue());
 
+	}
+
+	public boolean isFirstLimitingFirm(Firm f) {
+		return f == firstLimitingFirm;
 	}
 
 	public Firm getLowerLimitFirm(double q, boolean clean) {
@@ -237,7 +255,7 @@ public class Firms extends DefaultContext<Firm> {
 	public Firm getHigherLimitFirm(double q, boolean clean) {
 
 		Firm f = firstLimitingFirm;
-		while (f != null && f.getQuality() < q) {
+		while (f != null && f.getQuality() <= q) {
 			f = f.getHiLimitFirm();
 		}
 
@@ -250,15 +268,21 @@ public class Firms extends DefaultContext<Firm> {
 	}
 
 	public void initializeLimitingFirms(Firm f) {
+		if (sortQFirms.isEmpty())
+			firstLimitingFirm = f;
+
 		sortQFirms.put(f.getQuality(), f);
 		updateLimitingFirms(f);
 	}
 
 	public void removeFromSegments(Firm f) {
-		removeLimitingLinks(f);
+		if (firstAndLast(f)) {
+			firstLimitingFirm = null;
+		} else
+			removeLimitingLinks(f);
+
 		sortQFirms.remove(f.getQuality());
 	}
-
 
 	public void createProbabilityDistrib() {
 		double mean, stdDevPercent, alfa, lamda;
@@ -314,14 +338,14 @@ public class Firms extends DefaultContext<Firm> {
 
 			switch (FirmType.getRandomFirmType()) {
 			case OPPORTUNISTIC:
-//				new OpportunisticFirm();
-//				break;
+				// new OpportunisticFirm();
+				// break;
 			case PREMIUM:
 				new PremiumFirm();
 				break;
 			case WAIT:
-//				new WaitFirm();
-//				break;
+				// new WaitFirm();
+				// break;
 			case BASE_PYRAMID:
 				new BasePyramidFirm();
 				break;

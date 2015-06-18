@@ -5,12 +5,12 @@ import static repast.simphony.essentials.RepastEssentials.GetParameter;
 import java.awt.Color;
 import java.util.ArrayList;
 
-import cern.jet.random.Binomial;
 import consumers.Consumer;
 import consumers.Consumers;
 import firmState.FirmState;
 import firmState.Offer;
 import firmState.OfferType;
+import firmTypes.NoPrice;
 import pHX_2.Market;
 import pHX_2.RunPriority;
 import repast.simphony.engine.schedule.ScheduledMethod;
@@ -25,15 +25,12 @@ public abstract class Firm {
 	protected double maxPoorestConsumerMargUtil = Consumers
 			.getMaxMargUtilOfQuality();
 
-	private Binomial explorationDistrib;
 	private double accumProfit = 0;
 	private double fixedCost;
 	private double expectedQuality = 0;
 	private ArrayList<Consumer> notYetKnownBy, alreadyKnownBy;
 
 	private Firm loLimitFirm, hiLimitFirm;
-
-	protected OfferType[] offerTypePreference = new OfferType[4];
 
 	// Cost Scale is the same for all firms. It could be changed easily
 	private static double costScale;
@@ -52,10 +49,6 @@ public abstract class Firm {
 	public Firm() {
 
 		Market.firms.add(this);
-
-		setExplorationDistrib();
-
-		fillOfferTypePreference();
 
 		alreadyKnownBy = new ArrayList<Consumer>();
 		notYetKnownBy = new ArrayList<Consumer>();
@@ -85,28 +78,33 @@ public abstract class Firm {
 
 	}
 
-	protected abstract void fillOfferTypePreference();
+	private Offer getInitialOffer() {
+		double q = getInitialQuality();
 
-	private void setExplorationDistrib() {
+		try {
+			return new Offer(q, getInitialPrice(q));
+		} catch (NoPrice e) {
+			// Put any price because there is no meaningful price
+			double midPrice = (Offer.getMaxPrice() + Offer.getMinPrice()) / 2.0;
+			return new Offer(q, midPrice);
 
-		double p = (double) GetParameter("firmExplorationProb");
-
-		explorationDistrib = RandomHelper.createBinomial(1, p);
+		}
 
 	}
+
+	protected abstract double getInitialQuality();
+
+	protected abstract double getInitialPrice(double q) throws NoPrice;
 
 	@ScheduledMethod(start = 1, priority = RunPriority.MAKE_OFFER_PRIORITY, interval = 1)
 	public void makeOffer() {
 
 		Offer offer;
 
-		Market.firms.removeFromSegments(this);
-
-		if (explorationDistrib.nextInt() == 1) {
-			offer = getExploratoryOffer();
-		} else {
+		if (isInTheMarket())
 			offer = getMaximizingOffer();
-		}
+		else
+			offer = getReenteringOffer();
 
 		history.addCurrentState(new FirmState(offer));
 
@@ -116,23 +114,38 @@ public abstract class Firm {
 
 	}
 
-	private Offer getExploratoryOffer() {
-		Offer o;
+	private Offer getReenteringOffer() {
 
-		for (OfferType oType : offerTypePreference) {
-			o = new Offer(oType, history.getMaxProfitOffer());
+		if (Market.firms.firstAndLast(this))
+			throw new Error(
+					"A reentering offer is being made for the first and last Firm");
 
-			if (!history.containsOffer(o))
-				return o;
+		Market.firms.removeLimitingLinks(this);
+		double q = getQuality();
+		try {
+			return new Offer(q, getInitialPrice(q));
+		} catch (NoPrice e) {
+			// Take it out of the market because there is no available price to
+			// compete
+			// Keep currentprice
+			Market.firms.removeLimitingLinks(this);			
+			return new Offer(q, getPrice());
 		}
 
-		return null;
+	}
+
+	private boolean isInTheMarket() {
+		boolean isFirstInMarket = Market.firms.isFirstLimitingFirm(this);
+
+		return (getLoLimitFirm() != null || getHiLimitFirm() != null || isFirstInMarket);
 	}
 
 	private Offer getMaximizingOffer() {
+		double qStep = (Double) GetParameter("qualityStepMean");
+		double pStep = (Double) GetParameter("priceStepMean");
 
-		double margProfQ = Utils.getMarginalProfitOfQuality(this);
-		double margProfP = Utils.getMarginalProfitOfPrice(this);
+		double margProfQ = Utils.getMarginalProfitOfQuality(this) * qStep;
+		double margProfP = Utils.getMarginalProfitOfPrice(this) * pStep;
 
 		if (Math.abs(margProfP) > Math.abs(margProfQ)) {
 			// Modify price
@@ -184,8 +197,6 @@ public abstract class Firm {
 	}
 
 	public abstract Color getColor();
-
-	protected abstract Offer getInitialOffer();
 
 	private void initializeConsumerKnowledge() {
 
@@ -317,6 +328,38 @@ public abstract class Firm {
 	//
 	// Getters to probe
 	//
+
+	public double getMarginalProfitQ() {
+		return Utils.getMarginalProfitOfQuality(this);
+	}
+
+	public double getMarginalProfitP() {
+		return Utils.getMarginalProfitOfPrice(this);
+	}
+
+	public String getLoLimitFirmID() {
+		Firm f = getLoLimitFirm();
+
+		return (f == null ? null : f.getFirmID());
+	}
+
+	public double getLoLimitValue() {
+		Firm f = getLoLimitFirm();
+
+		return (f == null ? 0 : Utils.calcLimit(f, this));
+	}
+
+	public String getHiLimitFirmID() {
+		Firm f = getHiLimitFirm();
+
+		return (f == null ? null : f.getFirmID());
+	}
+
+	public double getHiLimitValue() {
+		Firm f = getHiLimitFirm();
+
+		return (f == null ? 0 : Utils.calcLimit(this, f));
+	}
 
 	public int getDemand() {
 		return history.getCurrentDemand();

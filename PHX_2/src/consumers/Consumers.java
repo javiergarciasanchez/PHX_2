@@ -14,6 +14,12 @@ public class Consumers extends DefaultContext<Consumer> {
 
 	private static Pareto margUtilOfQualityDistrib;
 
+	public static void resetStaticVars() {
+		minMargUtilOfQuality = 0.0;
+		maxMargUtilOfQuality = 0.0;
+		margUtilOfQualityDistrib = null;		
+	}
+
 	public Consumers() {
 		super("Consumers_Context");
 		

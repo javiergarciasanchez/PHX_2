@@ -7,7 +7,6 @@ import java.awt.Color;
 import consumers.Consumers;
 import consumers.Pareto;
 import firmState.Offer;
-import firmState.OfferType;
 import firms.Firm;
 import firms.Utils;
 import pHX_2.Market;
@@ -36,22 +35,13 @@ public class PremiumFirm extends Firm {
 
 	}
 
-	@Override
-	protected Offer getInitialOffer() {
-
-		double q = getRandomInitialQuality();
-		Offer offer = new Offer(q, getRandomInitialPrice(q));
-		return offer;
-
-	}
-
-	private double getRandomInitialQuality() {
+	protected double getInitialQuality() {
 		double lowerQ = (Offer.getMinQuality() + Offer.getMaxQuality()) / 2.0;
 		double higherQ = Offer.getMaxQuality();
 		return Utils.getRandomInitialQuality(lowerQ, higherQ);
 	}
 
-	private double getRandomInitialPrice(double q) {
+	protected double getInitialPrice(double q) {
 
 		// Chooses a price that is one step below maximum competitive price
 		double price = Utils.getMaxCompetitivePriceToEntry(q);
@@ -75,13 +65,5 @@ public class PremiumFirm extends Firm {
 	@Override
 	public Color getColor() {
 		return Color.BLUE;
-	}
-
-	@Override
-	protected void fillOfferTypePreference() {
-		offerTypePreference[0] = OfferType.INCREASE_QUALITY;
-		offerTypePreference[1] = OfferType.INCREASE_PRICE;
-		offerTypePreference[2] = OfferType.DECREASE_PRICE;
-		offerTypePreference[3] = OfferType.DECREASE_QUALITY;
 	}
 }

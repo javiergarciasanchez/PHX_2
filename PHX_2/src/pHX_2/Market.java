@@ -56,6 +56,7 @@ public class Market extends DefaultContext<Object> implements
 
 		// Reset static variables
 		Consumer.resetStaticVars();
+		Consumers.resetStaticVars();
 		Firm.resetStaticVars();
 		Offer.resetStaticVars();
 		FirmType.resetStaticVars();

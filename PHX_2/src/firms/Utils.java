@@ -105,6 +105,8 @@ public class Utils {
 	}
 
 	public static double getMarginalProfitOfQuality(Firm firm) {
+		// It is assumed firm is in the market
+
 		double p = firm.getPrice();
 		double q = firm.getQuality();
 		double demand = firm.getDemand();
@@ -116,6 +118,8 @@ public class Utils {
 	}
 
 	private static double demandDerivRespToQuality(Firm firm) {
+		// It is assumed firm is in the market
+		
 		double gini = (double) GetParameter("gini");
 		double lambda = (1.0 + gini) / (2.0 * gini);
 		double minMargUtil = Consumers.getMinMargUtilOfQuality();
@@ -129,6 +133,7 @@ public class Utils {
 		Firm hiF = Market.firms.getHigherLimitFirm(q, false);
 
 		if (loF == null && hiF == null && minMargUtil > poorest) {
+			// It has it all the market
 			return 0.0;
 
 		} else if (loF == null && hiF == null && poorest > minMargUtil) {
@@ -180,6 +185,8 @@ public class Utils {
 	}
 
 	public static double getMarginalProfitOfPrice(Firm firm) {
+		// It is assumed firm is in the market
+
 		double p = firm.getPrice();
 		double q = firm.getQuality();
 		double demand = firm.getDemand();
@@ -190,6 +197,8 @@ public class Utils {
 	}
 
 	private static double demandDerivRespToPrice(Firm firm) {
+		// It is assumed firm is in the market
+
 		double gini = (double) GetParameter("gini");
 		double lambda = (1.0 + gini) / (2.0 * gini);
 		double minMargUtil = Consumers.getMinMargUtilOfQuality();
@@ -203,6 +212,7 @@ public class Utils {
 		Firm hiF = Market.firms.getHigherLimitFirm(q, false);
 
 		if (loF == null && hiF == null && minMargUtil > poorest) {
+			// It has it all the market
 			return 0.0;
 
 		} else if (loF == null && hiF == null && poorest > minMargUtil) {

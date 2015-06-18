@@ -2,6 +2,7 @@ package graphs;
 
 import java.awt.Color;
 
+import consumers.Consumers;
 import firms.Firm;
 import firms.Utils;
 
@@ -16,7 +17,7 @@ public class SegmentLimit {
 		if (loF == null && hiF != null) {
 			value = hiF.getPoorestConsumerMargUtil();
 		} else if (loF != null && hiF == null) {
-			value = Double.MAX_VALUE;
+			value = Consumers.getMaxMargUtilOfQuality();
 		} else if (loF != null && hiF != null) {
 			value = Utils.calcLimit(loF, hiF);
 		} else
@@ -29,14 +30,6 @@ public class SegmentLimit {
 			return Color.BLACK;
 		else
 			return higherFirm.getColor();
-	}
-
-	public Firm getLowerFirm() {
-		return lowerFirm;
-	}
-
-	public Firm getHigherFirm() {
-		return higherFirm;
 	}
 
 	public String getLowerFirmID() {
