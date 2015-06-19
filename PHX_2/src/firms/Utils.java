@@ -46,9 +46,11 @@ public class Utils {
 		if (loOffer == null && hiOffer != null) {
 			double poorest = getPoorestConsumerMargUtil(hiOffer.getQuality(),
 					hiOffer.getPrice());
-			return poorest;
+			// The limit should be higher than the absolute minimum
+			double minMargUtil = Consumers.getMinMargUtilOfQuality();
+			return Math.max(poorest, minMargUtil);
 		} else if (loOffer != null && hiOffer == null)
-			return Double.MAX_VALUE;
+			return Consumers.getMaxMargUtilOfQuality();
 
 		else if (loOffer != null && hiOffer != null) {
 			double limit = (hiOffer.getPrice() - loOffer.getPrice())
@@ -119,7 +121,7 @@ public class Utils {
 
 	private static double demandDerivRespToQuality(Firm firm) {
 		// It is assumed firm is in the market
-		
+
 		double gini = (double) GetParameter("gini");
 		double lambda = (1.0 + gini) / (2.0 * gini);
 		double minMargUtil = Consumers.getMinMargUtilOfQuality();
@@ -133,7 +135,7 @@ public class Utils {
 		Firm hiF = Market.firms.getHigherLimitFirm(q, false);
 
 		if (loF == null && hiF == null && minMargUtil > poorest) {
-			// It has it all the market
+			// It has all the market
 			return 0.0;
 
 		} else if (loF == null && hiF == null && poorest > minMargUtil) {
@@ -144,13 +146,21 @@ public class Utils {
 			double pH = hiF.getPrice();
 			double qH = hiF.getQuality();
 
+			if (pH == p)
+				throw new Error(
+						"Prices cannot be the same if both firms are in the market");
+			
 			return mktSize * lambda * Math.pow(minMargUtil, lambda)
 					* Math.pow(qH - q, lambda - 1.0) / Math.pow(pH - p, lambda);
 
 		} else if (loF == null && hiF != null && poorest > minMargUtil) {
 			double pH = hiF.getPrice();
 			double qH = hiF.getQuality();
-
+			
+			if (pH == p)
+				throw new Error(
+						"Prices cannot be the same if both firms are in the market");
+			
 			return mktSize
 					* lambda
 					* Math.pow(minMargUtil, lambda)
@@ -170,6 +180,10 @@ public class Utils {
 			double qH = hiF.getQuality();
 			double pL = loF.getPrice();
 			double qL = loF.getQuality();
+			
+			if (pH == p || pL == p)
+				throw new Error(
+						"Prices cannot be the same if both firms are in the market");			
 
 			return mktSize
 					* lambda

@@ -7,7 +7,6 @@ public class Offer {
 
 	private double quality;
 	private double price;
-	private OfferType offerType = null;
 
 	// Read boundaries of parameters
 	private static double minPrice;
@@ -34,58 +33,47 @@ public class Offer {
 		setPrice(p);
 	}
 
-	public Offer(OfferType offerType, Offer currOffer) {
+	public Offer(Offer offer) {
+		setQuality(offer.getQuality());
+		setPrice(offer.getPrice());
+	}
 
-		double p = currOffer.getPrice();
-		double q = currOffer.getQuality();
-		
-		setOfferType(offerType);
-		setQuality(q);
-		setPrice(p);
-		
-		double priceStep = Market.firms.getPriceStepDistrib().nextDouble();
-		double qualityStep = Market.firms.getQualityStepDistrib().nextDouble();
-//		double priceStep = (Double) GetParameter("priceStepMean");
-//		double qualityStep = (Double) GetParameter("qualityStepMean");
+	public static double getDefaultQualityStep() {
+		return Market.firms.getQualityStepDistrib().nextDouble();
+	}
 
-		switch (offerType) {
-		case INCREASE_PRICE:
-			setPrice(p + priceStep );
-			break;
-		case DECREASE_PRICE:
-			setPrice(p - priceStep);
-			break;
-		case INCREASE_QUALITY:
-			setQuality(q + qualityStep);
-			break;
-		case DECREASE_QUALITY:
-			setQuality(q - qualityStep);
-			break;
-		default:
-			break;
+	public static double getDefaultPriceStep() {
+		return Market.firms.getPriceStepDistrib().nextDouble();
+	}
 
+	public void modifyQuality(double prevQStep, int sign) {
+		if (Math.signum(prevQStep) == (-sign))
+			// It wants to change the direction of a previous quality change
+			// Reduced it by half to avoid going back to the same offer
+			setQuality(getQuality() + Math.abs(prevQStep) / 2.0 * sign);
+		else {
+			// Either price didn't change before or it wants to change it in
+			// same direction
+			if (prevQStep == 0)
+				prevQStep = getDefaultQualityStep();
+			setQuality(getQuality() + Math.abs(prevQStep) * sign);
 		}
+
 	}
 
-	public boolean equals(Offer o) {
-		return ((o.getPrice() == getPrice()) && (o.getQuality() == getQuality()));
-	}
-
-	public double getPrice() {
-		return price;
-	}
-
-	public void setPrice(double price) {
-
-		if (price < minPrice)
-			this.price = minPrice;
-
-		else if (price > maxPrice)
-			this.price = maxPrice;
-
-		else
-			this.price = price;
-
+	public void modifyPrice(double prevPStep, int sign) {
+		if (Math.signum(prevPStep) == (-sign))
+			// It wants to change the direction of a previous price change
+			// Reduced it by half to avoid going back to the same offer
+			setPrice(getPrice() + Math.abs(prevPStep) / 2.0 * sign);
+		else {
+			// Either price didn't change before or it wants to change it in
+			// same
+			// direction
+			if (prevPStep == 0)
+				prevPStep = getDefaultPriceStep();
+			setPrice(getPrice() + Math.abs(prevPStep) * sign);
+		}
 	}
 
 	public double getQuality() {
@@ -105,17 +93,21 @@ public class Offer {
 
 	}
 
-	public OfferType getOfferType() {
-		return offerType;
+	public double getPrice() {
+		return price;
 	}
 
-	public void setOfferType(OfferType offerType) {
-		this.offerType = offerType;
-	}
+	public void setPrice(double price) {
 
-	public static double getInitialQPerD() {
-		return (getMaxQuality() - getMinQuality())
-				/ (getMaxPrice() - getMinPrice());
+		if (price < minPrice)
+			this.price = minPrice;
+
+		else if (price > maxPrice)
+			this.price = maxPrice;
+
+		else
+			this.price = price;
+
 	}
 
 	public static double getMinPrice() {
@@ -139,7 +131,6 @@ public class Offer {
 	}
 
 	public String toString() {
-		return "Q: " + quality + " P: " + price + " T: "
-				+ ((offerType == null) ? "null" : offerType.toString());
+		return "Q: " + quality + " P: " + price;
 	}
 }

@@ -1038,3 +1038,193 @@ Caused by: java.lang.StackOverflowError
 	at firms.Firms.updateLimitingFirms(Firms.java:97)
 	at firms.Firms.rebuildLimitsExcluding(Firms.java:229)
 	at firms.Firms.removeLimitingLinks(Firms.java:203)
+FATAL [Thread-7] 2015-06-19 16:14:50,854 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
+Current tick (2.0)
+java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
+	at repast.simphony.engine.controller.ScheduledMethodControllerAction$ScheduleMethodAllAction.execute(ScheduledMethodControllerAction.java:333)
+	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
+	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
+	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
+	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
+	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.lang.reflect.InvocationTargetException
+	at firms.Firm$$FastClassByCGLIB$$b488c2b7.invoke(<generated>)
+	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
+	... 7 more
+Caused by: java.lang.NullPointerException
+	at firms.FirmHistory.getCurrentQualityStep(FirmHistory.java:52)
+	at firms.Firm.getMaximizingOffer(Firm.java:142)
+	at firms.Firm.makeOffer(Firm.java:103)
+	... 10 more
+FATAL [Thread-7] 2015-06-19 16:58:06,293 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
+Current tick (31.0)
+java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
+	at repast.simphony.engine.controller.ScheduledMethodControllerAction$ScheduleMethodAllAction.execute(ScheduledMethodControllerAction.java:333)
+	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
+	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
+	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
+	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
+	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.lang.reflect.InvocationTargetException
+	at firms.Firm$$FastClassByCGLIB$$b488c2b7.invoke(<generated>)
+	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
+	... 7 more
+Caused by: java.lang.Error: Prices cannot be the same if both firms are in the market
+	at firms.Utils.demandDerivRespToQuality(Utils.java:148)
+	at firms.Utils.getMarginalProfitOfQuality(Utils.java:115)
+	at firms.Firm.getMaximizingOffer(Firm.java:148)
+	at firms.Firm.makeOffer(Firm.java:103)
+	... 10 more
+FATAL [Thread-7] 2015-06-19 17:43:07,001 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
+Current tick (31.0)
+java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
+	at repast.simphony.engine.controller.ScheduledMethodControllerAction$ScheduleMethodAllAction.execute(ScheduledMethodControllerAction.java:333)
+	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
+	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
+	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
+	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
+	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.lang.reflect.InvocationTargetException
+	at firms.Firm$$FastClassByCGLIB$$b488c2b7.invoke(<generated>)
+	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
+	... 7 more
+Caused by: java.lang.Error: Prices cannot be the same if both firms are in the market
+	at firms.Utils.demandDerivRespToQuality(Utils.java:148)
+	at firms.Utils.getMarginalProfitOfQuality(Utils.java:115)
+	at firms.Firm.getMaximizingOffer(Firm.java:147)
+	at firms.Firm.makeOffer(Firm.java:103)
+	... 10 more
+FATAL [Thread-7] 2015-06-19 18:24:54,693 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
+Current tick (32.0)
+com.jgoodies.binding.beans.PropertyAccessException: Failed to read an adapted Java Bean property.
+cause=java.lang.Error: Prices cannot be the same if both firms are in the market
+bean=Firm 3
+bean type=firmTypes.PremiumFirm
+property name=marginalProfitQ
+property type=double
+property reader=public double firms.Firm.getMarginalProfitQ()
+	at com.jgoodies.binding.beans.PropertyAccessException.createReadAccessException(PropertyAccessException.java:92)
+	at com.jgoodies.binding.beans.PropertyAccessor.getValue(PropertyAccessor.java:162)
+	at com.jgoodies.binding.beans.BeanAdapter.getValue0(BeanAdapter.java:1149)
+	at com.jgoodies.binding.beans.BeanAdapter.access$500(BeanAdapter.java:288)
+	at com.jgoodies.binding.beans.BeanAdapter$SimplePropertyAdapter.fireChange(BeanAdapter.java:1434)
+	at repast.simphony.ui.probe.ProbeModel$ProbeBeanAdapter$SimplePropertyAdapter.fireChange(ProbeModel.java:64)
+	at repast.simphony.ui.probe.ProbeModel$ProbeBeanAdapter.fireChange(ProbeModel.java:52)
+	at repast.simphony.ui.probe.ProbeModel.update(ProbeModel.java:108)
+	at repast.simphony.ui.probe.Probe.update(Probe.java:76)
+	at repast.simphony.ui.probe.ProbeManager.update(ProbeManager.java:76)
+	at repast.simphony.ui.RSApplication.tickCountUpdated(RSApplication.java:597)
+	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:60)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.lang.Error: Prices cannot be the same if both firms are in the market
+	at firms.Utils.demandDerivRespToQuality(Utils.java:183)
+	at firms.Utils.getMarginalProfitOfQuality(Utils.java:115)
+	at firms.Firm.getMarginalProfitQ(Firm.java:309)
+	at sun.reflect.GeneratedMethodAccessor43.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at com.jgoodies.binding.beans.PropertyAccessor.getValue(PropertyAccessor.java:160)
+	... 11 more
+FATAL [Thread-7] 2015-06-19 18:32:19,677 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
+Current tick (32.0)
+com.jgoodies.binding.beans.PropertyAccessException: Failed to read an adapted Java Bean property.
+cause=java.lang.Error: Prices cannot be the same if both firms are in the market
+bean=Firm 1
+bean type=firmTypes.BasePyramidFirm
+property name=marginalProfitQ
+property type=double
+property reader=public double firms.Firm.getMarginalProfitQ()
+	at com.jgoodies.binding.beans.PropertyAccessException.createReadAccessException(PropertyAccessException.java:92)
+	at com.jgoodies.binding.beans.PropertyAccessor.getValue(PropertyAccessor.java:162)
+	at com.jgoodies.binding.beans.BeanAdapter.getValue0(BeanAdapter.java:1149)
+	at com.jgoodies.binding.beans.BeanAdapter.access$500(BeanAdapter.java:288)
+	at com.jgoodies.binding.beans.BeanAdapter$SimplePropertyAdapter.fireChange(BeanAdapter.java:1434)
+	at repast.simphony.ui.probe.ProbeModel$ProbeBeanAdapter$SimplePropertyAdapter.fireChange(ProbeModel.java:64)
+	at repast.simphony.ui.probe.ProbeModel$ProbeBeanAdapter.fireChange(ProbeModel.java:52)
+	at repast.simphony.ui.probe.ProbeModel.update(ProbeModel.java:108)
+	at repast.simphony.ui.probe.Probe.update(Probe.java:76)
+	at repast.simphony.ui.probe.ProbeManager.update(ProbeManager.java:76)
+	at repast.simphony.ui.RSApplication.tickCountUpdated(RSApplication.java:597)
+	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:60)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.lang.Error: Prices cannot be the same if both firms are in the market
+	at firms.Utils.demandDerivRespToQuality(Utils.java:148)
+	at firms.Utils.getMarginalProfitOfQuality(Utils.java:115)
+	at firms.Firm.getMarginalProfitQ(Firm.java:309)
+	at sun.reflect.GeneratedMethodAccessor44.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at com.jgoodies.binding.beans.PropertyAccessor.getValue(PropertyAccessor.java:160)
+	... 11 more
+FATAL [Thread-8] 2015-06-19 18:40:23,705 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
+Current tick (32.0)
+com.jgoodies.binding.beans.PropertyAccessException: Failed to read an adapted Java Bean property.
+cause=java.lang.Error: Prices cannot be the same if both firms are in the market
+bean=Firm 1
+bean type=firmTypes.BasePyramidFirm
+property name=marginalProfitQ
+property type=double
+property reader=public double firms.Firm.getMarginalProfitQ()
+	at com.jgoodies.binding.beans.PropertyAccessException.createReadAccessException(PropertyAccessException.java:92)
+	at com.jgoodies.binding.beans.PropertyAccessor.getValue(PropertyAccessor.java:162)
+	at com.jgoodies.binding.beans.BeanAdapter.getValue0(BeanAdapter.java:1149)
+	at com.jgoodies.binding.beans.BeanAdapter.access$500(BeanAdapter.java:288)
+	at com.jgoodies.binding.beans.BeanAdapter$SimplePropertyAdapter.fireChange(BeanAdapter.java:1434)
+	at repast.simphony.ui.probe.ProbeModel$ProbeBeanAdapter$SimplePropertyAdapter.fireChange(ProbeModel.java:64)
+	at repast.simphony.ui.probe.ProbeModel$ProbeBeanAdapter.fireChange(ProbeModel.java:52)
+	at repast.simphony.ui.probe.ProbeModel.update(ProbeModel.java:108)
+	at repast.simphony.ui.probe.Probe.update(Probe.java:76)
+	at repast.simphony.ui.probe.ProbeManager.update(ProbeManager.java:76)
+	at repast.simphony.ui.RSApplication.tickCountUpdated(RSApplication.java:597)
+	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:60)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.lang.Error: Prices cannot be the same if both firms are in the market
+	at firms.Utils.demandDerivRespToQuality(Utils.java:148)
+	at firms.Utils.getMarginalProfitOfQuality(Utils.java:115)
+	at firms.Firm.getMarginalProfitQ(Firm.java:309)
+	at sun.reflect.GeneratedMethodAccessor44.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at com.jgoodies.binding.beans.PropertyAccessor.getValue(PropertyAccessor.java:160)
+	... 11 more
+FATAL [Thread-7] 2015-06-19 19:00:08,209 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
+Current tick (32.0)
+com.jgoodies.binding.beans.PropertyAccessException: Failed to read an adapted Java Bean property.
+cause=java.lang.Error: Prices cannot be the same if both firms are in the market
+bean=Firm 1
+bean type=firmTypes.BasePyramidFirm
+property name=marginalProfitQ
+property type=double
+property reader=public double firms.Firm.getMarginalProfitQ()
+	at com.jgoodies.binding.beans.PropertyAccessException.createReadAccessException(PropertyAccessException.java:92)
+	at com.jgoodies.binding.beans.PropertyAccessor.getValue(PropertyAccessor.java:162)
+	at com.jgoodies.binding.beans.BeanAdapter.getValue0(BeanAdapter.java:1149)
+	at com.jgoodies.binding.beans.BeanAdapter.access$500(BeanAdapter.java:288)
+	at com.jgoodies.binding.beans.BeanAdapter$SimplePropertyAdapter.fireChange(BeanAdapter.java:1434)
+	at repast.simphony.ui.probe.ProbeModel$ProbeBeanAdapter$SimplePropertyAdapter.fireChange(ProbeModel.java:64)
+	at repast.simphony.ui.probe.ProbeModel$ProbeBeanAdapter.fireChange(ProbeModel.java:52)
+	at repast.simphony.ui.probe.ProbeModel.update(ProbeModel.java:108)
+	at repast.simphony.ui.probe.Probe.update(Probe.java:76)
+	at repast.simphony.ui.probe.ProbeManager.update(ProbeManager.java:76)
+	at repast.simphony.ui.RSApplication.tickCountUpdated(RSApplication.java:597)
+	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:60)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.lang.Error: Prices cannot be the same if both firms are in the market
+	at firms.Utils.demandDerivRespToQuality(Utils.java:150)
+	at firms.Utils.getMarginalProfitOfQuality(Utils.java:117)
+	at firms.Firm.getMarginalProfitQ(Firm.java:309)
+	at sun.reflect.NativeMethodAccessorImpl.invoke0(Native Method)
+	at sun.reflect.NativeMethodAccessorImpl.invoke(Unknown Source)
+	at sun.reflect.DelegatingMethodAccessorImpl.invoke(Unknown Source)
+	at java.lang.reflect.Method.invoke(Unknown Source)
+	at com.jgoodies.binding.beans.PropertyAccessor.getValue(PropertyAccessor.java:160)
+	... 11 more

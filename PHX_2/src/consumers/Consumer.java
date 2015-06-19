@@ -200,7 +200,7 @@ public class Consumer {
 		for (Firm f : knownFirmsNotExplored) {
 
 			// it access f expected utility because f is known
-			double tmpUtil = utility(f.getExpectedQuality(), f.getPrice());
+			double tmpUtil = utility(f.getQuality(), f.getPrice());
 
 			if (tmpUtil > utility) {
 				maxExpectUtilFirm = f;

@@ -95,7 +95,7 @@ public class Firms extends DefaultContext<Firm> {
 			nextF = nextF.getHiLimitFirm();
 		}
 
-		Offer o = new Offer(firm.getQuality(), firm.getPrice());
+		Offer o = new Offer(firm.getOffer());
 		Firm lowerLimitFirm = getLowerLimitFirm(prevF, o, firm);
 		Firm higherLimitFirm = getHigherLimitFirm(nextF, o, firm);
 
@@ -268,9 +268,6 @@ public class Firms extends DefaultContext<Firm> {
 	}
 
 	public void initializeLimitingFirms(Firm f) {
-		if (sortQFirms.isEmpty())
-			firstLimitingFirm = f;
-
 		sortQFirms.put(f.getQuality(), f);
 		updateLimitingFirms(f);
 	}

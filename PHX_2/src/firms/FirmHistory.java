@@ -5,7 +5,6 @@ import java.util.HashMap;
 
 import firmState.FirmState;
 import firmState.Offer;
-import firmState.OfferType;
 
 public class FirmHistory extends ArrayList<FirmState> {
 
@@ -48,6 +47,36 @@ public class FirmHistory extends ArrayList<FirmState> {
 			return get(size() - 1);
 	}
 
+	public double getCurrentQualityStep() {
+		FirmState prevST = getPrevState();
+
+		if (prevST != null) {
+			double curQ = getCurrentQuality();
+			double prevQ = prevST.getQuality();
+			return curQ - prevQ;
+		} else
+			return 0;
+
+	}
+
+	public double getCurrentPriceStep() {
+		FirmState prevST = getPrevState();
+		
+		if (prevST != null) {
+			double curP = getCurrentPrice();
+			double prevP = getPrevState().getPrice();
+			return curP - prevP;
+		} else
+			return 0;
+	}
+
+	public FirmState getPrevState() {
+		if (size() > 1)
+			return get(size() - 2);
+		else
+			return null;
+	}
+
 	public Offer getMaxProfitOffer() {
 		if (isEmpty())
 			return null;
@@ -68,10 +97,6 @@ public class FirmHistory extends ArrayList<FirmState> {
 
 	public double getCurrentQuality() {
 		return getCurrentState().getQuality();
-	}
-
-	public OfferType getCurrentOfferType() {
-		return getCurrentState().getOfferType();
 	}
 
 	public double getCurrentProfit() {

@@ -9,7 +9,6 @@ import consumers.Consumer;
 import consumers.Consumers;
 import firmState.FirmState;
 import firmState.Offer;
-import firmState.OfferType;
 import firmTypes.NoPrice;
 import pHX_2.Market;
 import pHX_2.RunPriority;
@@ -27,7 +26,6 @@ public abstract class Firm {
 
 	private double accumProfit = 0;
 	private double fixedCost;
-	private double expectedQuality = 0;
 	private ArrayList<Consumer> notYetKnownBy, alreadyKnownBy;
 
 	private Firm loLimitFirm, hiLimitFirm;
@@ -123,13 +121,13 @@ public abstract class Firm {
 		Market.firms.removeLimitingLinks(this);
 		double q = getQuality();
 		try {
+			// Start again
+			history.clear();
 			return new Offer(q, getInitialPrice(q));
 		} catch (NoPrice e) {
-			// Take it out of the market because there is no available price to
-			// compete
-			// Keep currentprice
-			Market.firms.removeLimitingLinks(this);			
-			return new Offer(q, getPrice());
+			// There is no available price to compete
+			// Keep current Offer
+			return new Offer(getOffer());
 		}
 
 	}
@@ -141,28 +139,35 @@ public abstract class Firm {
 	}
 
 	private Offer getMaximizingOffer() {
-		double qStep = (Double) GetParameter("qualityStepMean");
-		double pStep = (Double) GetParameter("priceStepMean");
+		// It is assumed it is in the market
 
-		double margProfQ = Utils.getMarginalProfitOfQuality(this) * qStep;
-		double margProfP = Utils.getMarginalProfitOfPrice(this) * pStep;
+		double qStep = history.getCurrentQualityStep();
+		double pStep = history.getCurrentPriceStep();
 
+		double nextQStep = (qStep == 0 ? Offer.getDefaultQualityStep() : Math
+				.abs(qStep));
+		double nextPStep = (pStep == 0 ? Offer.getDefaultPriceStep() : Math
+				.abs(pStep));
+
+		double margProfQ = Utils.getMarginalProfitOfQuality(this) * nextQStep;
+		double margProfP = Utils.getMarginalProfitOfPrice(this) * nextPStep;
+
+		Offer o = new Offer(getOffer());
 		if (Math.abs(margProfP) > Math.abs(margProfQ)) {
 			// Modify price
-			double priceStep = Market.firms.getPriceStepDistrib().nextDouble();
 			if (margProfP > 0)
-				return new Offer(getQuality(), getPrice() + priceStep);
+				o.modifyPrice(pStep, +1);
 			else
-				return new Offer(getQuality(), getPrice() - priceStep);
+				o.modifyPrice(pStep, -1);
 		} else {
 			// Modify quality
-			double qualityStep = Market.firms.getQualityStepDistrib()
-					.nextDouble();
 			if (margProfQ > 0)
-				return new Offer(getQuality() + qualityStep, getPrice());
+				o.modifyQuality(qStep, +1);
 			else
-				return new Offer(getQuality() - qualityStep, getPrice());
+				o.modifyQuality(qStep, -1);
 		}
+
+		return o;
 
 	}
 
@@ -171,9 +176,6 @@ public abstract class Firm {
 		// This is run after all offers are made and consumers have chosen
 		// Calculates profit, accumProfit and kills the firm if necessary
 		// History was kept when Current State was established
-
-		// Updates expectations
-		updateExpectedQuality();
 
 		// Calculate profits of period
 		setProfit(profit());
@@ -273,26 +275,6 @@ public abstract class Firm {
 		return costScale;
 	}
 
-	private OfferType getOfferType() {
-		return history.getCurrentOfferType();
-	}
-
-	private void updateExpectedQuality() {
-
-		double expInertia;
-		double consumPerc;
-		double currExpQ;
-
-		consumPerc = getDemand() / Consumers.getNumberOfConsumers();
-		currExpQ = consumPerc * getQuality() + (1 - consumPerc)
-				* Market.getExpectedQPerDollar() * getPrice();
-
-		expInertia = (Double) GetParameter("expectationsInertia");
-		expectedQuality = expInertia * expectedQuality + (1 - expInertia)
-				* currExpQ;
-
-	}
-
 	private void setProfit(double profit) {
 		history.setCurrentProfit(profit);
 	}
@@ -300,12 +282,6 @@ public abstract class Firm {
 	private boolean isToBeKilled() {
 		// Returns true if firm should exit the market
 		return (accumProfit < Market.firms.minimumProfit);
-	}
-
-	public double getExpectedQuality() {
-		// Only consumers who know the firm could access
-		// to the expected quality
-		return expectedQuality;
 	}
 
 	public void killFirm() {
@@ -443,13 +419,6 @@ public abstract class Firm {
 
 	public double getMargin() {
 		return getProfit() / (getDemand() * getPrice());
-	}
-
-	public String getOfferTypeStr() {
-		if (getOfferType() == null)
-			return "NULL";
-		else
-			return getOfferType().toString();
 	}
 
 	public String toString() {

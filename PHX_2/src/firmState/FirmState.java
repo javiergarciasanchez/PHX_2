@@ -61,14 +61,6 @@ public class FirmState {
 		this.mktResponse.demand = demand;
 	}
 
-	public OfferType getOfferType() {
-		return offer.getOfferType();
-	}
-
-	public void setOfferType(OfferType offerType) {
-		offer.setOfferType(offerType);
-	}
-
 	public String toString() {
 		return offer.toString() + " Prof: " + getProfit() + " D: " + getDemand();
 	}
