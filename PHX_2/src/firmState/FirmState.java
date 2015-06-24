@@ -33,10 +33,6 @@ public class FirmState {
 		return offer.getQuality();
 	}
 
-	public void setQuality(double quality) {
-		offer.setQuality(quality);
-	}
-
 	public double getProfit() {
 		return mktResponse.profit;
 	}

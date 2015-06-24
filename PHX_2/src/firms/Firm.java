@@ -70,23 +70,26 @@ public abstract class Firm {
 
 		history.addCurrentState(new FirmState(offer));
 
-		Market.firms.initializeLimitingFirms(this);
+		Market.firms.addToFirmsByQ(this);
 
 		initializeConsumerKnowledge();
 
 	}
 
 	private Offer getInitialOffer() {
+		double p;
+
 		double q = getInitialQuality();
+		q = Offer.getAvailableQ(q);
 
 		try {
-			return new Offer(q, getInitialPrice(q));
+			p = getInitialPrice(q);
 		} catch (NoPrice e) {
 			// Put any price because there is no meaningful price
-			double midPrice = (Offer.getMaxPrice() + Offer.getMinPrice()) / 2.0;
-			return new Offer(q, midPrice);
-
+			p = (Offer.getMaxPrice() + Offer.getMinPrice()) / 2.0;
 		}
+
+		return new Offer(q, p);
 
 	}
 
@@ -99,36 +102,38 @@ public abstract class Firm {
 
 		Offer offer;
 
-		if (isInTheMarket())
+		boolean wasInTheMarket = isInTheMarket();
+
+		Market.firms.removeFromFirmsByQ(this);
+		
+		if (wasInTheMarket)
 			offer = getMaximizingOffer();
 		else
 			offer = getReenteringOffer();
 
 		history.addCurrentState(new FirmState(offer));
 
-		Market.firms.updateLimitingFirms(this);
+		Market.firms.addToFirmsByQ(this);
 
 		updateNotYetKnownBy();
 
 	}
 
 	private Offer getReenteringOffer() {
+		// It is assumed it was removed from FirmsByQ
 
-		if (Market.firms.firstAndLast(this))
-			throw new Error(
-					"A reentering offer is being made for the first and last Firm");
+		// Delete history to start again but keep current offer
+		Offer o = getCurrentOffer();
+		history.clear();
 
-		Market.firms.removeLimitingLinks(this);
-		double q = getQuality();
 		try {
-			// Start again
-			history.clear();
-			return new Offer(q, getInitialPrice(q));
+			o.setPrice(getInitialPrice(o.getQuality()));
 		} catch (NoPrice e) {
 			// There is no available price to compete
 			// Keep current Offer
-			return new Offer(getOffer());
 		}
+
+		return o;
 
 	}
 
@@ -152,7 +157,8 @@ public abstract class Firm {
 		double margProfQ = Utils.getMarginalProfitOfQuality(this) * nextQStep;
 		double margProfP = Utils.getMarginalProfitOfPrice(this) * nextPStep;
 
-		Offer o = new Offer(getOffer());
+		Offer o = new Offer(getCurrentOffer());
+
 		if (Math.abs(margProfP) > Math.abs(margProfQ)) {
 			// Modify price
 			if (margProfP > 0)
@@ -203,11 +209,19 @@ public abstract class Firm {
 	private void initializeConsumerKnowledge() {
 
 		if ((boolean) GetParameter("perfectKnowledge"))
-			// All firms immediately become explored
+			// All firms are known and immediately become explored
 			for (Consumer c : Market.consumers.getObjects(Consumer.class))
 				c.addToExploredFirms(this);
 
-		else {
+		else if ((boolean) GetParameter("allKnown")) {
+			// All firms are known but not explored
+			for (Consumer c : Market.consumers.getObjects(Consumer.class)) {
+				c.addToKnownFirms(this);
+				alreadyKnownBy.add(c);
+			}
+
+		} else {
+
 			// Firms should be known and then explored
 			for (Consumer c : Market.consumers.getObjects(Consumer.class))
 				notYetKnownBy.add(c);
@@ -285,7 +299,7 @@ public abstract class Firm {
 	}
 
 	public void killFirm() {
-		Market.firms.removeFromSegments(this);
+		Market.firms.removeFromFirmsByQ(this);
 
 		// Remove firm from consumers lists
 		for (Consumer c : alreadyKnownBy) {
@@ -341,7 +355,7 @@ public abstract class Firm {
 		return history.getCurrentDemand();
 	}
 
-	public Offer getOffer() {
+	public Offer getCurrentOffer() {
 		return history.getCurrentOffer();
 	}
 

@@ -134,7 +134,7 @@ public class Utils {
 		Firm loF = Market.firms.getLowerLimitFirm(q, false);
 		Firm hiF = Market.firms.getHigherLimitFirm(q, false);
 
-		if (loF == null && hiF == null && minMargUtil > poorest) {
+		if (loF == null && hiF == null && minMargUtil >= poorest) {
 			// It has all the market
 			return 0.0;
 
@@ -142,25 +142,25 @@ public class Utils {
 			return mktSize * lambda * Math.pow(minMargUtil, lambda)
 					* Math.pow(q, lambda - 1.0) / Math.pow(p, lambda);
 
-		} else if (loF == null && hiF != null && minMargUtil > poorest) {
+		} else if (loF == null && hiF != null && minMargUtil >= poorest) {
 			double pH = hiF.getPrice();
 			double qH = hiF.getQuality();
 
 			if (pH == p)
 				throw new Error(
 						"Prices cannot be the same if both firms are in the market");
-			
+
 			return mktSize * lambda * Math.pow(minMargUtil, lambda)
 					* Math.pow(qH - q, lambda - 1.0) / Math.pow(pH - p, lambda);
 
 		} else if (loF == null && hiF != null && poorest > minMargUtil) {
 			double pH = hiF.getPrice();
 			double qH = hiF.getQuality();
-			
+
 			if (pH == p)
 				throw new Error(
 						"Prices cannot be the same if both firms are in the market");
-			
+
 			return mktSize
 					* lambda
 					* Math.pow(minMargUtil, lambda)
@@ -175,15 +175,16 @@ public class Utils {
 			return mktSize * lambda * Math.pow(minMargUtil, lambda)
 					* Math.pow(q - qL, lambda - 1.0) / Math.pow(p - pL, lambda);
 
-		} else if (loF != null && hiF != null) {
+		} else {
+			// loF != null && hiF != null
 			double pH = hiF.getPrice();
 			double qH = hiF.getQuality();
 			double pL = loF.getPrice();
 			double qL = loF.getQuality();
-			
+
 			if (pH == p || pL == p)
 				throw new Error(
-						"Prices cannot be the same if both firms are in the market");			
+						"Prices cannot be the same if both firms are in the market");
 
 			return mktSize
 					* lambda
@@ -192,10 +193,7 @@ public class Utils {
 							/ Math.pow(p - pL, lambda) + Math.pow(qH - q,
 							lambda - 1.0) / Math.pow(pH - p, lambda));
 
-		} else
-			// It shouldn't come here
-			return 0.0;
-
+		}
 	}
 
 	public static double getMarginalProfitOfPrice(Firm firm) {
@@ -230,7 +228,8 @@ public class Utils {
 			return 0.0;
 
 		} else if (loF == null && hiF == null && poorest > minMargUtil) {
-			return -mktSize * lambda * Math.pow(minMargUtil, lambda);
+			return -mktSize * lambda * Math.pow(minMargUtil, lambda)
+					* Math.pow(q, lambda) / Math.pow(p, lambda + 1.0);
 
 		} else if (loF == null && hiF != null && minMargUtil > poorest) {
 			double pH = hiF.getPrice();

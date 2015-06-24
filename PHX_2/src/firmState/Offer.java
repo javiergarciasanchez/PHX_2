@@ -24,8 +24,6 @@ public class Offer {
 	}
 
 	public Offer() {
-		setQuality(minQuality);
-		setPrice(minPrice);
 	}
 
 	public Offer(double q, double p) {
@@ -46,19 +44,59 @@ public class Offer {
 		return Market.firms.getPriceStepDistrib().nextDouble();
 	}
 
+	public static double getAvailableQ(double tentativeQ) {
+
+		double retQ;
+
+		// Check limits
+		if (tentativeQ < minQuality)
+			retQ = minQuality;
+
+		else if (tentativeQ > maxQuality)
+			retQ = maxQuality;
+
+		else
+			retQ = tentativeQ;
+
+		// Check if another firm has chosen this value
+		while (Market.firms.containsQ(retQ)) {
+			retQ = retQ + Math.ulp(retQ);
+		}
+
+		if (retQ > maxQuality) {
+			// There is no quality available to choose by increasing quality
+			retQ = maxQuality;
+			while (Market.firms.containsQ(retQ)) {
+				retQ = retQ - Math.ulp(retQ);
+			}
+			if (retQ < minQuality) {
+				throw new Error(
+						"No Quality available. All possible values of Quality are taken. Choose a lower amount of firms");
+			}
+		}
+
+		return retQ;
+
+	}
+
 	public void modifyQuality(double prevQStep, int sign) {
-		if (Math.signum(prevQStep) == (-sign))
+
+		if (Math.signum(prevQStep) == (-sign)) {
 			// It wants to change the direction of a previous quality change
-			// Reduced it by half to avoid going back to the same offer
-			setQuality(getQuality() + Math.abs(prevQStep) / 2.0 * sign);
-		else {
+			// Reduce it by half to avoid going back to the same offer
+			double q = getAvailableQ(getQuality() + Math.abs(prevQStep) / 2.0
+					* sign);
+
+			setQuality(q);
+
+		} else {
 			// Either price didn't change before or it wants to change it in
 			// same direction
 			if (prevQStep == 0)
 				prevQStep = getDefaultQualityStep();
-			setQuality(getQuality() + Math.abs(prevQStep) * sign);
+			double q = getAvailableQ(getQuality() + Math.abs(prevQStep) * sign);
+			setQuality(q);
 		}
-
 	}
 
 	public void modifyPrice(double prevPStep, int sign) {
@@ -80,17 +118,8 @@ public class Offer {
 		return quality;
 	}
 
-	public void setQuality(double quality) {
-
-		if (quality < minQuality)
-			this.quality = minQuality;
-
-		else if (quality > maxQuality)
-			this.quality = maxQuality;
-
-		else
-			this.quality = quality;
-
+	public void setQuality(double q) {
+		quality = q;
 	}
 
 	public double getPrice() {

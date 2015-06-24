@@ -1,7 +1,9 @@
 package consumers;
 
 import static repast.simphony.essentials.RepastEssentials.GetParameter;
+import cern.jet.random.Beta;
 import repast.simphony.context.DefaultContext;
+import repast.simphony.random.RandomHelper;
 
 public class Consumers extends DefaultContext<Consumer> {
 
@@ -13,37 +15,50 @@ public class Consumers extends DefaultContext<Consumer> {
 	private static double maxMargUtilOfQuality;
 
 	private static Pareto margUtilOfQualityDistrib;
+	private static Beta utilityDiscountDistrib;
 
 	public static void resetStaticVars() {
 		minMargUtilOfQuality = 0.0;
 		maxMargUtilOfQuality = 0.0;
-		margUtilOfQualityDistrib = null;		
+		margUtilOfQualityDistrib = null;
+		utilityDiscountDistrib = null;
 	}
 
 	public Consumers() {
 		super("Consumers_Context");
-		
+
 		minMargUtilOfQuality = (double) GetParameter("minMargUtilOfQuality");
-		
+
 		// Max marginal utility is updated every time a consumer is created
 		maxMargUtilOfQuality = 0.;
 
 		createProbabilityDistrib();
-		
+
 	}
 
 	private static void createProbabilityDistrib() {
-	
-		// Marginal Utility of Quality 
+
+		// Marginal Utility of Quality
 		double gini = (double) GetParameter("gini");
 		double lambda = (1.0 + gini) / (2.0 * gini);
 		margUtilOfQualityDistrib = Pareto.getPareto(lambda,
-				getMinMargUtilOfQuality());		
-	
+				getMinMargUtilOfQuality());
+
+		// Utility Discount
+		double mean = (Double) GetParameter("utilityDiscountMean");
+		double mode = (Double) GetParameter("utilityDiscountMostLikely");
+		double alpha = mean * (1 - 2 * mode) / (mean - mode);
+		double beta = alpha * (1 - mean) / mean;
+		utilityDiscountDistrib = RandomHelper.createBeta(alpha, beta);
+
 	}
 
 	public static Pareto getMargUtilOfQualityDistrib() {
 		return margUtilOfQualityDistrib;
+	}
+
+	public static Beta getUtilityDicountDistrib() {
+		return utilityDiscountDistrib;
 	}
 
 	public static double getMinMargUtilOfQuality() {
@@ -69,7 +84,7 @@ public class Consumers extends DefaultContext<Consumer> {
 		}
 
 	}
-	
+
 	public void addConsumersToProjections() {
 
 		for (Consumer c : getObjects(Consumer.class)) {

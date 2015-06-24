@@ -8,6 +8,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 import cern.jet.random.Binomial;
+import firmState.Offer;
 import firms.Firm;
 import pHX_2.Market;
 import pHX_2.RecessionsHandler;
@@ -19,9 +20,11 @@ public class Consumer {
 
 	// Set either "exploreKnownFirmByMaximExpect" or "randomlyExploreKnownFirm"
 	private static final String EXPLORE_METHOD_NAME = "randomlyExploreKnownFirm";
-//	private static final String EXPLORE_METHOD_NAME = "exploreKnownFirmByMaximExpect";
+	// private static final String EXPLORE_METHOD_NAME =
+	// "exploreKnownFirmByMaximExpect";
 
 	private double margUtilOfQuality;
+	private double utilityDiscount;
 	private Firm chosenFirm;
 	private HashSet<Firm> exploredFirms;
 	private ArrayList<Firm> knownFirmsNotExplored;
@@ -55,6 +58,8 @@ public class Consumer {
 
 		setMargUtilOfQuality();
 
+		setUtilityDiscount();
+
 		setExplorationDistrib();
 
 	}
@@ -70,6 +75,11 @@ public class Consumer {
 		// graphs
 		Consumers.setMaxMargUtilOfQuality(Math.max(
 				Consumers.getMaxMargUtilOfQuality(), margUtilOfQuality));
+
+	}
+
+	private void setUtilityDiscount() {
+		utilityDiscount = Consumers.getUtilityDicountDistrib().nextDouble();
 
 	}
 
@@ -200,7 +210,7 @@ public class Consumer {
 		for (Firm f : knownFirmsNotExplored) {
 
 			// it access f expected utility because f is known
-			double tmpUtil = utility(f.getQuality(), f.getPrice());
+			double tmpUtil = expectedUtility(f);
 
 			if (tmpUtil > utility) {
 				maxExpectUtilFirm = f;
@@ -216,6 +226,10 @@ public class Consumer {
 			return maxExpectUtilFirm;
 		} else
 			return null;
+	}
+
+	private double expectedUtility(Firm f) {
+		return utilityDiscount * utility(f);
 	}
 
 	// Returns the explored firm that maximizes utility
@@ -246,12 +260,12 @@ public class Consumer {
 
 	private double utility(Firm f) {
 
-		return utility(f.getQuality(), f.getPrice());
+		return utility(f.getCurrentOffer());
 
 	}
 
-	private double utility(double q, double p) {
-		return margUtilOfQuality * q - p;
+	private double utility(Offer o) {
+		return margUtilOfQuality * o.getQuality() - o.getPrice();
 	}
 
 	private Color getChosenFirmColor() {
