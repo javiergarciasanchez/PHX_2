@@ -25,13 +25,16 @@ public abstract class Firm {
 			.getMaxMargUtilOfQuality();
 
 	private double accumProfit = 0;
+	private double autoRegressiveProfit = 0;
 	private double fixedCost;
+	private double born;
 	private ArrayList<Consumer> notYetKnownBy, alreadyKnownBy;
 
 	private Firm loLimitFirm, hiLimitFirm;
 
 	// Cost Scale is the same for all firms. It could be changed easily
 	private static double costScale;
+	private static double currentProfitWeight;
 
 	protected static long firmIDCounter;
 
@@ -41,6 +44,7 @@ public abstract class Firm {
 	public static void resetStaticVars() {
 		// resets static variables
 		costScale = (Double) GetParameter("costScale");
+		currentProfitWeight = (Double) GetParameter("currentProfitWeight");
 		firmIDCounter = 1;
 	}
 
@@ -52,6 +56,8 @@ public abstract class Firm {
 		notYetKnownBy = new ArrayList<Consumer>();
 
 		fixedCost = (Double) Market.firms.getFixedCostDistrib().nextDouble();
+		
+		born = 0.0;
 
 		// Expand max price if cost at highest quality is higher than max price
 		double maxUnitCost = unitCost(Offer.getMaxQuality());
@@ -105,7 +111,7 @@ public abstract class Firm {
 		boolean wasInTheMarket = isInTheMarket();
 
 		Market.firms.removeFromFirmsByQ(this);
-		
+
 		if (wasInTheMarket)
 			offer = getMaximizingOffer();
 		else
@@ -115,7 +121,7 @@ public abstract class Firm {
 
 		Market.firms.addToFirmsByQ(this);
 
-		updateNotYetKnownBy();
+		updateConsumerKnowledge();
 
 	}
 
@@ -187,6 +193,8 @@ public abstract class Firm {
 		setProfit(profit());
 
 		accumProfit += getProfit();
+		autoRegressiveProfit = currentProfitWeight * getProfit()
+				+ (1 - currentProfitWeight) * autoRegressiveProfit;
 
 		if (isToBeKilled())
 			Market.toBeKilled.add(this);
@@ -208,20 +216,28 @@ public abstract class Firm {
 
 	private void initializeConsumerKnowledge() {
 
-		if ((boolean) GetParameter("perfectKnowledge"))
-			// All firms are known and immediately become explored
+		if ((boolean) GetParameter("allExplored")
+				&& (boolean) GetParameter("allKnown"))
+			// Firms are known and immediately become explored
 			for (Consumer c : Market.consumers.getObjects(Consumer.class))
 				c.addToExploredFirms(this);
 
 		else if ((boolean) GetParameter("allKnown")) {
-			// All firms are known but not explored
+			// Firms are known but not explored
 			for (Consumer c : Market.consumers.getObjects(Consumer.class)) {
 				c.addToKnownFirms(this);
 				alreadyKnownBy.add(c);
 			}
 
-		} else {
+		} else if ((boolean) GetParameter("allExplored")) {
+			// Firms should be known but are automatically explored
 
+			// Take out of the list the initial "knower's" and set them as
+			// explored
+			getFromIgnoranceAndExplore((int) Math
+					.round((Double) GetParameter("initiallyKnownByPerc")
+							* Market.consumers.size()));
+		} else {
 			// Firms should be known and then explored
 			for (Consumer c : Market.consumers.getObjects(Consumer.class))
 				notYetKnownBy.add(c);
@@ -250,7 +266,25 @@ public abstract class Firm {
 		}
 	}
 
-	private void updateNotYetKnownBy() {
+	private void getFromIgnoranceAndExplore(int amount) {
+		Consumer c;
+
+		for (int k = 0; (k < amount) && !notYetKnownBy.isEmpty(); k++) {
+
+			int i = RandomHelper.getUniform().nextIntFromTo(0,
+					notYetKnownBy.size() - 1);
+
+			c = notYetKnownBy.get(i);
+			notYetKnownBy.remove(i);
+
+			alreadyKnownBy.add(c);
+
+			c.addToExploredFirms(this);
+		}
+
+	}
+
+	private void updateConsumerKnowledge() {
 		Consumers consumers = Market.consumers;
 		int mktSize = consumers.size();
 
@@ -295,7 +329,7 @@ public abstract class Firm {
 
 	private boolean isToBeKilled() {
 		// Returns true if firm should exit the market
-		return (accumProfit < Market.firms.minimumProfit);
+		return (autoRegressiveProfit < Market.firms.minimumProfit);
 	}
 
 	public void killFirm() {
@@ -421,6 +455,10 @@ public abstract class Firm {
 
 	public double getAccumProfit() {
 		return accumProfit;
+	}
+
+	public double getAutoRegressiveProfit() {
+		return autoRegressiveProfit;
 	}
 
 	public double getFixedCost() {

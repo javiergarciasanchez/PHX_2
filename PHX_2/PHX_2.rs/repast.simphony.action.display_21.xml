@@ -1,16 +1,16 @@
 <repast.simphony.visualization.engine.CartesianDisplayDescriptor>
-  <name>Consumption</name>
+  <name>Profit</name>
   <type>3D</type>
   <styles>
     <entry>
-      <string>consumers.Consumer</string>
+      <string>firms.Firm</string>
       <string>repast.simphony.visualization.editedStyle.EditedStyle3D</string>
     </entry>
   </styles>
   <editedStyles>
     <entry>
-      <string>consumers.Consumer</string>
-      <string>consumers.Consumer.style_8.xml</string>
+      <string>firms.Firm</string>
+      <string>firms.Firm.style_7.xml</string>
     </entry>
   </editedStyles>
   <netStyles/>
@@ -23,20 +23,20 @@
     <pType>LAST</pType>
     <duration>-1.0</duration>
     <frequency>REPEAT</frequency>
-    <hashCode>-54706535</hashCode>
+    <hashCode>250409951</hashCode>
   </schedParams>
   <layoutClassName>foo.bar.baz</layoutClassName>
-  <layoutProjection>ConsumptionProjection</layoutProjection>
+  <layoutProjection>FirmsProfitProjection</layoutProjection>
   <layoutInterval>0</layoutInterval>
   <layerOrder>
     <entry>
-      <string>consumers.Consumer</string>
+      <string>firms.Firm</string>
       <int>0</int>
     </entry>
   </layerOrder>
   <projections>
     <repast.simphony.scenario.data.ProjectionData>
-      <id>ConsumptionProjection</id>
+      <id>FirmsProfitProjection</id>
       <attributes/>
       <type>continuous space</type>
     </repast.simphony.scenario.data.ProjectionData>
@@ -46,7 +46,7 @@
   </visualizationProperties>
   <projectionDescriptors>
     <entry>
-      <string>ConsumptionProjection</string>
+      <string>FirmsProfitProjection</string>
       <repast.simphony.visualization.continuous.ContinuousProjectionDescriptor>
         <proj reference="../../../../projections/repast.simphony.scenario.data.ProjectionData"/>
         <props>

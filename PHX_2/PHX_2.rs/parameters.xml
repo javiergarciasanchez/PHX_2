@@ -23,6 +23,10 @@
 		displayName="Fixed Cost Standard Deviation as Percent of Mean" type="double"
 		defaultValue="0.05" isReadOnly="true"
 		converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" />
+	<parameter name="currentProfitWeight"
+		displayName="Weight of Current Profit in Auto regressive average"
+		type="double" defaultValue="0.8" isReadOnly="false"
+		converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" />
 	<parameter name="minimumProfit" displayName="Minimum profit to exit"
 		type="double" defaultValue="-1000.0" isReadOnly="false"
 		converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" />
@@ -83,10 +87,10 @@
 	<parameter name="firmExplorationProb" displayName="Firm's Exploration Probability"
 		type="double" defaultValue="0.2" isReadOnly="true"
 		converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" />
-	<parameter name="allKnown" displayName="All Known" type="boolean"
+	<parameter name="allKnown" displayName="All firms are known?" type="boolean"
 		defaultValue="true" isReadOnly="false"
 		converter="repast.simphony.parameter.StringConverterFactory$BooleanConverter" />
-	<parameter name="perfectKnowledge" displayName="Perfect Knowledge"
+	<parameter name="allExplored" displayName="All Known firms become automatically explored?"
 		type="boolean" defaultValue="true" isReadOnly="false"
 		converter="repast.simphony.parameter.StringConverterFactory$BooleanConverter" />
 	<parameter name="initiallyKnownByPerc"
