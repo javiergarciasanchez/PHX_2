@@ -2,11 +2,90 @@ package firms;
 
 import static repast.simphony.essentials.RepastEssentials.GetParameter;
 import consumers.Consumers;
+import firmState.FirmState;
 import firmState.Offer;
+import firmTypes.NoPrice;
 import pHX_2.Market;
 import repast.simphony.random.RandomHelper;
 
 public class Utils {
+
+	public static Offer getMaximizingOffer(Firm f) {
+		// It is assumed it is in the market
+
+		double qStep = f.getHistory().getCurrentQualityStep();
+		double pStep = f.getHistory().getCurrentPriceStep();
+
+		double nextQStep = (qStep == 0 ? Offer.getDefaultQualityStep() : Math
+				.abs(qStep));
+		double nextPStep = (pStep == 0 ? Offer.getDefaultPriceStep() : Math
+				.abs(pStep));
+
+		double margProfQ = Utils.getMarginalProfitOfQuality(f) * nextQStep;
+		double margProfP = Utils.getMarginalProfitOfPrice(f) * nextPStep;
+
+		Offer o = new Offer(f.getCurrentOffer());
+
+		if (Math.abs(margProfP) > Math.abs(margProfQ)) {
+			// Modify price
+			if (margProfP > 0)
+				o.modifyPrice(pStep, +1);
+			else
+				o.modifyPrice(pStep, -1);
+		} else {
+			// Modify quality
+			if (margProfQ > 0)
+				o.modifyQuality(qStep, +1);
+			else
+				o.modifyQuality(qStep, -1);
+		}
+
+		return o;
+
+	}
+
+	public static Offer getReenteringOffer(Firm f) {
+		// It is assumed it was removed from FirmsByQ
+
+		// Delete history to start again but keep current offer
+		Offer o = f.getCurrentOffer();
+		f.getHistory().clear();
+
+		try {
+			double q = o.getQuality();
+			double unitCost = f.unitCost(q);
+			o.setPrice(Utils.getRationalPrice(unitCost, q));
+		} catch (NoPrice e) {
+			// There is no available price to compete
+			// Keep current Offer
+		}
+
+		return o;
+
+	}
+
+	public static double getRationalPrice(double unitCost, double q)
+			throws NoPrice {
+
+		// Price shouldn't be lower than unit cost
+		double minPrice = Math.max(Offer.getMinPrice(), unitCost);
+
+		// Chooses a price that is one step below maximum competitive price
+		double price = Utils.getMaxCompetitivePriceToEntry(q);
+
+		if (price > minPrice) {
+			double priceStep = Market.firms.getPriceStepDistrib().nextDouble();
+			price = price - priceStep;
+
+			// Price cannot be lower than cost
+			price = Math.max(price, minPrice);
+
+			return price;
+
+		} else
+			throw new NoPrice();
+
+	}
 
 	public static double getMaxCompetitivePriceToEntry(double quality) {
 
@@ -114,12 +193,12 @@ public class Utils {
 		double demand = firm.getDemand();
 		double cost = firm.unitCost(q);
 		double margCost = firm.getMarginalCostOfQuality();
-		double derivQ = demandDerivRespToQuality(firm);
+		double derivQ = demandDerivRespToQuality(q, p);
 
 		return (p - cost) * derivQ - margCost * demand;
 	}
 
-	private static double demandDerivRespToQuality(Firm firm) {
+	private static double demandDerivRespToQuality(double q, double p) {
 		// It is assumed firm is in the market
 
 		double gini = (double) GetParameter("gini");
@@ -127,9 +206,7 @@ public class Utils {
 		double minMargUtil = Consumers.getMinMargUtilOfQuality();
 		double mktSize = Consumers.getNumberOfConsumers();
 
-		double q = firm.getQuality();
-		double p = firm.getPrice();
-		double poorest = firm.getPoorestConsumerMargUtil();
+		double poorest = Utils.getPoorestConsumerMargUtil(q, p);
 
 		Firm loF = Market.firms.getLowerLimitFirm(q, false);
 		Firm hiF = Market.firms.getHigherLimitFirm(q, false);
@@ -172,6 +249,10 @@ public class Utils {
 			double pL = loF.getPrice();
 			double qL = loF.getQuality();
 
+			if (pL == p)
+				throw new Error(
+						"Prices cannot be the same if both firms are in the market");
+
 			return mktSize * lambda * Math.pow(minMargUtil, lambda)
 					* Math.pow(q - qL, lambda - 1.0) / Math.pow(p - pL, lambda);
 
@@ -203,12 +284,12 @@ public class Utils {
 		double q = firm.getQuality();
 		double demand = firm.getDemand();
 		double cost = firm.unitCost(q);
-		double derivP = demandDerivRespToPrice(firm);
+		double derivP = demandDerivRespToPrice(q, p);
 
 		return (p - cost) * derivP + demand;
 	}
 
-	private static double demandDerivRespToPrice(Firm firm) {
+	private static double demandDerivRespToPrice(double q, double p) {
 		// It is assumed firm is in the market
 
 		double gini = (double) GetParameter("gini");
@@ -216,9 +297,7 @@ public class Utils {
 		double minMargUtil = Consumers.getMinMargUtilOfQuality();
 		double mktSize = Consumers.getNumberOfConsumers();
 
-		double q = firm.getQuality();
-		double p = firm.getPrice();
-		double poorest = firm.getPoorestConsumerMargUtil();
+		double poorest = Utils.getPoorestConsumerMargUtil(q, p);
 
 		Firm loF = Market.firms.getLowerLimitFirm(q, false);
 		Firm hiF = Market.firms.getHigherLimitFirm(q, false);
@@ -253,6 +332,10 @@ public class Utils {
 			double pL = loF.getPrice();
 			double qL = loF.getQuality();
 
+			if (pL == p)
+				throw new Error(
+						"Prices cannot be the same if both firms are in the market");
+
 			return -mktSize * lambda * Math.pow(minMargUtil, lambda)
 					* Math.pow(q - qL, lambda) / Math.pow(p - pL, lambda + 1.0);
 
@@ -274,4 +357,114 @@ public class Utils {
 			return 0.0;
 	}
 
+	/*
+	 * it adds the new offer to history it removes the firm from and adds it
+	 * back to FirmsByQ
+	 */
+	public static void setNewRationalOffer(Firm f) {
+		Offer o;
+
+		boolean wasInTheMarket = f.isInTheMarket();
+
+		Market.firms.removeFromFirmsByQ(f);
+
+		if (wasInTheMarket)
+			o = Utils.getMaximizingOffer(f);
+		else
+			o = Utils.getReenteringOffer(f);
+
+		f.getHistory().addCurrentState(new FirmState(o));
+
+		Market.firms.addToFirmsByQ(f);
+
+	}
+
+	public static double getTheoreticalDemand(double q, double p) {
+		/*
+		 * Price cannot be equal to theoretical loF & hiF price. If that were
+		 * the case, theoretical demand is calculated for an intermediate price
+		 */
+		Firm loF = Market.firms.getLowerLimitFirm(q, false);
+		Firm hiF = Market.firms.getHigherLimitFirm(q, false);
+
+		double gini = (double) GetParameter("gini");
+		double lambda = (1.0 + gini) / (2.0 * gini);
+		double minMargUtil = Consumers.getMinMargUtilOfQuality();
+		double mktSize = Consumers.getNumberOfConsumers();
+
+		double poorest = Utils.getPoorestConsumerMargUtil(q, p);
+
+		if (loF == null && hiF == null && minMargUtil >= poorest) {
+			// It should have all the market
+			return mktSize;
+
+		} else if (loF == null && hiF == null && poorest > minMargUtil) {
+			return mktSize * Math.pow(minMargUtil, lambda)
+					* Math.pow(q / p, lambda);
+
+		} else if (loF == null && hiF != null && minMargUtil >= poorest) {
+			double pH = hiF.getPrice();
+			double qH = hiF.getQuality();
+
+			if (pH == p) {
+				double lowestPrice = getPoorestConsumerMinPrice(minMargUtil, q);
+				p = (lowestPrice + pH) / 2.0;
+			}
+
+			return 1 - (mktSize * Math.pow(minMargUtil, lambda) * Math.pow(
+					(qH - q) / (pH - p), lambda));
+
+		} else if (loF == null && hiF != null && poorest > minMargUtil) {
+			double pH = hiF.getPrice();
+			double qH = hiF.getQuality();
+
+			if (pH == p) {
+				double lowestPrice = getPoorestConsumerMinPrice(poorest, q);
+				p = (lowestPrice + pH) / 2.0;
+			}
+
+			return mktSize
+					* Math.pow(minMargUtil, lambda)
+					* (Math.pow(q / p, lambda) - Math.pow((qH - q) / (pH - p),
+							lambda));
+
+		} else if (loF != null && hiF == null) {
+			double pL = loF.getPrice();
+			double qL = loF.getQuality();
+
+			if (pL == p) {
+				double priceStep = Market.firms.getPriceStepDistrib()
+						.nextDouble();
+				p = pL + priceStep;
+			}
+
+			return mktSize * Math.pow(minMargUtil, lambda)
+					* Math.pow((q - qL) / (p - pL), lambda);
+
+		} else {
+			// loF != null && hiF != null
+			double pH = hiF.getPrice();
+			double qH = hiF.getQuality();
+			double pL = loF.getPrice();
+			double qL = loF.getQuality();
+
+			if (pH == p) {
+				double lowerLimit = Math.max(poorest, minMargUtil);
+				double lowestPrice = getPoorestConsumerMinPrice(lowerLimit, q);
+				p = (lowestPrice + pH) / 2.0;
+
+			} else if (pL == p) {
+				double priceStep = Market.firms.getPriceStepDistrib()
+						.nextDouble();
+				p = pL + priceStep;
+			}
+			
+			return mktSize
+					* Math.pow(minMargUtil, lambda)
+					* (Math.pow((q - qL) / (p - pL), lambda) - Math.pow(
+							(qH - q) / (pH - p), lambda));
+
+		}
+
+	}
 }

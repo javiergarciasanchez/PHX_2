@@ -9,10 +9,10 @@ import consumers.Consumer;
 import consumers.Consumers;
 import firmState.FirmState;
 import firmState.Offer;
-import firmTypes.NoPrice;
 import pHX_2.Market;
 import pHX_2.RunPriority;
 import repast.simphony.engine.schedule.ScheduledMethod;
+import repast.simphony.essentials.RepastEssentials;
 import repast.simphony.random.RandomHelper;
 
 public abstract class Firm {
@@ -56,8 +56,8 @@ public abstract class Firm {
 		notYetKnownBy = new ArrayList<Consumer>();
 
 		fixedCost = (Double) Market.firms.getFixedCostDistrib().nextDouble();
-		
-		born = 0.0;
+
+		born = RepastEssentials.GetTickCount();
 
 		// Expand max price if cost at highest quality is higher than max price
 		double maxUnitCost = unitCost(Offer.getMaxQuality());
@@ -88,99 +88,39 @@ public abstract class Firm {
 		double q = getInitialQuality();
 		q = Offer.getAvailableQ(q);
 
-		try {
-			p = getInitialPrice(q);
-		} catch (NoPrice e) {
-			// Put any price because there is no meaningful price
-			p = (Offer.getMaxPrice() + Offer.getMinPrice()) / 2.0;
-		}
+		p = getInitialPrice(q);
 
 		return new Offer(q, p);
 
 	}
 
-	protected abstract double getInitialQuality();
+	protected abstract double getInitialPrice(double q);
 
-	protected abstract double getInitialPrice(double q) throws NoPrice;
+	protected double getInitialQuality() {
+		double lowerQ = Offer.getMinQuality();
+		double higherQ = Offer.getMaxInitialQuality();
+		return Utils.getRandomInitialQuality(lowerQ, higherQ);
+	}
 
 	@ScheduledMethod(start = 1, priority = RunPriority.MAKE_OFFER_PRIORITY, interval = 1)
 	public void makeOffer() {
 
-		Offer offer;
-
-		boolean wasInTheMarket = isInTheMarket();
-
-		Market.firms.removeFromFirmsByQ(this);
-
-		if (wasInTheMarket)
-			offer = getMaximizingOffer();
-		else
-			offer = getReenteringOffer();
-
-		history.addCurrentState(new FirmState(offer));
-
-		Market.firms.addToFirmsByQ(this);
+		setNewOffer();
 
 		updateConsumerKnowledge();
 
 	}
 
-	private Offer getReenteringOffer() {
-		// It is assumed it was removed from FirmsByQ
+	/*
+	 *  it should add the new offer to history
+	 *  it should remove the firm from and add it back to FirmsByQ 
+	 */
+	protected abstract void setNewOffer();
 
-		// Delete history to start again but keep current offer
-		Offer o = getCurrentOffer();
-		history.clear();
-
-		try {
-			o.setPrice(getInitialPrice(o.getQuality()));
-		} catch (NoPrice e) {
-			// There is no available price to compete
-			// Keep current Offer
-		}
-
-		return o;
-
-	}
-
-	private boolean isInTheMarket() {
+	protected boolean isInTheMarket() {
 		boolean isFirstInMarket = Market.firms.isFirstLimitingFirm(this);
 
 		return (getLoLimitFirm() != null || getHiLimitFirm() != null || isFirstInMarket);
-	}
-
-	private Offer getMaximizingOffer() {
-		// It is assumed it is in the market
-
-		double qStep = history.getCurrentQualityStep();
-		double pStep = history.getCurrentPriceStep();
-
-		double nextQStep = (qStep == 0 ? Offer.getDefaultQualityStep() : Math
-				.abs(qStep));
-		double nextPStep = (pStep == 0 ? Offer.getDefaultPriceStep() : Math
-				.abs(pStep));
-
-		double margProfQ = Utils.getMarginalProfitOfQuality(this) * nextQStep;
-		double margProfP = Utils.getMarginalProfitOfPrice(this) * nextPStep;
-
-		Offer o = new Offer(getCurrentOffer());
-
-		if (Math.abs(margProfP) > Math.abs(margProfQ)) {
-			// Modify price
-			if (margProfP > 0)
-				o.modifyPrice(pStep, +1);
-			else
-				o.modifyPrice(pStep, -1);
-		} else {
-			// Modify quality
-			if (margProfQ > 0)
-				o.modifyQuality(qStep, +1);
-			else
-				o.modifyQuality(qStep, -1);
-		}
-
-		return o;
-
 	}
 
 	@ScheduledMethod(start = 1, priority = RunPriority.NEXT_STEP_FIRM_PRIORITY, interval = 1)
@@ -193,8 +133,13 @@ public abstract class Firm {
 		setProfit(profit());
 
 		accumProfit += getProfit();
-		autoRegressiveProfit = currentProfitWeight * getProfit()
-				+ (1 - currentProfitWeight) * autoRegressiveProfit;
+
+		if (born == RepastEssentials.GetTickCount())
+			// Entry moment
+			autoRegressiveProfit = getProfit();
+		else
+			autoRegressiveProfit = currentProfitWeight * getProfit()
+					+ (1 - currentProfitWeight) * autoRegressiveProfit;
 
 		if (isToBeKilled())
 			Market.toBeKilled.add(this);
@@ -219,8 +164,10 @@ public abstract class Firm {
 		if ((boolean) GetParameter("allExplored")
 				&& (boolean) GetParameter("allKnown"))
 			// Firms are known and immediately become explored
-			for (Consumer c : Market.consumers.getObjects(Consumer.class))
+			for (Consumer c : Market.consumers.getObjects(Consumer.class)) {
 				c.addToExploredFirms(this);
+				alreadyKnownBy.add(c);
+			}
 
 		else if ((boolean) GetParameter("allKnown")) {
 			// Firms are known but not explored
@@ -314,7 +261,7 @@ public abstract class Firm {
 		return (getPrice() - unitCost(getQuality())) * getDemand() - fixedCost;
 	}
 
-	protected double unitCost(double quality) {
+	public double unitCost(double quality) {
 		// Cost grows with quality
 		return costScale * quality;
 	}
@@ -332,6 +279,10 @@ public abstract class Firm {
 		return (autoRegressiveProfit < Market.firms.minimumProfit);
 	}
 
+	public FirmHistory getHistory() {
+		return history;
+	}
+
 	public void killFirm() {
 		Market.firms.removeFromFirmsByQ(this);
 
@@ -347,6 +298,27 @@ public abstract class Firm {
 
 	public void setDemand(int i) {
 		history.setCurrentDemand(i);
+	}
+
+	/*
+	 * Setters to probe DO NOT USE FOR CODE
+	 */
+	public void setPrice(double p) {
+		Market.firms.removeFromFirmsByQ(this);
+
+		Offer o = getCurrentOffer();
+		o.setPrice(p);
+
+		Market.firms.addToFirmsByQ(this);
+	}
+
+	public void setQuality(double q) {
+		Market.firms.removeFromFirmsByQ(this);
+
+		Offer o = getCurrentOffer();
+		o.setQuality(q);
+
+		Market.firms.addToFirmsByQ(this);
 	}
 
 	//
@@ -435,6 +407,10 @@ public abstract class Firm {
 
 	public double getPoorestConsumerMargUtil() {
 		return Utils.getPoorestConsumerMargUtil(getQuality(), getPrice());
+	}
+
+	public double getAge() {
+		return RepastEssentials.GetTickCount() - born;
 	}
 
 	public String getFirmType() {

@@ -16,10 +16,10 @@
   <atEnd>false</atEnd>
   <methodDataSources class="linked-hash-map">
     <entry>
-      <string>Profit_B</string>
+      <string>Profit_R</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Profit_B</id>
-        <className>firmTypes.BasePyramidFirm</className>
+        <id>Profit_R</id>
+        <className>firmTypes.RationalFirm</className>
         <methodName>getProfit</methodName>
         <aggType>MEAN</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
@@ -34,28 +34,19 @@
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>Profit_W</string>
+      <string>Profit_E</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Profit_W</id>
-        <className>firmTypes.WaitFirm</className>
+        <id>Profit_E</id>
+        <className>firmTypes.ExpectationsFirm</className>
         <methodName>getProfit</methodName>
         <aggType>MEAN</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>Profit_P</string>
+      <string>Demand_R</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Profit_P</id>
-        <className>firmTypes.PremiumFirm</className>
-        <methodName>getProfit</methodName>
-        <aggType>MEAN</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>Demand_B</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Demand_B</id>
-        <className>firmTypes.BasePyramidFirm</className>
+        <id>Demand_R</id>
+        <className>firmTypes.RationalFirm</className>
         <methodName>getDemand</methodName>
         <aggType>MEAN</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
@@ -70,28 +61,19 @@
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>Demand_W</string>
+      <string>Demand_E</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Demand_W</id>
-        <className>firmTypes.WaitFirm</className>
+        <id>Demand_E</id>
+        <className>firmTypes.ExpectationsFirm</className>
         <methodName>getDemand</methodName>
         <aggType>MEAN</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>Demand_P</string>
+      <string>Price_R</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Demand_P</id>
-        <className>firmTypes.PremiumFirm</className>
-        <methodName>getDemand</methodName>
-        <aggType>MEAN</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>Price_B</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Price_B</id>
-        <className>firmTypes.BasePyramidFirm</className>
+        <id>Price_R</id>
+        <className>firmTypes.RationalFirm</className>
         <methodName>getPrice</methodName>
         <aggType>MEAN</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
@@ -106,28 +88,19 @@
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>Price_W</string>
+      <string>Price_E</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Price_W</id>
-        <className>firmTypes.WaitFirm</className>
+        <id>Price_E</id>
+        <className>firmTypes.ExpectationsFirm</className>
         <methodName>getPrice</methodName>
         <aggType>MEAN</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>Price_P</string>
+      <string>Quality_R</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Price_P</id>
-        <className>firmTypes.PremiumFirm</className>
-        <methodName>getPrice</methodName>
-        <aggType>MEAN</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>Quality_B</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Quality_B</id>
-        <className>firmTypes.BasePyramidFirm</className>
+        <id>Quality_R</id>
+        <className>firmTypes.RationalFirm</className>
         <methodName>getQuality</methodName>
         <aggType>MEAN</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
@@ -142,19 +115,10 @@
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>Quality_W</string>
+      <string>Quality_E</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Quality_W</id>
-        <className>firmTypes.WaitFirm</className>
-        <methodName>getQuality</methodName>
-        <aggType>MEAN</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>Quality_P</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Quality_P</id>
-        <className>firmTypes.PremiumFirm</className>
+        <id>Quality_E</id>
+        <className>firmTypes.ExpectationsFirm</className>
         <methodName>getQuality</methodName>
         <aggType>MEAN</aggType>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>

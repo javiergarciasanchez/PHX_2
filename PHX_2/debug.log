@@ -693,3 +693,98 @@ Caused by: java.lang.ClassNotFoundException: Gamma
 	at org.java.plugin.standard.StandardPluginClassLoader.loadClass(Unknown Source)
 	at java.lang.ClassLoader.loadClass(Unknown Source)
 	... 30 more
+FATAL [Thread-9] 2015-06-30 12:40:39,881 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
+Current tick (122.0)
+java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
+	at repast.simphony.engine.controller.ScheduledMethodControllerAction$ScheduleMethodAllAction.execute(ScheduledMethodControllerAction.java:333)
+	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
+	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
+	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
+	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
+	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.lang.reflect.InvocationTargetException
+	at firms.Firm$$FastClassByCGLIB$$b488c2b7.invoke(<generated>)
+	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
+	... 7 more
+Caused by: java.lang.IllegalArgumentException: Object 'Firm 30' must be added to the space's context before it can be moved
+	at repast.simphony.space.continuous.AbstractContinuousSpace.doMove(AbstractContinuousSpace.java:129)
+	at repast.simphony.space.continuous.AbstractContinuousSpace.moveTo(AbstractContinuousSpace.java:121)
+	at graphs.Firms2DProjection.update(Firms2DProjection.java:32)
+	at firms.Firm.updateProjections(Firm.java:219)
+	... 10 more
+FATAL [Thread-8] 2015-06-30 12:53:09,476 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
+Current tick (115.0)
+java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
+	at repast.simphony.engine.controller.ScheduledMethodControllerAction$ScheduleMethodAllAction.execute(ScheduledMethodControllerAction.java:333)
+	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
+	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
+	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
+	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
+	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.lang.reflect.InvocationTargetException
+	at firms.Firm$$FastClassByCGLIB$$b488c2b7.invoke(<generated>)
+	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
+	... 7 more
+Caused by: java.lang.IllegalArgumentException: Object 'Firm 18' must be added to the space's context before it can be moved
+	at repast.simphony.space.continuous.AbstractContinuousSpace.doMove(AbstractContinuousSpace.java:129)
+	at repast.simphony.space.continuous.AbstractContinuousSpace.moveTo(AbstractContinuousSpace.java:121)
+	at graphs.Firms2DProjection.update(Firms2DProjection.java:32)
+	at firms.Firm.updateProjections(Firm.java:219)
+	... 10 more
+FATAL [Thread-9] 2015-06-30 12:53:09,476 repast.simphony.ui.GUIScheduleRunner - RunTimeException when running the schedule
+Current tick (1.0)
+java.lang.RuntimeException: java.lang.reflect.InvocationTargetException
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:72)
+	at repast.simphony.engine.schedule.DefaultAction.execute(DefaultAction.java:38)
+	at repast.simphony.engine.schedule.ScheduleGroup.executeList(ScheduleGroup.java:205)
+	at repast.simphony.engine.schedule.ScheduleGroup.execute(ScheduleGroup.java:231)
+	at repast.simphony.engine.schedule.Schedule.execute(Schedule.java:352)
+	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:52)
+	at java.lang.Thread.run(Unknown Source)
+Caused by: java.lang.reflect.InvocationTargetException
+	at firms.Firms$$FastClassByCGLIB$$dc8f949c.invoke(<generated>)
+	at net.sf.cglib.reflect.FastMethod.invoke(FastMethod.java:53)
+	at repast.simphony.engine.schedule.DynamicTargetAction.execute(DynamicTargetAction.java:69)
+	... 6 more
+Caused by: java.util.ConcurrentModificationException
+	at java.util.ArrayList$Itr.checkForComodification(Unknown Source)
+	at java.util.ArrayList$Itr.next(Unknown Source)
+	at firms.Firms.wipeDeadFirms(Firms.java:354)
+	... 9 more
+WARN  [Thread-9] 2015-06-30 13:04:13,485 repast.simphony.ui.GUIScheduleRunner - Caught InterruptedException when running simulation, unpausing.
+java.lang.InterruptedException
+	at java.lang.Object.wait(Native Method)
+	at java.lang.Object.wait(Object.java:503)
+	at repast.simphony.ui.GUIScheduleRunner.go(GUIScheduleRunner.java:137)
+	at repast.simphony.ui.GUIScheduleRunner$ScheduleLoopRunnable.run(GUIScheduleRunner.java:48)
+	at java.lang.Thread.run(Unknown Source)
+WARN  [AWT-EventQueue-0] 2015-06-30 13:36:52,288 repast.simphony.engine.environment.ProjectionRegistry - Duplicate projection typegeography
+WARN  [AWT-EventQueue-0] 2015-06-30 13:36:52,288 repast.simphony.visualization.engine.VisualizationRegistry - Duplicate visualization typeGIS
+WARN  [AWT-EventQueue-0] 2015-06-30 13:36:52,301 repast.simphony.visualization.engine.VisualizationRegistry - Duplicate visualization typeGIS 3D
+INFO  [AWT-EventQueue-0] 2015-06-30 16:35:08,265 repast.simphony.batch.gui.BatchConfigMediator - Writing batch run config file to: C:\Users\jgsanchez\git\PHX_2\PHX_2\output\config.props
+INFO  [AWT-EventQueue-0] 2015-06-30 16:35:08,849 repast.simphony.batch.gui.BatchConfigMediator - Unrolling batch parameter file:
+	C:\Users\jgsanchez\git\PHX_2\PHX_2\batch\batch_params.xml to
+	C:\Users\JGSANC~1\AppData\Local\Temp\unrolledParamFile.txt
+INFO  [SwingWorker-pool-2-thread-1] 2015-06-30 16:35:39,728 repast.simphony.batch.ssh.LocalSession - 
+	Copying locally C:\Users\JGSANC~1\AppData\Local\Temp\JGSanchez_localhost823371627998698883.zip to 
+C:\Users\JGSANC~1\AppData\Local\Temp\simphony_model_1435692936751 ...
+INFO  [SwingWorker-pool-2-thread-1] 2015-06-30 16:35:39,775 repast.simphony.batch.ssh.LocalSession - Copying Finished.
+INFO  [SwingWorker-pool-2-thread-1] 2015-06-30 16:35:39,775 repast.simphony.batch.ssh.SessionsDriver - Initialization Time: 0,0504
+INFO  [SwingWorker-pool-2-thread-1] 2015-06-30 16:35:39,790 repast.simphony.batch.ssh.LocalSession - Unzipping model C:\Users\JGSANC~1\AppData\Local\Temp\simphony_model_1435692936751\JGSanchez_localhost823371627998698883.zip
+INFO  [SwingWorker-pool-2-thread-1] 2015-06-30 16:35:41,087 repast.simphony.batch.ssh.LocalSession - Running model on localhost ...
+INFO  [pool-3-thread-1] 2015-06-30 16:36:41,108 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\JGSANC~1\AppData\Local\Temp\simphony_model_1435692936751 for DONE:  no
+INFO  [pool-3-thread-1] 2015-06-30 16:37:41,121 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\JGSANC~1\AppData\Local\Temp\simphony_model_1435692936751 for DONE:  no
+INFO  [pool-3-thread-1] 2015-06-30 16:38:41,135 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\JGSANC~1\AppData\Local\Temp\simphony_model_1435692936751 for DONE:  no
+INFO  [pool-3-thread-1] 2015-06-30 16:39:41,143 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\JGSANC~1\AppData\Local\Temp\simphony_model_1435692936751 for DONE:  no
+INFO  [pool-3-thread-1] 2015-06-30 16:40:41,148 repast.simphony.batch.ssh.LocalDonePoller - Polled C:\Users\JGSANC~1\AppData\Local\Temp\simphony_model_1435692936751 for DONE:  yes
+INFO  [SwingWorker-pool-2-thread-1] 2015-06-30 16:40:41,148 repast.simphony.batch.ssh.SessionsDriver - Run Time: 5,0226
+INFO  [SwingWorker-pool-2-thread-1] 2015-06-30 16:40:41,195 repast.simphony.batch.ssh.LocalSession - Finding output on localhost in C:\Users\JGSANC~1\AppData\Local\Temp\simphony_model_1435692936751
+INFO  [SwingWorker-pool-2-thread-1] 2015-06-30 16:40:41,226 repast.simphony.batch.ssh.SessionsDriver - Aggregating output into C:/Users/jgsanchez/git/PHX_2/PHX_2/output
+INFO  [SwingWorker-pool-2-thread-1] 2015-06-30 16:40:42,303 repast.simphony.batch.ssh.SessionsDriver - Get Output Time: 0,0192
+INFO  [SwingWorker-pool-2-thread-1] 2015-06-30 16:40:42,303 repast.simphony.batch.ssh.SessionsDriver - Finished. Elapsed Time: 5,0931

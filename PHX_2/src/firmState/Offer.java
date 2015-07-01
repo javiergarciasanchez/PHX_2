@@ -17,7 +17,7 @@ public class Offer {
 	public static void resetStaticVars() {
 		// resets static variables
 		minPrice = (double) GetParameter("minPrice");
-		maxPrice = (double) GetParameter("maxPrice");
+		maxPrice = minPrice + 1.0;
 
 		minQuality = (double) GetParameter("minQuality");
 		maxQuality = (double) GetParameter("maxQuality");
@@ -157,6 +157,13 @@ public class Offer {
 
 	public static double getMaxQuality() {
 		return maxQuality;
+	}
+
+	public static double getMaxInitialQuality() {
+		// The purpose of this function is to avoid reaching the maxQ
+		// Ideally a firm that increases its quality every step, shouldn't reach
+		// maxQ
+		return maxQuality / 4.0;
 	}
 
 	public String toString() {

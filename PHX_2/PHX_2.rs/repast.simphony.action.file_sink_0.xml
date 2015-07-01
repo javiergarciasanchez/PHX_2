@@ -12,6 +12,8 @@
     <string>Quality</string>
     <string>Price</string>
     <string>FirmType</string>
+    <string>Age</string>
+    <string>AutoRegressiveProfit</string>
   </sourceIds>
   <fileName>FirmData.csv</fileName>
   <addTimeStamp>true</addTimeStamp>

@@ -15,13 +15,13 @@ public class Consumers extends DefaultContext<Consumer> {
 	private static double maxMargUtilOfQuality;
 
 	private static Pareto margUtilOfQualityDistrib;
-	private static Beta utilityDiscountDistrib;
+	private static Beta qualityDiscountDistrib;
 
 	public static void resetStaticVars() {
 		minMargUtilOfQuality = 0.0;
 		maxMargUtilOfQuality = 0.0;
 		margUtilOfQualityDistrib = null;
-		utilityDiscountDistrib = null;
+		qualityDiscountDistrib = null;
 	}
 
 	public Consumers() {
@@ -44,12 +44,12 @@ public class Consumers extends DefaultContext<Consumer> {
 		margUtilOfQualityDistrib = Pareto.getPareto(lambda,
 				getMinMargUtilOfQuality());
 
-		// Utility Discount
-		double mean = (Double) GetParameter("utilityDiscountMean");
-		double mode = (Double) GetParameter("utilityDiscountMostLikely");
+		// Quality Discount
+		double mean = (Double) GetParameter("qualityDiscountMean");
+		double mode = (Double) GetParameter("qualityDiscountMostLikely");
 		double alpha = mean * (1 - 2 * mode) / (mean - mode);
 		double beta = alpha * (1 - mean) / mean;
-		utilityDiscountDistrib = RandomHelper.createBeta(alpha, beta);
+		qualityDiscountDistrib = RandomHelper.createBeta(alpha, beta);
 
 	}
 
@@ -57,8 +57,8 @@ public class Consumers extends DefaultContext<Consumer> {
 		return margUtilOfQualityDistrib;
 	}
 
-	public static Beta getUtilityDicountDistrib() {
-		return utilityDiscountDistrib;
+	public static Beta getQualityDicountDistrib() {
+		return qualityDiscountDistrib;
 	}
 
 	public static double getMinMargUtilOfQuality() {

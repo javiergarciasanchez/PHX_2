@@ -7,11 +7,10 @@ import pHX_2.Market;
 import pHX_2.RunPriority;
 import cern.jet.random.Gamma;
 import firmState.Offer;
-import firmTypes.BasePyramidFirm;
+import firmTypes.RationalFirm;
 import firmTypes.FirmType;
 import firmTypes.OpportunisticFirm;
-import firmTypes.PremiumFirm;
-import firmTypes.WaitFirm;
+import firmTypes.ExpectationsFirm;
 import graphs.SegmentLimit;
 import static repast.simphony.essentials.RepastEssentials.GetParameter;
 import repast.simphony.context.DefaultContext;
@@ -77,7 +76,7 @@ public class Firms extends DefaultContext<Firm> {
 		sortFirmsByQ.put(f.getQuality(), f);
 		addLimitingFirms(f);
 	}
-	
+
 	public void addLimitingFirms(Firm firm) {
 		// It assumes f is not in the market
 
@@ -86,7 +85,7 @@ public class Firms extends DefaultContext<Firm> {
 			// firm is the first firm
 			firstLimitingFirm = firm;
 			return;
-		} 
+		}
 
 		// Get Tentative neighbors
 		Firm prevF = null;
@@ -129,36 +128,36 @@ public class Firms extends DefaultContext<Firm> {
 			firstLimitingFirm = null;
 		} else
 			removeLimitingLinks(f);
-	
+
 		sortFirmsByQ.remove(f.getQuality());
 	}
 
 	private void removeLimitingLinks(Firm f) {
 		// It assumes it is not the first and last in the market
-		
+
 		// connect links if it had them and reset firstLimitingFirm if necessary
 		Firm loF = f.getLoLimitFirm();
 		Firm hiF = f.getHiLimitFirm();
-	
+
 		if (firstLimitingFirm == f && hiF != null) {
 			firstLimitingFirm = hiF;
 			hiF.setLoLimitFirm(null);
-	
+
 		} else if (firstLimitingFirm == f && hiF == null) {
 			// It shouldn't come here because it is the first and last
 			throw new Error("It was intended to remove the first and last firm");
-	
+
 		} else {
 			// firstLimitingFirm != f
-	
+
 			if (loF != null)
 				loF.setHiLimitFirm(hiF);
-	
+
 			if (hiF != null)
 				hiF.setLoLimitFirm(loF);
-	
+
 		}
-	
+
 		f.setLoLimitFirm(null);
 		f.setHiLimitFirm(null);
 	}
@@ -333,16 +332,13 @@ public class Firms extends DefaultContext<Firm> {
 
 			switch (FirmType.getRandomFirmType()) {
 			case OPPORTUNISTIC:
-				// new OpportunisticFirm();
-				// break;
-			case PREMIUM:
-				new PremiumFirm();
+				new OpportunisticFirm();
 				break;
-			case WAIT:
-				// new WaitFirm();
-				// break;
-			case BASE_PYRAMID:
-				new BasePyramidFirm();
+			case EXPECTATIONS:
+				new ExpectationsFirm();
+				break;
+			case RATIONAL:
+				new RationalFirm();
 				break;
 			}
 		}

@@ -18,7 +18,7 @@ import repast.simphony.random.RandomHelper;
 public class Consumer {
 
 	private double margUtilOfQuality;
-	private double utilityDiscount;
+	private double qualityDiscount;
 	private Firm chosenFirm;
 	private HashSet<Firm> exploredFirms;
 	private ArrayList<Firm> knownFirmsNotExplored;
@@ -52,7 +52,7 @@ public class Consumer {
 
 		setMargUtilOfQuality();
 
-		setUtilityDiscount();
+		setQualityDiscount();
 
 		setExplorationDistrib();
 
@@ -72,8 +72,8 @@ public class Consumer {
 
 	}
 
-	private void setUtilityDiscount() {
-		utilityDiscount = Consumers.getUtilityDicountDistrib().nextDouble();
+	private void setQualityDiscount() {
+		qualityDiscount = Consumers.getQualityDicountDistrib().nextDouble();
 
 	}
 
@@ -228,7 +228,10 @@ public class Consumer {
 	}
 
 	private double expectedUtility(Firm f) {
-		return utilityDiscount * utility(f);
+		double q = qualityDiscount * f.getQuality();
+		double p = f.getPrice();
+
+		return utility(new Offer(q, p));
 	}
 
 	private double utility(Firm f) {

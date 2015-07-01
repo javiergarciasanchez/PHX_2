@@ -80,6 +80,14 @@
         <methodName>getAutoRegressiveProfit</methodName>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
+    <entry>
+      <string>Age</string>
+      <repast.simphony.data2.engine.MethodDataSourceDefinition>
+        <id>Age</id>
+        <className>firms.Firm</className>
+        <methodName>getAge</methodName>
+      </repast.simphony.data2.engine.MethodDataSourceDefinition>
+    </entry>
   </methodDataSources>
   <countSources class="linked-hash-map"/>
   <customNADataSources class="linked-hash-map"/>
