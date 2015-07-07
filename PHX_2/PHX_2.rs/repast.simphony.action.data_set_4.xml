@@ -1,8 +1,9 @@
 <repast.simphony.data2.engine.DataSetDescriptor>
-  <name>Firm_Type</name>
-  <type>AGGREGATE</type>
+  <name>Segments</name>
+  <type>NON_AGGREGATE</type>
+  <sourceType>graphs.SegmentLimit</sourceType>
   <inclTick>true</inclTick>
-  <inclBatchRun>false</inclBatchRun>
+  <inclBatchRun>true</inclBatchRun>
   <inclRandomSeed>false</inclRandomSeed>
   <scheduleParams>
     <start>1.0</start>
@@ -11,116 +12,24 @@
     <pType>LAST</pType>
     <duration>-1.0</duration>
     <frequency>REPEAT</frequency>
-    <hashCode>-771980289</hashCode>
+    <hashCode>-1290874152</hashCode>
   </scheduleParams>
   <atEnd>false</atEnd>
   <methodDataSources class="linked-hash-map">
     <entry>
-      <string>Profit_R</string>
+      <string>Value</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Profit_R</id>
-        <className>firmTypes.RationalFirm</className>
-        <methodName>getProfit</methodName>
-        <aggType>MEAN</aggType>
+        <id>Value</id>
+        <className>graphs.SegmentLimit</className>
+        <methodName>getValue</methodName>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>Profit_O</string>
+      <string>Label</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Profit_O</id>
-        <className>firmTypes.OpportunisticFirm</className>
-        <methodName>getProfit</methodName>
-        <aggType>MEAN</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>Profit_E</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Profit_E</id>
-        <className>firmTypes.ExpectationsFirm</className>
-        <methodName>getProfit</methodName>
-        <aggType>MEAN</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>Demand_R</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Demand_R</id>
-        <className>firmTypes.RationalFirm</className>
-        <methodName>getDemand</methodName>
-        <aggType>MEAN</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>Demand_O</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Demand_O</id>
-        <className>firmTypes.OpportunisticFirm</className>
-        <methodName>getDemand</methodName>
-        <aggType>MEAN</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>Demand_E</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Demand_E</id>
-        <className>firmTypes.ExpectationsFirm</className>
-        <methodName>getDemand</methodName>
-        <aggType>MEAN</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>Price_R</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Price_R</id>
-        <className>firmTypes.RationalFirm</className>
-        <methodName>getPrice</methodName>
-        <aggType>MEAN</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>Price_O</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Price_O</id>
-        <className>firmTypes.OpportunisticFirm</className>
-        <methodName>getPrice</methodName>
-        <aggType>MEAN</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>Price_E</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Price_E</id>
-        <className>firmTypes.ExpectationsFirm</className>
-        <methodName>getPrice</methodName>
-        <aggType>MEAN</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>Quality_R</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Quality_R</id>
-        <className>firmTypes.RationalFirm</className>
-        <methodName>getQuality</methodName>
-        <aggType>MEAN</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>Quality_O</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Quality_O</id>
-        <className>firmTypes.OpportunisticFirm</className>
-        <methodName>getQuality</methodName>
-        <aggType>MEAN</aggType>
-      </repast.simphony.data2.engine.MethodDataSourceDefinition>
-    </entry>
-    <entry>
-      <string>Quality_E</string>
-      <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Quality_E</id>
-        <className>firmTypes.ExpectationsFirm</className>
-        <methodName>getQuality</methodName>
-        <aggType>MEAN</aggType>
+        <id>Label</id>
+        <className>graphs.SegmentLimit</className>
+        <methodName>getLabel</methodName>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
   </methodDataSources>

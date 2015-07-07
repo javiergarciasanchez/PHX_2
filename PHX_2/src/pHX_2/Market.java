@@ -10,7 +10,7 @@ import graphs.FirmsDemandProjection;
 import graphs.FirmsProfitProjection;
 import graphs.MargUtilProjection;
 import graphs.SegmentLimit;
-import firmState.Offer;
+import firmHistory.Offer;
 import firmTypes.FirmType;
 
 import java.util.ArrayList;
@@ -83,6 +83,7 @@ public class Market extends DefaultContext<Object> implements
 		// Create firms
 		firms = new Firms();
 		context.addSubContext(firms);
+		context.add(firms); // We add firms as an agent to get Market Variation
 
 		// Firms Projections
 		// Dimensions are price, quality and consumers

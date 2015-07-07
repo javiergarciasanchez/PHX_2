@@ -4,7 +4,7 @@ import static repast.simphony.essentials.RepastEssentials.GetParameter;
 import consumers.Consumer;
 import consumers.Consumers;
 import consumers.Pareto;
-import firmState.Offer;
+import firmHistory.Offer;
 import firms.Firm;
 import repast.simphony.context.space.continuous.ContextSpace;
 import repast.simphony.space.continuous.ContinuousSpace;

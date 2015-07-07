@@ -4,9 +4,9 @@ import cern.jet.random.Uniform;
 import repast.simphony.random.RandomHelper;
 
 public enum FirmType {
-	OPPORTUNISTIC, RATIONAL, EXPECTATIONS;
+	RATIONAL, EXPECTATIONS;
 
-	public static final int FIRM_TYPES = 3;
+	public static final int FIRM_TYPES = 2;
 
 	// Create distribution for Random Firm Type to be added
 	private static Uniform firmTypeDistrib;
@@ -19,10 +19,8 @@ public enum FirmType {
 
 		switch (firmTypeDistrib.nextInt()) {
 		case 1:
-			return FirmType.OPPORTUNISTIC;
-		case 2:
 			return FirmType.RATIONAL;
-		case 3:
+		case 2:
 			return FirmType.EXPECTATIONS;
 
 		}

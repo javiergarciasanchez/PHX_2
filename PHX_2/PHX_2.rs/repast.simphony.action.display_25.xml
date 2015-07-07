@@ -1,16 +1,16 @@
 <repast.simphony.visualization.engine.CartesianDisplayDescriptor>
-  <name>Firms</name>
-  <type>2D</type>
+  <name>Consumption</name>
+  <type>3D</type>
   <styles>
     <entry>
-      <string>firms.Firm</string>
-      <string>repast.simphony.visualization.editedStyle.EditedStyle2D</string>
+      <string>consumers.Consumer</string>
+      <string>repast.simphony.visualization.editedStyle.EditedStyle3D</string>
     </entry>
   </styles>
   <editedStyles>
     <entry>
-      <string>firms.Firm</string>
-      <string>firms.Firm.style_0.xml</string>
+      <string>consumers.Consumer</string>
+      <string>consumers.Consumer.style_8.xml</string>
     </entry>
   </editedStyles>
   <netStyles/>
@@ -23,30 +23,30 @@
     <pType>LAST</pType>
     <duration>-1.0</duration>
     <frequency>REPEAT</frequency>
-    <hashCode>-1147964604</hashCode>
+    <hashCode>-54706535</hashCode>
   </schedParams>
   <layoutClassName>foo.bar.baz</layoutClassName>
-  <layoutProjection>Firms2DProjection</layoutProjection>
+  <layoutProjection>ConsumptionProjection</layoutProjection>
   <layoutInterval>0</layoutInterval>
   <layerOrder>
     <entry>
-      <string>firms.Firm</string>
+      <string>consumers.Consumer</string>
       <int>0</int>
     </entry>
   </layerOrder>
   <projections>
     <repast.simphony.scenario.data.ProjectionData>
-      <id>Firms2DProjection</id>
+      <id>ConsumptionProjection</id>
       <attributes/>
       <type>continuous space</type>
     </repast.simphony.scenario.data.ProjectionData>
   </projections>
   <visualizationProperties class="repast.simphony.visualization.UnitSizeLayoutProperties">
-    <unitSize>5.0</unitSize>
+    <unitSize>0.01</unitSize>
   </visualizationProperties>
   <projectionDescriptors>
     <entry>
-      <string>Firms2DProjection</string>
+      <string>ConsumptionProjection</string>
       <repast.simphony.visualization.continuous.ContinuousProjectionDescriptor>
         <proj reference="../../../../projections/repast.simphony.scenario.data.ProjectionData"/>
         <props>
@@ -55,7 +55,7 @@
             <map>
               <entry>
                 <string>UNIT_SIZE</string>
-                <float>5.0</float>
+                <float>0.01</float>
               </entry>
               <entry>
                 <string>SHOW</string>
@@ -63,7 +63,7 @@
               </entry>
               <entry>
                 <string>COLOR</string>
-                <int>-16777216</int>
+                <int>-1</int>
               </entry>
             </map>
           </entry>
@@ -73,9 +73,9 @@
   </projectionDescriptors>
   <props/>
   <backgroundColor>
-    <red>255</red>
-    <green>255</green>
-    <blue>255</blue>
+    <red>0</red>
+    <green>0</green>
+    <blue>0</blue>
     <alpha>255</alpha>
   </backgroundColor>
   <valueLayers/>

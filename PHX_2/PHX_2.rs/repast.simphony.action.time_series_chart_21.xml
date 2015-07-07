@@ -1,9 +1,9 @@
 <repast.simphony.chart2.engine.TimeSeriesChartDescriptor>
-  <name>Demand</name>
-  <dataSet>Firm_Data</dataSet>
+  <name>MarketVariation</name>
+  <dataSet>Firms</dataSet>
   <xAxisLabel>Tick Count</xAxisLabel>
   <yAxisLabel></yAxisLabel>
-  <chartTitle>Demand</chartTitle>
+  <chartTitle>Market Variation</chartTitle>
   <type>TIME_SERIES</type>
   <background>
     <red>192</red>
@@ -21,14 +21,14 @@
   <showLegend>true</showLegend>
   <seriesIds>
     <entry>
-      <string>FirmID</string>
+      <string>Id</string>
       <SeriesData>
         <label></label>
       </SeriesData>
     </entry>
   </seriesIds>
   <dataValueIds>
-    <string>Demand</string>
+    <string>MarketVariation</string>
   </dataValueIds>
   <plotRangeLength>-1</plotRangeLength>
 </repast.simphony.chart2.engine.TimeSeriesChartDescriptor>

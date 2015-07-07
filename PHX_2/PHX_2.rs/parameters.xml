@@ -1,5 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <parameters>
+	steadyStateVariation
+	<parameter name="steadyStateVariation" displayName="Steady State Variation" type="double"
+		defaultValue="0.1" isReadOnly="false"
+		converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" />
 	<parameter name="stopAt" displayName="Stop at" type="double"
 		defaultValue="500.0" isReadOnly="false"
 		converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" />
@@ -72,7 +76,7 @@
 		type="double" defaultValue="0.7" isReadOnly="false"
 		converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" />
 	<parameter name="numberOfConsumers" displayName="Number of Consumers"
-		type="int" defaultValue="400" isReadOnly="true"
+		type="int" defaultValue="400" isReadOnly="false"
 		converter="repast.simphony.parameter.StringConverterFactory$IntConverter" />
 	<parameter name="firmsEntryOnlyAtStart" displayName="Firms Entry only at Start?"
 		type="boolean" defaultValue="true" isReadOnly="false"
@@ -99,4 +103,8 @@
 	<parameter name="minPrice" displayName="Minimum Price" type="double"
 		defaultValue="1.0" isReadOnly="true"
 		converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" />
+	<parameter name="initialMaxPrice" displayName="Initial Max Price" type="double"
+		defaultValue="50.0" isReadOnly="true"
+		converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter" />
+
 </parameters>

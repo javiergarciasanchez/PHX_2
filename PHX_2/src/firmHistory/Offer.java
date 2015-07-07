@@ -1,4 +1,4 @@
-package firmState;
+package firmHistory;
 
 import static repast.simphony.essentials.RepastEssentials.GetParameter;
 import pHX_2.Market;
@@ -17,7 +17,12 @@ public class Offer {
 	public static void resetStaticVars() {
 		// resets static variables
 		minPrice = (double) GetParameter("minPrice");
-		maxPrice = minPrice + 1.0;
+		
+		/*
+		 *  Max price is expanded so price is enough to cover the cost
+		 *  of the most expensive firm
+		 */
+		maxPrice = (double) GetParameter("initialMaxPrice");
 
 		minQuality = (double) GetParameter("minQuality");
 		maxQuality = (double) GetParameter("maxQuality");

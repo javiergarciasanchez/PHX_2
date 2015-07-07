@@ -7,8 +7,9 @@ import java.util.ArrayList;
 
 import consumers.Consumer;
 import consumers.Consumers;
-import firmState.FirmState;
-import firmState.Offer;
+import firmHistory.FirmHistory;
+import firmHistory.FirmState;
+import firmHistory.Offer;
 import pHX_2.Market;
 import pHX_2.RunPriority;
 import repast.simphony.engine.schedule.ScheduledMethod;
@@ -94,13 +95,13 @@ public abstract class Firm {
 
 	}
 
-	protected abstract double getInitialPrice(double q);
-
 	protected double getInitialQuality() {
 		double lowerQ = Offer.getMinQuality();
 		double higherQ = Offer.getMaxInitialQuality();
 		return Utils.getRandomInitialQuality(lowerQ, higherQ);
 	}
+
+	protected abstract double getInitialPrice(double q);
 
 	@ScheduledMethod(start = 1, priority = RunPriority.MAKE_OFFER_PRIORITY, interval = 1)
 	public void makeOffer() {
@@ -288,8 +289,7 @@ public abstract class Firm {
 
 		// Remove firm from consumers lists
 		for (Consumer c : alreadyKnownBy) {
-			c.removeFromKnownFirms(this);
-			c.removeFromExploredFirms(this);
+			c.removeTraceOfFirm(this);
 		}
 
 		Market.firms.remove(this);
@@ -319,6 +319,10 @@ public abstract class Firm {
 		o.setQuality(q);
 
 		Market.firms.addToFirmsByQ(this);
+	}
+	
+	public double getHistoryVariation(){
+		return history.getHistoryVariation();
 	}
 
 	//

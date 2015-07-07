@@ -2,8 +2,8 @@ package firms;
 
 import static repast.simphony.essentials.RepastEssentials.GetParameter;
 import consumers.Consumers;
-import firmState.FirmState;
-import firmState.Offer;
+import firmHistory.FirmState;
+import firmHistory.Offer;
 import firmTypes.NoPrice;
 import pHX_2.Market;
 import repast.simphony.random.RandomHelper;

@@ -3,8 +3,8 @@ package firmTypes;
 import java.awt.Color;
 
 import pHX_2.Market;
-import firmState.FirmState;
-import firmState.Offer;
+import firmHistory.FirmState;
+import firmHistory.Offer;
 import firms.Firm;
 import firms.Utils;
 import repast.simphony.random.RandomHelper;

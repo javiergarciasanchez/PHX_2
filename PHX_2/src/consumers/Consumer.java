@@ -7,7 +7,7 @@ import java.util.ArrayList;
 import java.util.HashSet;
 
 import cern.jet.random.Binomial;
-import firmState.Offer;
+import firmHistory.Offer;
 import firms.Firm;
 import pHX_2.Market;
 import pHX_2.RecessionsHandler;
@@ -95,17 +95,9 @@ public class Consumer {
 		knownFirmsNotExplored.add(firm);
 	}
 
-	public void removeFromKnownFirms(Firm firm) {
-		knownFirmsNotExplored.remove(firm);
-	}
-
 	public void addToExploredFirms(Firm f) {
 		exploredFirms.add(f);
 		knownFirmsNotExplored.remove(f);
-	}
-
-	public void removeFromExploredFirms(Firm firm) {
-		exploredFirms.remove(firm);
 	}
 
 	@ScheduledMethod(start = 1, priority = RunPriority.CHOOSE_FIRM_PRIORITY, interval = 1)
@@ -249,6 +241,14 @@ public class Consumer {
 			return Color.BLACK;
 		else
 			return chosenFirm.getColor();
+	}
+
+	public void removeTraceOfFirm(Firm firm) {
+		knownFirmsNotExplored.remove(firm);
+		exploredFirms.remove(firm);
+		if ((chosenFirm != null)
+				&& (chosenFirm.getFirmIntID() == firm.getFirmIntID()))
+			chosenFirm = null;
 	}
 
 	// Procedures for inspecting values

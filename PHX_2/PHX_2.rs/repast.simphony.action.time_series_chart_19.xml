@@ -1,9 +1,9 @@
 <repast.simphony.chart2.engine.TimeSeriesChartDescriptor>
-  <name>Profit X Type</name>
+  <name>Quality X Type</name>
   <dataSet>Firm_Type</dataSet>
   <xAxisLabel>Tick Count</xAxisLabel>
   <yAxisLabel></yAxisLabel>
-  <chartTitle>Avg Profit</chartTitle>
+  <chartTitle>Avg Quality</chartTitle>
   <type>TIME_SERIES</type>
   <background>
     <red>192</red>
@@ -21,21 +21,9 @@
   <showLegend>true</showLegend>
   <seriesIds>
     <entry>
-      <string>Profit_P</string>
+      <string>Quality_O</string>
       <SeriesData>
-        <label>Profit_P</label>
-        <color>
-          <red>0</red>
-          <green>0</green>
-          <blue>204</blue>
-          <alpha>255</alpha>
-        </color>
-      </SeriesData>
-    </entry>
-    <entry>
-      <string>Profit_O</string>
-      <SeriesData>
-        <label>Profit_O</label>
+        <label>Quality_O</label>
         <color>
           <red>255</red>
           <green>0</green>
@@ -45,9 +33,21 @@
       </SeriesData>
     </entry>
     <entry>
-      <string>Profit_B</string>
+      <string>Quality_P</string>
       <SeriesData>
-        <label>Profit_B</label>
+        <label>Quality_P</label>
+        <color>
+          <red>0</red>
+          <green>0</green>
+          <blue>255</blue>
+          <alpha>255</alpha>
+        </color>
+      </SeriesData>
+    </entry>
+    <entry>
+      <string>Quality_B</string>
+      <SeriesData>
+        <label>Quality_B</label>
         <color>
           <red>0</red>
           <green>255</green>
@@ -57,9 +57,9 @@
       </SeriesData>
     </entry>
     <entry>
-      <string>Profit_W</string>
+      <string>Quality_W</string>
       <SeriesData>
-        <label>Profit_W</label>
+        <label>Quality_W</label>
         <color>
           <red>0</red>
           <green>255</green>

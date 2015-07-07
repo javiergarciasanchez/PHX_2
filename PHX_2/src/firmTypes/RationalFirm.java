@@ -2,7 +2,7 @@ package firmTypes;
 
 import java.awt.Color;
 
-import firmState.Offer;
+import firmHistory.Offer;
 import firms.Firm;
 import firms.Utils;
 

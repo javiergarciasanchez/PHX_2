@@ -1,9 +1,9 @@
 <repast.simphony.data2.engine.DataSetDescriptor>
-  <name>Segments</name>
+  <name>Firms</name>
   <type>NON_AGGREGATE</type>
-  <sourceType>graphs.SegmentLimit</sourceType>
+  <sourceType>firms.Firms</sourceType>
   <inclTick>true</inclTick>
-  <inclBatchRun>true</inclBatchRun>
+  <inclBatchRun>false</inclBatchRun>
   <inclRandomSeed>false</inclRandomSeed>
   <scheduleParams>
     <start>1.0</start>
@@ -12,24 +12,24 @@
     <pType>LAST</pType>
     <duration>-1.0</duration>
     <frequency>REPEAT</frequency>
-    <hashCode>-1290874152</hashCode>
+    <hashCode>1481865622</hashCode>
   </scheduleParams>
   <atEnd>false</atEnd>
   <methodDataSources class="linked-hash-map">
     <entry>
-      <string>Value</string>
+      <string>MarketVariation</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Value</id>
-        <className>graphs.SegmentLimit</className>
-        <methodName>getValue</methodName>
+        <id>MarketVariation</id>
+        <className>firms.Firms</className>
+        <methodName>getMarketVariation</methodName>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
     <entry>
-      <string>Label</string>
+      <string>Id</string>
       <repast.simphony.data2.engine.MethodDataSourceDefinition>
-        <id>Label</id>
-        <className>graphs.SegmentLimit</className>
-        <methodName>getLabel</methodName>
+        <id>Id</id>
+        <className>firms.Firms</className>
+        <methodName>getId</methodName>
       </repast.simphony.data2.engine.MethodDataSourceDefinition>
     </entry>
   </methodDataSources>

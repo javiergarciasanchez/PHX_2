@@ -1,6 +1,6 @@
 package graphs;
 
-import firmState.Offer;
+import firmHistory.Offer;
 import firms.Firm;
 import firms.Firms;
 import repast.simphony.context.space.continuous.ContextSpace;
