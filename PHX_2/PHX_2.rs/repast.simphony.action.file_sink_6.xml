@@ -1,20 +1,14 @@
 <repast.simphony.data2.engine.FileSinkDescriptor>
-  <name>FirmData</name>
-  <dataSet>Firm_Data</dataSet>
+  <name>Segments</name>
+  <dataSet>Segments</dataSet>
   <delimiter>,</delimiter>
   <format>TABULAR</format>
   <sourceIds class="linked-hash-set">
-    <string>run</string>
     <string>tick</string>
-    <string>FirmID</string>
-    <string>Demand</string>
-    <string>Profit</string>
-    <string>Quality</string>
-    <string>Price</string>
-    <string>FirmType</string>
-    <string>Age</string>
-    <string>AutoRegressiveProfit</string>
+    <string>Label</string>
+    <string>Value</string>
+    <string>run</string>
   </sourceIds>
-  <fileName>FirmData.csv</fileName>
+  <fileName>Segments.csv</fileName>
   <addTimeStamp>true</addTimeStamp>
 </repast.simphony.data2.engine.FileSinkDescriptor>

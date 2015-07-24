@@ -320,10 +320,6 @@ public abstract class Firm {
 
 		Market.firms.addToFirmsByQ(this);
 	}
-	
-	public double getHistoryVariation(){
-		return history.getHistoryVariation();
-	}
 
 	//
 	// Getters to probe

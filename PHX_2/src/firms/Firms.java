@@ -13,7 +13,6 @@ import firmTypes.ExpectationsFirm;
 import graphs.SegmentLimit;
 import static repast.simphony.essentials.RepastEssentials.GetParameter;
 import repast.simphony.context.DefaultContext;
-import repast.simphony.engine.environment.RunEnvironment;
 import repast.simphony.engine.schedule.ScheduledMethod;
 import repast.simphony.random.RandomHelper;
 import repast.simphony.essentials.RepastEssentials;
@@ -24,13 +23,6 @@ public class Firms extends DefaultContext<Firm> {
 	private Gamma qualityStepDistrib;
 	private Gamma priceStepDistrib;
 	private Gamma fixedCostDistrib;
-
-	// marketVariation to check for steady state
-	private double marketVariation;
-
-	private final static double INITIAL_MARKET_VARIATION = 100.0;
-	private final static double MARKET_VARIATION_AR_FACTOR = 0.9;
-	private final static double MIN_PERIOD_FOR_MARKET_VARIATION = 5.0;
 
 	// Parameters for Firms
 	double initiallyKnownByPerc, minimumProfit, diffusionSpeedParam;
@@ -50,42 +42,6 @@ public class Firms extends DefaultContext<Firm> {
 		createProbabilityDistrib();
 
 		sortFirmsByQ = new TreeMap<Double, Firm>();
-	}
-
-	@ScheduledMethod(start = 1, priority = RunPriority.UPDATE_STATE_VARIATION, interval = 1)
-	public void updateStateVariation() {
-		double tick = RepastEssentials.GetTickCount();
-
-		if (tick == 1.0) {
-			marketVariation = INITIAL_MARKET_VARIATION;
-
-		} else if (tick >= MIN_PERIOD_FOR_MARKET_VARIATION) {
-
-			Firm f;
-			double tmp = 0.0;
-
-			for (Object o : this.getObjects(Firm.class)) {
-				f = (Firm) o;
-				f.getHistory().updateHistoryVariation();
-				tmp += f.getHistoryVariation();
-			}
-
-			marketVariation = tmp * (1 - MARKET_VARIATION_AR_FACTOR)
-					+ marketVariation * MARKET_VARIATION_AR_FACTOR;
-
-		}
-	}
-
-	@ScheduledMethod(start = 1, priority = RunPriority.CHECK_STEADY_STATE, interval = 1)
-	public void checkSteadyState() {
-		if (steadyState()) {
-			RunEnvironment.getInstance().endRun();
-			return;
-		}
-	}
-
-	private boolean steadyState() {
-		return marketVariation < (Double) GetParameter("steadyStateVariation");
 	}
 
 	@ScheduledMethod(start = 1, priority = RunPriority.CREATE_SEGMENT_LIMITS_PRIORITY, interval = 1)
@@ -392,10 +348,6 @@ public class Firms extends DefaultContext<Firm> {
 
 		Market.toBeKilled.clear();
 
-	}
-
-	public double getMarketVariation() {
-		return marketVariation;
 	}
 
 }

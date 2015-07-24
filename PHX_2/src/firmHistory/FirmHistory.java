@@ -8,20 +8,12 @@ public class FirmHistory extends ArrayList<FirmState> {
 	public static final int HISTORY_SIZE = 10;
 	private static final long serialVersionUID = 1L;
 
-	// State Variation for calculating steady state
-	private final static double INITIAL_HISTORY_VARIATION = 100.0;
-	private final static double HISTORY_VARIATION_AR_FACTOR = 0.9;
-	private final static double MIN_PERIODS_FOR_HISTORY_VARIATION = 5.0;
-
-	private double historyVariation;
-
 	// It has the last profit obtained when offering offer
 	private HashMap<Offer, Double> profitMap;
 
 	public FirmHistory(int historySize) {
 		super(historySize);
 		profitMap = new HashMap<Offer, Double>();
-		historyVariation = INITIAL_HISTORY_VARIATION;
 	}
 
 	public boolean addCurrentState(FirmState firmState) {
@@ -96,25 +88,6 @@ public class FirmHistory extends ArrayList<FirmState> {
 		}
 	}
 
-	public void updateHistoryVariation() {
-
-		if (size() >= MIN_PERIODS_FOR_HISTORY_VARIATION) {
-
-			double tmp;
-
-			FirmState prevSt = getPrevState();
-			FirmState currSt = getCurrentState();
-
-			tmp = Math.pow(currSt.getPrice() - prevSt.getPrice(), 2.0);
-			tmp += Math.pow(currSt.getQuality() - prevSt.getQuality(), 2.0);
-			tmp += Math.pow(currSt.getDemand() - prevSt.getDemand(), 2.0);
-
-			historyVariation = tmp * (1 - HISTORY_VARIATION_AR_FACTOR)
-					+ historyVariation * HISTORY_VARIATION_AR_FACTOR;
-		}
-
-	}
-
 	public double getCurrentPrice() {
 		return getCurrentState().getPrice();
 	}
@@ -143,10 +116,6 @@ public class FirmHistory extends ArrayList<FirmState> {
 
 	public Offer getCurrentOffer() {
 		return getCurrentState().getOffer();
-	}
-
-	public double getHistoryVariation() {
-		return historyVariation;
 	}
 
 }

@@ -21,6 +21,7 @@ import repast.simphony.context.Context;
 import repast.simphony.context.DefaultContext;
 import repast.simphony.dataLoader.ContextBuilder;
 import repast.simphony.engine.environment.RunEnvironment;
+import repast.simphony.engine.environment.RunState;
 import repast.simphony.random.RandomHelper;
 
 public class Market extends DefaultContext<Object> implements
@@ -43,6 +44,10 @@ public class Market extends DefaultContext<Object> implements
 
 	@Override
 	public Context<Object> build(Context<Object> context) {
+		
+		if (RunEnvironment.getInstance().isBatch())
+			System.out.println("Run: " + RunState.getInstance().getRunInfo().getRunNumber());
+
 
 		// Reset seed
 		RandomHelper.setSeed((Integer) GetParameter("randomSeed"));
@@ -83,7 +88,6 @@ public class Market extends DefaultContext<Object> implements
 		// Create firms
 		firms = new Firms();
 		context.addSubContext(firms);
-		context.add(firms); // We add firms as an agent to get Market Variation
 
 		// Firms Projections
 		// Dimensions are price, quality and consumers
