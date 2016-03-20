@@ -35,13 +35,13 @@ public class RationalFirm extends Firm {
 	 * new offer
 	 */
 	@Override
-	protected void setNewOffer() {
+	protected void setNextOffer() {
 		Utils.setNewRationalOffer(this);
 	}
 
 	@Override
 	public Color getColor() {
-		return Color.CYAN;
+		return Color.BLUE;
 	}
 
 }

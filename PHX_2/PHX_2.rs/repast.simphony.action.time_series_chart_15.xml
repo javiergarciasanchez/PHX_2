@@ -56,18 +56,6 @@
         </color>
       </SeriesData>
     </entry>
-    <entry>
-      <string>Demand_O</string>
-      <SeriesData>
-        <label>Demand_O</label>
-        <color>
-          <red>255</red>
-          <green>0</green>
-          <blue>51</blue>
-          <alpha>255</alpha>
-        </color>
-      </SeriesData>
-    </entry>
   </seriesIds>
   <dataValueIds/>
   <plotRangeLength>-1</plotRangeLength>

@@ -34,7 +34,7 @@ public class ExpectationsFirm extends Firm {
 	}
 
 	@Override
-	protected void setNewOffer() {
+	protected void setNextOffer() {
 		/*
 		 * it adds the new offer to history
 		 * 
@@ -54,6 +54,7 @@ public class ExpectationsFirm extends Firm {
 			Market.firms.removeFromFirmsByQ(this);
 
 			double p = getInitialPrice(expectedQ(q));
+			
 			o = new Offer(q, p);
 
 			getHistory().addCurrentState(new FirmState(o));

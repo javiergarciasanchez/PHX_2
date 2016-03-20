@@ -67,18 +67,15 @@ public class Utils {
 	public static double getRationalPrice(double unitCost, double q)
 			throws NoPrice {
 
-		// Price shouldn't be lower than unit cost
-		double minPrice = Math.max(Offer.getMinPrice(), unitCost);
-
 		// Chooses a price that is one step below maximum competitive price
 		double price = Utils.getMaxCompetitivePriceToEntry(q);
 
-		if (price > minPrice) {
+		if (price > unitCost) {
 			double priceStep = Market.firms.getPriceStepDistrib().nextDouble();
 			price = price - priceStep;
 
 			// Price cannot be lower than cost
-			price = Math.max(price, minPrice);
+			price = Math.max(price, unitCost);
 
 			return price;
 
@@ -160,13 +157,19 @@ public class Utils {
 		return Math.max(hiF.getPoorestConsumerMargUtil(), limit);
 	}
 
+	/*
+	 * Calculates the minimum marginal utility that a consumer may have to
+	 * afford a product with quality and price given
+	 */
 	public static double getPoorestConsumerMargUtil(double quality, double price) {
 		return price / quality;
 	}
 
-	public static double getPoorestConsumerMinPrice(double minMargUtil,
-			double quality) {
-		return minMargUtil * quality;
+	/*
+	 * Calculates the price that the poorest consumer may afford
+	 */
+	public static double getPoorestConsumerMaxPrice(double quality) {
+		return Consumers.getMinMargUtilOfQuality() * quality;
 	}
 
 	public static double getRandomInitialQuality(double lowerQ, double higherQ) {
@@ -192,7 +195,7 @@ public class Utils {
 		double q = firm.getQuality();
 		double demand = firm.getDemand();
 		double cost = firm.unitCost(q);
-		double margCost = firm.getMarginalCostOfQuality();
+		double margCost = firm.getMarginalCostOfQuality(q);
 		double derivQ = demandDerivRespToQuality(q, p);
 
 		return (p - cost) * derivQ - margCost * demand;
@@ -206,31 +209,14 @@ public class Utils {
 		double minMargUtil = Consumers.getMinMargUtilOfQuality();
 		double mktSize = Consumers.getNumberOfConsumers();
 
-		double poorest = Utils.getPoorestConsumerMargUtil(q, p);
-
 		Firm loF = Market.firms.getLowerLimitFirm(q, false);
 		Firm hiF = Market.firms.getHigherLimitFirm(q, false);
 
-		if (loF == null && hiF == null && minMargUtil >= poorest) {
-			// It has all the market
-			return 0.0;
-
-		} else if (loF == null && hiF == null && poorest > minMargUtil) {
+		if (loF == null && hiF == null) {
 			return mktSize * lambda * Math.pow(minMargUtil, lambda)
 					* Math.pow(q, lambda - 1.0) / Math.pow(p, lambda);
 
-		} else if (loF == null && hiF != null && minMargUtil >= poorest) {
-			double pH = hiF.getPrice();
-			double qH = hiF.getQuality();
-
-			if (pH == p)
-				throw new Error(
-						"Prices cannot be the same if both firms are in the market");
-
-			return mktSize * lambda * Math.pow(minMargUtil, lambda)
-					* Math.pow(qH - q, lambda - 1.0) / Math.pow(pH - p, lambda);
-
-		} else if (loF == null && hiF != null && poorest > minMargUtil) {
+		} else if (loF == null && hiF != null) {
 			double pH = hiF.getPrice();
 			double qH = hiF.getQuality();
 
@@ -392,41 +378,23 @@ public class Utils {
 		double minMargUtil = Consumers.getMinMargUtilOfQuality();
 		double mktSize = Consumers.getNumberOfConsumers();
 
-		double poorest = Utils.getPoorestConsumerMargUtil(q, p);
-
-		if (loF == null && hiF == null && minMargUtil >= poorest) {
-			// It should have all the market
-			return mktSize;
-
-		} else if (loF == null && hiF == null && poorest > minMargUtil) {
+		if (loF == null && hiF == null) {
 			return mktSize * Math.pow(minMargUtil, lambda)
 					* Math.pow(q / p, lambda);
 
-		} else if (loF == null && hiF != null && minMargUtil >= poorest) {
+		} else if (loF == null && hiF != null) {
 			double pH = hiF.getPrice();
 			double qH = hiF.getQuality();
 
 			if (pH == p) {
-				double lowestPrice = getPoorestConsumerMinPrice(minMargUtil, q);
-				p = (lowestPrice + pH) / 2.0;
-			}
-
-			return 1 - (mktSize * Math.pow(minMargUtil, lambda) * Math.pow(
-					(qH - q) / (pH - p), lambda));
-
-		} else if (loF == null && hiF != null && poorest > minMargUtil) {
-			double pH = hiF.getPrice();
-			double qH = hiF.getQuality();
-
-			if (pH == p) {
-				double lowestPrice = getPoorestConsumerMinPrice(poorest, q);
-				p = (lowestPrice + pH) / 2.0;
-			}
-
-			return mktSize
-					* Math.pow(minMargUtil, lambda)
-					* (Math.pow(q / p, lambda) - Math.pow((qH - q) / (pH - p),
-							lambda));
+				// If it has the same price than a competitor with higher q
+				// the theoretical demand is 0
+				return 0.0;
+			} else
+				return mktSize
+						* Math.pow(minMargUtil, lambda)
+						* (Math.pow(q / p, lambda) - Math.pow((qH - q)
+								/ (pH - p), lambda));
 
 		} else if (loF != null && hiF == null) {
 			double pL = loF.getPrice();
@@ -449,16 +417,16 @@ public class Utils {
 			double qL = loF.getQuality();
 
 			if (pH == p) {
-				double lowerLimit = Math.max(poorest, minMargUtil);
-				double lowestPrice = getPoorestConsumerMinPrice(lowerLimit, q);
-				p = (lowestPrice + pH) / 2.0;
+				// If it has the same price than a competitor with higher q
+				// the theoretical demand is 0
+				return 0.0;
 
 			} else if (pL == p) {
 				double priceStep = Market.firms.getPriceStepDistrib()
 						.nextDouble();
 				p = pL + priceStep;
 			}
-			
+
 			return mktSize
 					* Math.pow(minMargUtil, lambda)
 					* (Math.pow((q - qL) / (p - pL), lambda) - Math.pow(

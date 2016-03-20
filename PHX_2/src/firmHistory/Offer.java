@@ -1,6 +1,7 @@
 package firmHistory;
 
 import static repast.simphony.essentials.RepastEssentials.GetParameter;
+import firms.Utils;
 import pHX_2.Market;
 
 public class Offer {
@@ -17,10 +18,10 @@ public class Offer {
 	public static void resetStaticVars() {
 		// resets static variables
 		minPrice = (double) GetParameter("minPrice");
-		
+
 		/*
-		 *  Max price is expanded so price is enough to cover the cost
-		 *  of the most expensive firm
+		 * Max price is expanded so price is enough to cover the cost of the
+		 * most expensive firm
 		 */
 		maxPrice = (double) GetParameter("initialMaxPrice");
 
@@ -133,14 +134,18 @@ public class Offer {
 
 	public void setPrice(double price) {
 
-		if (price < minPrice)
-			this.price = minPrice;
+		if (quality == 0.0)
+			throw new Error("quality should be set before price");
 
-		else if (price > maxPrice)
-			this.price = maxPrice;
+		// Price shouldn't be lower than the maximum price that the poorest
+		// consumer may afford
+		price = Math.max(price, Utils.getPoorestConsumerMaxPrice(quality));
 
-		else
-			this.price = price;
+		// Price should be between limits
+		price = Math.max(price, minPrice);
+		price = Math.min(price, maxPrice);
+		
+		this.price = price;
 
 	}
 

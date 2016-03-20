@@ -34,7 +34,7 @@ public abstract class Firm {
 	private Firm loLimitFirm, hiLimitFirm;
 
 	// Cost Scale is the same for all firms. It could be changed easily
-	private static double costScale;
+	private static double costParameter;
 	private static double currentProfitWeight;
 
 	protected static long firmIDCounter;
@@ -44,7 +44,7 @@ public abstract class Firm {
 
 	public static void resetStaticVars() {
 		// resets static variables
-		costScale = (Double) GetParameter("costScale");
+		costParameter = (Double) GetParameter("costParameter");
 		currentProfitWeight = (Double) GetParameter("currentProfitWeight");
 		firmIDCounter = 1;
 	}
@@ -106,17 +106,17 @@ public abstract class Firm {
 	@ScheduledMethod(start = 1, priority = RunPriority.MAKE_OFFER_PRIORITY, interval = 1)
 	public void makeOffer() {
 
-		setNewOffer();
+		setNextOffer();
 
 		updateConsumerKnowledge();
 
 	}
 
 	/*
-	 *  it should add the new offer to history
-	 *  it should remove the firm from and add it back to FirmsByQ 
+	 * it should add the new offer to history it should remove the firm from and
+	 * add it back to FirmsByQ
 	 */
-	protected abstract void setNewOffer();
+	protected abstract void setNextOffer();
 
 	protected boolean isInTheMarket() {
 		boolean isFirstInMarket = Market.firms.isFirstLimitingFirm(this);
@@ -263,12 +263,12 @@ public abstract class Firm {
 	}
 
 	public double unitCost(double quality) {
-		// Cost grows with quality
-		return costScale * quality;
+		// Cost grows quadratically with quality
+		return Math.pow(quality / costParameter, 2.0);
 	}
 
-	protected double getMarginalCostOfQuality() {
-		return costScale;
+	protected double getMarginalCostOfQuality(double q) {
+		return 2.0 / Math.pow(costParameter, 2.0) * q;
 	}
 
 	private void setProfit(double profit) {

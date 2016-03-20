@@ -85,8 +85,8 @@
 									
 		/>
 				<parameter name="initialMaxPrice" displayName="Initial Max Price" type="double" 
-						defaultValue="50.0" 
-						isReadOnly="true" 
+						defaultValue="100.0" 
+						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter"
 									
 		/>
@@ -150,8 +150,8 @@
 						converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter"
 									
 		/>
-				<parameter name="costScale" displayName="Scale cost parameter" type="double" 
-						defaultValue="0.3" 
+				<parameter name="costParameter" displayName="Cost parameter" type="double" 
+						defaultValue="10.0" 
 						isReadOnly="false" 
 						converter="repast.simphony.parameter.StringConverterFactory$DoubleConverter"
 									
